@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -16,12 +17,17 @@ import org.openftc.easyopencv.OpenCvWebcam;
 //@Disabled
 public class WebcamViewerDashboard extends OpMode {
 
+
   OpenCvWebcam webcam;
 
   @Override
   public void init() {
     int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
     webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+
+    //This allows you to see through the camera on FTC dashboard by going to 192.168.43.1:8080/dash on a webpage.
+    FtcDashboard.getInstance().startCameraStream(webcam, 0);
+
     webcam.setPipeline(new SamplePipeline());
     webcam.setMillisecondsPermissionTimeout(5000); // Timeout for obtaining permission is configurable. Set before opening.
     webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
