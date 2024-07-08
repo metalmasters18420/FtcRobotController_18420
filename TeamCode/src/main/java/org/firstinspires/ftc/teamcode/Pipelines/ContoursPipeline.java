@@ -146,9 +146,7 @@ public class ContoursPipeline extends OpenCvPipeline {
 
     }
 
-    Point getCenter(){
-        return center;
-    }
+
 
     @Override
     public void onViewportTapped() {

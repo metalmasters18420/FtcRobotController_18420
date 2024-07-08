@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.SimpleExamples;
+package org.firstinspires.ftc.teamcode.Pipelines;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -6,7 +6,12 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-class SamplePipeline extends OpenCvPipeline
+/*
+ * Sample pipeline to be used in the standard WebcamViewer Opmodes in Simple Examples Folder
+ *
+ */
+
+public class SamplePipeline extends OpenCvPipeline
 {
     boolean viewportPaused;
 

@@ -19,7 +19,8 @@ public class ColorConvertPipeline extends OpenCvPipeline {
     public ColorConvertPipeline(Telemetry telemetry) {
         this.telemetry = telemetry;
     }
-    //end required to send telemetry.
+
+    //Varaibles to be used in EOCV Simulator as a slider
     public Scalar lower = new Scalar(0, 0, 0);
     public Scalar upper = new Scalar(255, 255, 255);
 

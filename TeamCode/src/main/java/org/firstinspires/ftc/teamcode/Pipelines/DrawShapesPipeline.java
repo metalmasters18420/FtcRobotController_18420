@@ -12,6 +12,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 /***
  * This class shows how to draw shapes on images.
+ * Play around with it in EOCV simulator to see what the different things do!
  */
 
 public class DrawShapesPipeline extends OpenCvPipeline {

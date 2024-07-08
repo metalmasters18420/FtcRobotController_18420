@@ -8,17 +8,23 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 /***
- * Another pipeline to show how to use a threshold to make a mask using the EOCV Pipeline Tester.
+ * Another pipeline to show how to use a threshold to make a masked image
+ * using the EOCV Pipeline Tester.  It does the following
+ *  1. Convert from RGB to YCrCB
+ *  2. Make a Mask called a Binary Mask (has only 1's and 0's)
+ *  3. Use a bitwise and specifically for masks to make an output file.
+ *
+ *  https://pyimagesearch.com/2021/01/19/opencv-bitwise-and-or-xor-and-not/
  */
 
 public class SliderThresholdPipeline extends OpenCvPipeline {
 
     /*
      * These are our variables that will be
-     * modifiable from the variable tuner.
+     * modifiable from the variable tuner in EOCV Simulator
      *
      * Scalars in OpenCV are generally used to
-     * represent color. So our values in the
+     * represent color values. So our values in the
      * lower and upper Scalars here represent
      * the Y, Cr and Cb values respectively.
      *
@@ -38,7 +44,9 @@ public class SliderThresholdPipeline extends OpenCvPipeline {
      * with every Mat you create on the processFrame method,
      * and therefore, reducing the possibility of getting a
      * memory leak and causing the app to crash due to an
-     * "Out of Memory" error.
+     * "Out of Memory" error.  If you want to make more images
+     * do so at the top of the pipeline and not in the process
+     * frame method.
      */
     private Mat ycrcbMat       = new Mat();
     private Mat binaryMat      = new Mat();
@@ -48,13 +56,14 @@ public class SliderThresholdPipeline extends OpenCvPipeline {
     public Mat processFrame(Mat input) {
         /*
          * Converts our input mat from RGB to YCrCb.
-         * EOCV ALWAYS returns RGB mats, so you'd
+         * EOCV ALWAYS returns RGB mats standard, so you'd
          * always convert from RGB to the color
          * space you want to use.
          *
          * Takes our "input" mat as an input, and outputs
          * to a separate Mat buffer "ycrcbMat"
          */
+        //              in file, out file, conversion to perform!
         Imgproc.cvtColor(input, ycrcbMat, Imgproc.COLOR_RGB2YCrCb);
 
         /*
@@ -87,6 +96,7 @@ public class SliderThresholdPipeline extends OpenCvPipeline {
          * the range) and will discard any other pixel outside the
          * range (RGB 0, 0, 0. All discarded pixels will be black)
          */
+
         Core.bitwise_and(input, input, maskedInputMat, binaryMat);
 
         /*
