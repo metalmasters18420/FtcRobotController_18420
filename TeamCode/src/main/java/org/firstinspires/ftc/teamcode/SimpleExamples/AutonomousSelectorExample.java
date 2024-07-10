@@ -5,14 +5,11 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="Autonomous Selector Example", group="Simple Examples")
 @Disabled
-public class AutonomousExample extends LinearOpMode {
+public class AutonomousSelectorExample extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -35,10 +32,19 @@ public class AutonomousExample extends LinearOpMode {
                 autoSelector = AutoSelector.RED;
             }
             telemetry.addData("Current Auto Selected", autoSelector);
+            telemetry.addData("Runtime", runtime.seconds());
             telemetry.update();
         }
         runtime.reset();
 
+        switch(autoSelector){
+            case BLUE:
+                //blue code goes here
+                break;
+            case RED:
+                //red code goes here
+                break;
+        }
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
