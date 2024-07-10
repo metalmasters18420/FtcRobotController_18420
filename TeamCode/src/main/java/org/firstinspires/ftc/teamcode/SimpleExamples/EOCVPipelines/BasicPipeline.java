@@ -41,7 +41,7 @@ public class BasicPipeline extends OpenCvPipeline {
 
         telemetry.addData("Mean RGB color", meanColor.toString());
         telemetry.addData("Mean red value as Scalar", redValueScalar);
-        telemetry.addData("Mean red value", redValue);
+        telemetry.addData("Mean red value","%.1f", redValue);
         telemetry.update();
 
         return input; // Return the image that will be displayed in the viewport
