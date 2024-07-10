@@ -13,7 +13,6 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-
 /*
  * Demonstrates an empty iterative OpMode
  */
@@ -37,10 +36,10 @@ public class EOCVWebcamViewerDashboard extends OpMode {
     //This allows you to see through the camera on FTC dashboard by going to 192.168.43.1:8080/dash on a webpage.
     FtcDashboard.getInstance().startCameraStream(webcam, 0);
 
-    //pipeline = new BlankPipeline();
-    pipeline = new ColorConvertPipeline();
-    //pipeline = new ContoursPipeline();
-    //DrawShapesPipeline pipeline = new DrawShapesPipeline();
+    //pipeline = new BlankPipeline(telemetry);
+    pipeline = new ColorConvertPipeline(telemetry);
+    //pipeline = new ContoursPipeline(telemetry);
+    //pipeline = new DrawShapesPipeline(telemetry);
 
     webcam.setPipeline(pipeline);       //set the first pipeline in the ArrayList called pipelines to the webcam.
     webcam.setMillisecondsPermissionTimeout(5000); // Timeout for obtaining permission is configurable. Set before opening.
