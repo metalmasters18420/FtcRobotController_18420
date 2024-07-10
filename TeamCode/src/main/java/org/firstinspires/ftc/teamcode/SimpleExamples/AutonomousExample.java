@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="Autonomous Selector Example", group="Simple Examples")
-//@Disabled
+@Disabled
 public class AutonomousExample extends LinearOpMode {
 
     // Declare OpMode members.
@@ -19,9 +21,10 @@ public class AutonomousExample extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         telemetry.addData("Status", "Initialized");
-        telemetry.update();
-
+        telemetry.update(); //needed specifically to do in LinearOpModes to send telemetry packet to DS and FTCDashboard.
+                            //For Iterative OpModes (normal OpModes) the telemetry is updated each loop automatically.
 
         // Wait for the game to start (driver presses PLAY)
         while(opModeInInit()){

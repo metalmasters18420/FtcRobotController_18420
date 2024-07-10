@@ -1,7 +1,9 @@
 
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -12,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @Config
 @TeleOp(name="Claw Control", group="Simple Examples")
-//@Disabled
+@Disabled
 public class ClawControl extends OpMode
 {
     // Declare OpMode members.
@@ -31,6 +33,7 @@ public class ClawControl extends OpMode
      */
     @Override
     public void init() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         telemetry.addData("Status", "Initialized");
 
         leftClaw  = hardwareMap.get(Servo.class, "leftclaw");

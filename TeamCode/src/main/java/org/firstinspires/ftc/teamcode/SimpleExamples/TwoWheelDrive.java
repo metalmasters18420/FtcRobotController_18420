@@ -1,7 +1,9 @@
 
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Two Wheel Drive", group="Simple Examples")
-//@Disabled
+@Disabled
 public class TwoWheelDrive extends OpMode
 {
     // Declare OpMode members.
@@ -20,7 +22,7 @@ public class TwoWheelDrive extends OpMode
 
     @Override
     public void init() {
-        telemetry.addData("Status", "Initialized");
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         leftMotor  = hardwareMap.get(DcMotor.class, "left");
         rightMotor = hardwareMap.get(DcMotor.class, "right");
@@ -47,7 +49,6 @@ public class TwoWheelDrive extends OpMode
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
-
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.

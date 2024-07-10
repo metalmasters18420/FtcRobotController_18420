@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,7 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 @Config
 @TeleOp(name = "Lift: Run To Position", group = "Simple Examples")
-//@Disabled
+@Disabled
 public class LiftRunToPosition extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();
@@ -29,6 +31,8 @@ public class LiftRunToPosition extends OpMode {
    */
   @Override
   public void init() {
+    telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
     Lift = hardwareMap.get(DcMotor.class,"lift");
     Lift.setDirection(DcMotorSimple.Direction.REVERSE);
     Lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
