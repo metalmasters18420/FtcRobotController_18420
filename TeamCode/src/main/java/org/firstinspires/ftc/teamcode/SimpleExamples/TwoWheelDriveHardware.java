@@ -5,15 +5,14 @@ import static org.firstinspires.ftc.teamcode.SimpleExamples.TwoWheelDriveConstan
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+import java.util.List;
 
 public class TwoWheelDriveHardware {
     //Note that there is a class called "TwoWheelDriveConstants that contain some values that are imported here
@@ -21,12 +20,14 @@ public class TwoWheelDriveHardware {
 
     /* Declare OpMode members. */
     // For getting access to OpMode functionality.
-    Telemetry telemetry = null;
-    HardwareMap hardwareMap = null;
+    final Telemetry telemetry;
+    final HardwareMap hardwareMap;
 
     // Define Motor and Servo objects  (Make them private so they can't be accessed externally)
-    private DcMotor leftMotor = null;
-    private DcMotor rightMotor = null;
+    private final DcMotor leftMotor;
+    private final DcMotor rightMotor;
+
+    List<LynxModule> allHubs;
 
     // Define a constructor that allows objects common in OpMode to be used in this class.
     // OpMode have telemetry and hardwareMap built in, but other classes don't, so to have access to them
@@ -35,16 +36,18 @@ public class TwoWheelDriveHardware {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
 
+        allHubs = hardwareMap.getAll(LynxModule.class);
+        leftMotor = hardwareMap.get(DcMotor.class, "left");
+        rightMotor = hardwareMap.get(DcMotor.class, "right");
     }
 
     public void init()    {
-        // Define and Initialize Motors (note: need to use reference to actual OpMode).
-        leftMotor = hardwareMap.get(DcMotor.class, "left");
-        rightMotor = hardwareMap.get(DcMotor.class, "right");
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
+        for (LynxModule hub : allHubs) {
+            hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
+        }
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
 

@@ -6,9 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 //The thing to notice in this OpMode is how short it is.  Most of the logic is happening in the hardware class that is stored
 //in the variable "robot".  Note how we just construct a robot object using the Hardware Class, pass it some variables from the opmode
@@ -23,11 +21,12 @@ import com.qualcomm.robotcore.util.Range;
 public class TwoWheelDriveUsingHardwareClass extends OpMode
 {
     ElapsedTime clock = new ElapsedTime();
-    TwoWheelDriveHardware robot = new TwoWheelDriveHardware(telemetry, hardwareMap);
+    TwoWheelDriveHardware robot;//new TwoWheelDriveHardware(telemetry, hardwareMap);
 
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        robot = new TwoWheelDriveHardware(telemetry,hardwareMap);
         robot.init();
         telemetry.addData("Status", "Initialized");
     }
