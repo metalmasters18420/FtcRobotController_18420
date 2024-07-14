@@ -11,6 +11,10 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+/**
+ * This opmode is a simple test of the direction of the wheels for a 4 motor robot.
+ */
+
 @TeleOp(name="Wheel Test", group="Simple Examples")
 //@Disabled
 public class WheelTest extends OpMode
@@ -50,16 +54,30 @@ public class WheelTest extends OpMode
 
     @Override
     public void loop() {
-        // Setup a variable for each drive wheel to save power level for telemetry
 
-
-        // Send calculated power to wheels
-        leftFront.setPower(-gamepad1.left_stick_y);
-        leftBack.setPower(gamepad1.left_stick_x);
-        rightFront.setPower(-gamepad1.right_stick_y);
-        rightBack.setPower(gamepad1.right_stick_x);
-
-
+        if (gamepad1.a){
+            leftBack.setPower(1);
+        }
+        else if (gamepad1.b){
+            rightBack.setPower(1);
+        }
+        else if (gamepad1.x){
+            rightFront.setPower(1);
+        }
+        else if (gamepad1.y){
+            leftFront.setPower(1);
+        }
+        else {
+            leftFront.setPower(0);
+            leftBack.setPower(0);
+            rightFront.setPower(0);
+            rightBack.setPower(0);
+        }
+        telemetry.addLine("Turn the controller 45 deg CCW.");
+        telemetry.addLine("The buttons will now resemble the orientation");
+        telemetry.addLine("of the motors if the robot faces away from you");
+        telemetry.addLine("Y (Front Left) (Front Right) X");
+        telemetry.addLine("A (Back Left)  (Back  Right) B");
     }
 
     /*

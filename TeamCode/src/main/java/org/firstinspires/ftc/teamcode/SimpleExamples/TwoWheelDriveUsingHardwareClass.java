@@ -27,7 +27,6 @@ public class TwoWheelDriveUsingHardwareClass extends OpMode
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot = new TwoWheelDriveHardware(telemetry,hardwareMap);
-        robot.init();
         telemetry.addData("Status", "Initialized");
     }
 
