@@ -34,8 +34,8 @@ public class hwRobot
 
         LFDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         LBDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        RFDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        RBDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        RFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        RBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 
         LFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
