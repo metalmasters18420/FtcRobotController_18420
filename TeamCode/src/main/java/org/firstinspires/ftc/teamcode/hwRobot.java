@@ -19,6 +19,7 @@ public class hwRobot
     public DcMotor Intake = null;
     public Servo claw = null;
     public Servo wrist = null;
+    public Servo arm = null;
 
     HardwareMap hm = null;
 
@@ -73,7 +74,10 @@ public class hwRobot
 
         claw = hm.get(Servo.class, "Claw");
         wrist = hm.get(Servo.class,"Wrist");
+        arm = hm.get(Servo.class,"Arm");
 
         claw.setPosition(0);
+        wrist.setPosition(0);
+        arm.setPosition(0);
     }
 }
