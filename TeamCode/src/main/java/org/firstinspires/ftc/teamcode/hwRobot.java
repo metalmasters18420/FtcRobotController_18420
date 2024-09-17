@@ -53,18 +53,23 @@ public class hwRobot
 
         LExtend = hm.get(DcMotor.class, "LE");
         RExtend = hm.get(DcMotor.class, "RE");
+        Intake = hm.get(DcMotor.class, "IN");
 
         LExtend.setDirection(DcMotorSimple.Direction.FORWARD);
         RExtend.setDirection(DcMotorSimple.Direction.FORWARD);
+        Intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
         LExtend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RExtend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         LExtend.setPower(0);
         RExtend.setPower(0);
+        Intake.setPower(0);
 
         LExtend.setTargetPosition(0);
         RExtend.setTargetPosition(0);
+        Intake.setTargetPosition(0);
 
         claw = hm.get(Servo.class, "Claw");
         wrist = hm.get(Servo.class,"Wrist");
