@@ -72,6 +72,8 @@ public class hwRobot
         //RExtend.setTargetPosition(0);
         Intake.setTargetPosition(0);
 
+        arm.setDirection(Servo.Direction.REVERSE);
+
         claw = hm.get(Servo.class, "Claw");
         wrist = hm.get(Servo.class,"Wrist");
         arm = hm.get(Servo.class,"Arm");
