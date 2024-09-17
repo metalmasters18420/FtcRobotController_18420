@@ -44,6 +44,11 @@ public class DriveControl extends  OpMode {
         }else{
             hw.wrist.setPosition(0);
         }
+        if (gamepad2.x){
+            hw.arm.setPosition(0.7);
+        }else{
+            hw.arm.setPosition(0);
+        }
         //THIS IS A TEST OF BRENNANS POWER :)
 
     }
