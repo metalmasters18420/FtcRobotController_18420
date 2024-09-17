@@ -49,7 +49,24 @@ public class DriveControl extends  OpMode {
         }else{
             hw.arm.setPosition(0);
         }
-        //THIS IS A TEST OF BRENNANS POWER :)
+
+        double Drive = gamepad1.left_stick_y;
+        double Turn = gamepad1.right_stick_x;
+        double Strafe = gamepad1.left_stick_x * 1.1;
+
+        double Denom = Math.max(Math.abs(Drive) + Math.abs(Strafe) + Math.abs(Turn), 1);
+
+        double LFP = (Drive + Strafe + Turn) / Denom;
+        double LBP = (Drive - Strafe + Turn) / Denom;
+        double RFP = (Drive - Strafe - Turn) / Denom;
+        double RBP = (Drive + Strafe - Turn) / Denom;
+
+            hw.LFDrive.setPower(LFP);
+            hw.LBDrive.setPower(LBP);
+            hw.RFDrive.setPower(RFP);
+            hw.RBDrive.setPower(RBP);
+
+
 
     }
 }
