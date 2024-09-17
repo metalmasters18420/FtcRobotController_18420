@@ -39,7 +39,8 @@ public class DriveControl extends  OpMode {
         lastMovement = currMovement;
         currMovement = gamepad2.a;
         if (currMovement && !lastMovement)
-            if (gamepad2.a){
+            downPos = !downPos;
+            if (downPos){
              hw.claw.setPosition(0.40);
             }
             else{
