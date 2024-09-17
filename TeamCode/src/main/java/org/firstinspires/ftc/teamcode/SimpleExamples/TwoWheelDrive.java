@@ -20,6 +20,8 @@ public class TwoWheelDrive extends OpMode
     private ElapsedTime clock = new ElapsedTime();
     private DcMotor leftMotor = null;
     private DcMotor rightMotor = null;
+    public static double MAX_SPEED = 1;
+    public static double SLOW_MODE_SPEED = 0.3;
 
     @Override
     public void init() {
@@ -55,14 +57,21 @@ public class TwoWheelDrive extends OpMode
         // - This uses basic math to combine motions and is easier to drive straight.
         double drive = -gamepad1.left_stick_y;
         double turn  =  gamepad1.right_stick_x;
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+
+        //calculate speeds
+        double SPEED_CAP = MAX_SPEED;
+        if (gamepad1.right_bumper) { // slow mode button for fine driving.
+            SPEED_CAP = SLOW_MODE_SPEED;
+        }
+        leftPower = Range.clip(drive + turn, -SPEED_CAP, SPEED_CAP);
+        rightPower = Range.clip(drive - turn, -SPEED_CAP, SPEED_CAP);
 
         // Send calculated power to wheels
         leftMotor.setPower(leftPower);
         rightMotor.setPower(rightPower);
 
         // Show the elapsed game time and wheel power.
+        telemetry.addData("SLOW_MODE", gamepad1.right_bumper);
         telemetry.addData("Status", "Run Time: " + clock.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
     }
