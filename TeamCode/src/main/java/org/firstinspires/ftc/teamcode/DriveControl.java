@@ -62,27 +62,19 @@ public class DriveControl extends  OpMode {
         double Strafe = gamepad1.left_stick_x * 1.1;
 
         double Denom = Math.max(Math.abs(Drive) + Math.abs(Strafe) + Math.abs(Turn), 1);
-
+        if (gamepad1.right_bumper)
+        {
+            Denom = Denom * 4;
+        }
         double LFP = (Drive + Strafe + Turn) / Denom;
         double LBP = (Drive - Strafe + Turn) / Denom;
         double RFP = (Drive - Strafe - Turn) / Denom;
         double RBP = (Drive + Strafe - Turn) / Denom;
 
-            double DrivePower = {
                     hw.LFDrive.setPower(LFP);
                     hw.LBDrive.setPower(LBP);
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
-            }
-
-            double SLOW = DrivePower * .25;
-        if (gamepad1.right_bumper) {
-            DrivePower = SLOW;
-        }else {
-            DrivePower = DrivePower;
-        }
-
-
 
     }
 }
