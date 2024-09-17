@@ -33,12 +33,18 @@ public class DriveControl extends  OpMode {
 
     @Override
     public void loop() {
-        if (gamepad2.a){
-            hw.claw.setPosition(0.40);
-        }
-        else{
-            hw.claw.setPosition(0);
-        }
+        boolean lastMovement = false, currMovement = false;
+        boolean downPos = true;
+
+        lastMovement = currMovement;
+        currMovement = gamepad2.a;
+        if (currMovement && !lastMovement)
+            if (gamepad2.a){
+             hw.claw.setPosition(0.40);
+            }
+            else{
+                hw.claw.setPosition(0);
+         }
         if (gamepad2.b){
             hw.wrist.setPosition(0.2);
         }else{
