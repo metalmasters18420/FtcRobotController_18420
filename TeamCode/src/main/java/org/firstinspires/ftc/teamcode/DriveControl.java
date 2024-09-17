@@ -57,7 +57,7 @@ public class DriveControl extends  OpMode {
             hw.arm.setPosition(0);
         }
 
-        double Drive = gamepad1.left_stick_y;
+        double Drive = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
         double Strafe = gamepad1.left_stick_x * 1.1;
 
