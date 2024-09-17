@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
  * OpMode showing how to detect color and activate a servo based on a measurement and turn on the BlinkinLED Light
  */
 
-@TeleOp(name = "Detecting Color", group = "Simple Examples")
+@TeleOp(name = "Detecting Color Simple", group = "Simple Examples")
 @Disabled
 public class DetectingColorSimple extends OpMode {
   private ElapsedTime runtime = new ElapsedTime();

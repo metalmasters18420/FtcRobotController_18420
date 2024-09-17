@@ -1,0 +1,74 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+public class hwRobot
+{
+    public DcMotor LFDrive = null;
+    public DcMotor LBDrive = null;
+    public DcMotor RBDrive = null;
+    public DcMotor RFDrive = null;
+
+    public DcMotor LExtend = null;
+    public DcMotor RExtend = null;
+
+    public DcMotor Intake = null;
+    public Servo claw = null;
+    public Servo wrist = null;
+
+    HardwareMap hm = null;
+
+    public hwRobot () {}
+    public void init (HardwareMap hmap) {
+        hm = hmap;
+
+        LFDrive = hm.get(DcMotor.class, "LF");
+        LBDrive = hm.get(DcMotor.class, "LB");
+        RFDrive = hm.get(DcMotor.class, "RF");
+        RBDrive = hm.get(DcMotor.class, "RB");
+
+        LFDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        LBDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        RFDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        RBDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        LFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        LFDrive.setPower(0);
+        LBDrive.setPower(0);
+        RFDrive.setPower(0);
+        RBDrive.setPower(0);
+
+        LFDrive.setTargetPosition(0);
+        LBDrive.setTargetPosition(0);
+        RFDrive.setTargetPosition(0);
+        RBDrive.setTargetPosition(0);
+
+        LExtend = hm.get(DcMotor.class, "LE");
+        RExtend = hm.get(DcMotor.class, "RE");
+
+        LExtend.setDirection(DcMotorSimple.Direction.FORWARD);
+        RExtend.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        LExtend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RExtend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        LExtend.setPower(0);
+        RExtend.setPower(0);
+
+        LExtend.setTargetPosition(0);
+        RExtend.setTargetPosition(0);
+
+        claw = hm.get(Servo.class, "Claw");
+        wrist = hm.get(Servo.class,"Wrist");
+
+        claw.setPosition(0);
+    }
+}
