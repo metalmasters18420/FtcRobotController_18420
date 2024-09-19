@@ -73,23 +73,23 @@ public class hwRobot
         }
 
 }
-    public class HExtend {
-        private Servo LH;
-        private Servo RH;
+    //public class HExtend {
+       // private Servo LH;
+       // private Servo RH;
 
-        public HExtend(Servo lh, Servo rh) {
-            this.LH = lh;
-            this.RH = rh;
-        }
+       // public HExtend(Servo lh, Servo rh) {
+           // this.LH = lh;
+           // this.RH = rh;
 
-        public void Ext() {
-            LH.setPosition(2);
-            RH.setPosition(2);
-        }
 
-        public void Ret() {
-            LH.setPosition(0);
-            RH.setPosition(0);
-        }
-    }
+       // public void Ext() {
+           // LH.setPosition(2);
+           // RH.setPosition(2);
+
+
+        //public void Ret() {
+            //LH.setPosition(0);
+            //RH.setPosition(0);
+
+
 
