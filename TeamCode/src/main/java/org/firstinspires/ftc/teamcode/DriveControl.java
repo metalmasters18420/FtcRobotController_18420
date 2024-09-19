@@ -78,18 +78,7 @@ public class DriveControl extends  OpMode {
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
 
-        if (gamepad2.dpad_up){
-            hw.Intake.setPower(1);
-        }else{
-            hw.Intake.setPower(0);
-        }
-
-        if (gamepad2.dpad_down){
-            hw.Intake.setDirection(DcMotorSimple.Direction.REVERSE);
-            hw.Intake.setPower(1);
-        }else{
-            hw.Intake.setPower(0);
-        }
+        hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
 
     }
 }
