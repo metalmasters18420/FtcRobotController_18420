@@ -13,9 +13,6 @@ public class hwRobot
     public DcMotor RBDrive = null;
     public DcMotor RFDrive = null;
 
-    public DcMotor LExtend = null;
-    public DcMotor RExtend = null;
-
     public DcMotor Intake = null;
     public Servo claw = null;
     public Servo wrist = null;
@@ -52,24 +49,14 @@ public class hwRobot
         RFDrive.setTargetPosition(0);
         RBDrive.setTargetPosition(0);
 
-        //LExtend = hm.get(DcMotor.class, "LE");
-        //RExtend = hm.get(DcMotor.class, "RE");
         Intake = hm.get(DcMotor.class, "IN");
 
-        //LExtend.setDirection(DcMotorSimple.Direction.FORWARD);
-        //RExtend.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        //LExtend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //RExtend.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //LExtend.setPower(0);
-        //RExtend.setPower(0);
         Intake.setPower(0);
 
-        //LExtend.setTargetPosition(0);
-        //RExtend.setTargetPosition(0);
         Intake.setTargetPosition(0);
 
         claw = hm.get(Servo.class, "Claw");
@@ -81,5 +68,28 @@ public class hwRobot
         claw.setPosition(0);
         wrist.setPosition(0);
         arm.setPosition(0);
-    }
+
+
+        }
+
 }
+    public class HExtend {
+        private Servo LH;
+        private Servo RH;
+
+        public HExtend(Servo lh, Servo rh) {
+            this.LH = lh;
+            this.RH = rh;
+        }
+
+        public void Ext() {
+            LH.setPosition(2);
+            RH.setPosition(2);
+        }
+
+        public void Ret() {
+            LH.setPosition(0);
+            RH.setPosition(0);
+        }
+    }
+
