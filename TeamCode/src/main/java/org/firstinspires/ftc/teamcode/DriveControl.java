@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -18,9 +19,27 @@ import org.firstinspires.ftc.teamcode.SimpleExamples.HorizExten;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
+    private static final double GRAB_FROM_WALL_POSITION = .75;
+    private static final double ARM_RESTING_POSITION = 0;
+    private static final double HOLDING_SAMPLE = .40;
+    private static final double OPEN_CLAW = 0;
+    private static final double WALL_ROTATION = .2;
+    private static final double INTAKE_POSITION = 0;
     hwRobot hw = new hwRobot();
 
     private ElapsedTime runtime = new ElapsedTime();
+
+    Boolean x2Current = false;
+    Boolean x2Last = false;
+    Boolean x2Toggle = false;
+
+    Boolean a2Current = false;
+    Boolean a2Last = false;
+    Boolean a2Toggle = false;
+
+    Boolean b2Current = false;
+    Boolean b2Last = false;
+    Boolean b2Toggle = false;
 
     @Override
     public void init() {
@@ -35,29 +54,50 @@ public class DriveControl extends  OpMode {
 
     @Override
     public void loop() {
-        boolean lastMovement = false, currMovement = false;
-        boolean downPos = true;
+        x2Current = gamepad2.x;
 
-        lastMovement = currMovement;
-        currMovement = gamepad2.a;
-        if (currMovement && !lastMovement)
-            downPos = !downPos;
-            if (downPos){
-             hw.claw.setPosition(0.40);
+            if (x2Current && !x2Last){
+                x2Toggle = !x2Toggle;
+            }
+
+            if (x2Toggle){
+                hw.arm.setPosition(GRAB_FROM_WALL_POSITION);
+            }
+
+            else{
+                hw.arm.setPosition(ARM_RESTING_POSITION);
+            }
+
+        x2Last = x2Current;
+
+        a2Current = gamepad2.a;
+
+            if (a2Current && !a2Last) {
+                a2Toggle = !a2Toggle;
+            }
+            if (a2Toggle){
+                hw.claw.setPosition(HOLDING_SAMPLE);
+            }
+
+            else{
+                hw.claw.setPosition(OPEN_CLAW);
+            }
+
+        a2Last = a2Current;
+
+        b2Current = gamepad2.b;
+
+            if (b2Current && !b2Last){
+                b2Toggle = !b2Toggle;
+            }
+            if (b2Toggle){
+                hw.wrist.setPosition(WALL_ROTATION);
             }
             else{
-                hw.claw.setPosition(0);
-         }
-        if (gamepad2.b){
-            hw.wrist.setPosition(0.2);
-        }else{
-            hw.wrist.setPosition(0);
-        }
-        if (gamepad2.x){
-            hw.arm.setPosition(0.8);
-        }else{
-            hw.arm.setPosition(0);
-        }
+                hw.wrist.setPosition(INTAKE_POSITION);
+            }
+
+        b2Last = b2Current;
 
         double Drive = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
