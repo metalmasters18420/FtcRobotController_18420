@@ -24,7 +24,7 @@ public class DriveControl extends  OpMode {
     private static final double HOLDING_SAMPLE = .40;
     private static final double OPEN_CLAW = 0;
     private static final double WALL_ROTATION = .2;
-    private static final double INTAKE_POSITION = 0;
+    private static final double INTAKE_POSITION = .1;
     hwRobot hw = new hwRobot();
 
     private ElapsedTime runtime = new ElapsedTime();
