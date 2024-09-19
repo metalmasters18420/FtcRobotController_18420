@@ -54,7 +54,7 @@ public class DriveControl extends  OpMode {
             hw.wrist.setPosition(0);
         }
         if (gamepad2.x){
-            hw.arm.setPosition(0.7);
+            hw.arm.setPosition(0.8);
         }else{
             hw.arm.setPosition(0);
         }

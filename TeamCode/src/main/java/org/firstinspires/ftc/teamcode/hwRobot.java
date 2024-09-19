@@ -50,13 +50,9 @@ public class hwRobot
         RBDrive.setTargetPosition(0);
 
         Intake = hm.get(DcMotor.class, "IN");
-
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
-
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         Intake.setPower(0);
-
         Intake.setTargetPosition(0);
 
         claw = hm.get(Servo.class, "Claw");
