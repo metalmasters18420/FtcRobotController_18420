@@ -12,6 +12,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.SimpleExamples.HorizExten;
+
 @Config
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
@@ -75,6 +77,19 @@ public class DriveControl extends  OpMode {
                     hw.LBDrive.setPower(LBP);
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
+
+        if (gamepad2.right_trigger){
+            hw.Intake.setPower(1);
+        }else{
+            hw.Intake.setPower(0);
+        }
+
+        if (gamepad2.left_trigger){
+            hw.Intake.setDirection(DcMotorSimple.Direction.REVERSE);
+            hw.Intake.setPower(1);
+        }else{
+            hw.Intake.setPower(0);
+        }
 
     }
 }
