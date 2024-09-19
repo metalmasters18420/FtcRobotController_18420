@@ -80,16 +80,16 @@ public class hwRobot
        // public HExtend(Servo lh, Servo rh) {
            // this.LH = lh;
            // this.RH = rh;
-        }
+
 
        // public void Ext() {
            // LH.setPosition(2);
            // RH.setPosition(2);
-        }
+
 
         //public void Ret() {
             //LH.setPosition(0);
             //RH.setPosition(0);
-        }
-    }
+
+
 
