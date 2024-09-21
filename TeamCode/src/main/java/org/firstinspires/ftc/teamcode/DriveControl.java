@@ -25,7 +25,7 @@ public class DriveControl extends  OpMode {
     private static final double OPEN_CLAW = 0;
     private static final double WALL_ROTATION = .1;
     private static final double INTAKE_POSITION = .0;
-    //hello
+
     hwRobot hw = new hwRobot();
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -120,6 +120,8 @@ public class DriveControl extends  OpMode {
                     hw.RBDrive.setPower(RBP);
 
         hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
+
+        hw.
 
     }
 }
