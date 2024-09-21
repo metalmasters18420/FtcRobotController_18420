@@ -81,6 +81,9 @@ public class hwRobot
         claw.setPosition(0);
         wrist.setPosition(0);
         arm.setPosition(0);
+
+        RHoriz.setPosition(0);
+        LHoriz.setPosition(0);
         }
 
         public void FliptoIntake(){
