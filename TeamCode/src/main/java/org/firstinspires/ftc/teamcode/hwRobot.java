@@ -91,6 +91,11 @@ public class hwRobot
         rightSlide.setTargetPosition(0);
         leftSlide.setTargetPosition(0);
 
+        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftSlide.setPower(1);
+
+
         Intake = hm.get(DcMotor.class, "IN");
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
