@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -11,6 +12,8 @@ public class hwRobot
     public DcMotor LBDrive = null;
     public DcMotor RBDrive = null;
     public DcMotor RFDrive = null;
+    public DcMotor rightSlide = null;
+    public DcMotor leftSlide = null;
 
     public DcMotor Intake = null;
     public Servo LIntake = null;
@@ -19,6 +22,8 @@ public class hwRobot
     public Servo claw = null;
     public Servo wrist = null;
     public Servo arm = null;
+    public Servo extensionRight = null;
+    public Servo extensionLeft= null;
 
     public Servo LHoriz = null;
     public Servo RHoriz = null;
@@ -44,20 +49,32 @@ public class hwRobot
         LHoriz = hm.get(Servo.class, "LH");
         RHoriz = hm.get(Servo.class, "RH");
 
+        rightSlide = hm.get(DcMotor.class, "rightSlide");
+        leftSlide = hm.get(DcMotor.class, "leftSlide");
+
         LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         RFDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         RBDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        rightSlide.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
 
         LFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         RBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        rightSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftSlide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         LFDrive.setPower(0);
         LBDrive.setPower(0);
         RFDrive.setPower(0);
         RBDrive.setPower(0);
+
+        rightSlide.setPower(0);
+        leftSlide.setPower(0);
 
         LFDrive.setTargetPosition(0);
         LBDrive.setTargetPosition(0);
@@ -71,16 +88,33 @@ public class hwRobot
 
         flip.FliptoIntake();
 
+        rightSlide.setTargetPosition(0);
+        leftSlide.setTargetPosition(0);
+
+        Intake = hm.get(DcMotor.class, "IN");
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Intake.setPower(0);
         Intake.setTargetPosition(0);
+
+        claw = hm.get(Servo.class, "Claw");
+        wrist = hm.get(Servo.class,"Wrist");
+        arm = hm.get(Servo.class,"Arm");
+        extensionLeft = hm.get(Servo.class, "extensionLeft");
+        extensionRight = hm.get(Servo.class, "extensionRight");
 
         arm.setDirection(Servo.Direction.REVERSE);
 
         claw.setPosition(0);
         wrist.setPosition(0);
         arm.setPosition(0);
+        extensionRight.setPosition(0);
+        extensionLeft.setPosition(0);
+
+        LIntake.setPosition(0);
+        RIntake.setPosition(0);
+
+
 
         RHoriz.setPosition(0);
         LHoriz.setPosition(0);
@@ -95,6 +129,9 @@ public class hwRobot
 
 }
 
+        //public void Ret() {
+            //LH.setPosition(0);
+            //RH.setPosition(0);
 
 
 
