@@ -22,13 +22,12 @@ public class hwRobot
     public Servo claw = null;
     public Servo wrist = null;
     public Servo arm = null;
-    public Servo extensionRight = null;
-    public Servo extensionLeft= null;
 
     public Servo LHoriz = null;
     public Servo RHoriz = null;
 
     public IntakeFlip flip = null;
+    public HorizExten HorExt = null;
 
     HardwareMap hm = null;
 
@@ -48,7 +47,6 @@ public class hwRobot
         arm = hm.get(Servo.class,"Arm");
         LHoriz = hm.get(Servo.class, "LH");
         RHoriz = hm.get(Servo.class, "RH");
-
         rightSlide = hm.get(DcMotor.class, "rightSlide");
         leftSlide = hm.get(DcMotor.class, "leftSlide");
 
@@ -81,15 +79,18 @@ public class hwRobot
         RFDrive.setTargetPosition(0);
         RBDrive.setTargetPosition(0);
 
+        rightSlide.setTargetPosition(0);
+        leftSlide.setTargetPosition(0);
+
         flip = new IntakeFlip(LIntake, RIntake);
 
         LIntake.setPosition(0);
         RIntake.setPosition(0);
 
-        flip.FliptoIntake();
+        HorExt = new HorizExten(LHoriz, RHoriz);
 
-        rightSlide.setTargetPosition(0);
-        leftSlide.setTargetPosition(0);
+        LHoriz.setPosition(0);
+        RHoriz.setPosition(0);
 
         leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -102,24 +103,14 @@ public class hwRobot
         Intake.setPower(0);
         Intake.setTargetPosition(0);
 
-        claw = hm.get(Servo.class, "Claw");
-        wrist = hm.get(Servo.class,"Wrist");
-        arm = hm.get(Servo.class,"Arm");
-        extensionLeft = hm.get(Servo.class, "extensionLeft");
-        extensionRight = hm.get(Servo.class, "extensionRight");
-
         arm.setDirection(Servo.Direction.REVERSE);
 
         claw.setPosition(0);
         wrist.setPosition(0);
         arm.setPosition(0);
-        extensionRight.setPosition(0);
-        extensionLeft.setPosition(0);
 
         LIntake.setPosition(0);
         RIntake.setPosition(0);
-
-
 
         RHoriz.setPosition(0);
         LHoriz.setPosition(0);
@@ -132,11 +123,11 @@ public class hwRobot
             flip.FliptoClaw();
         }
 
+        public void HExtend(){
+            HorExt.HExtend();
+        }
+        public void HRetract(){
+            HorExt.HRetract();
+        }
+
 }
-
-        //public void Ret() {
-            //LH.setPosition(0);
-            //RH.setPosition(0);
-
-
-
