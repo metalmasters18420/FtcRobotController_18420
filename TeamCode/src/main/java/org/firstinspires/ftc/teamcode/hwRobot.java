@@ -115,6 +115,9 @@ public class hwRobot
         RIntake.setPosition(0);
 
 
+
+        RHoriz.setPosition(0);
+        LHoriz.setPosition(0);
         }
 
         public void FliptoIntake(){
