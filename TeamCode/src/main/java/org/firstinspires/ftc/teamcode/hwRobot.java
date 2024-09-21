@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -21,6 +20,7 @@ public class hwRobot
     public Servo wrist = null;
     public Servo arm = null;
 
+    public IntakeFlip flip = null;
 
     HardwareMap hm = null;
 
@@ -32,6 +32,12 @@ public class hwRobot
         LBDrive = hm.get(DcMotor.class, "LB");
         RFDrive = hm.get(DcMotor.class, "RF");
         RBDrive = hm.get(DcMotor.class, "RB");
+        LIntake = hm.get(Servo.class,"LFlip");
+        RIntake = hm.get(Servo.class, "RFlip");
+        Intake = hm.get(DcMotor.class, "IN");
+        claw = hm.get(Servo.class, "Claw");
+        wrist = hm.get(Servo.class,"Wrist");
+        arm = hm.get(Servo.class,"Arm");
 
         LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -53,46 +59,34 @@ public class hwRobot
         RFDrive.setTargetPosition(0);
         RBDrive.setTargetPosition(0);
 
-        Intake = hm.get(DcMotor.class, "IN");
+        flip = new IntakeFlip(LIntake, RIntake);
+
+        LIntake.setPosition(0);
+        RIntake.setPosition(0);
+
+        flip.FliptoIntake();
+
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Intake.setPower(0);
         Intake.setTargetPosition(0);
-
-        claw = hm.get(Servo.class, "Claw");
-        wrist = hm.get(Servo.class,"Wrist");
-        arm = hm.get(Servo.class,"Arm");
 
         arm.setDirection(Servo.Direction.REVERSE);
 
         claw.setPosition(0);
         wrist.setPosition(0);
         arm.setPosition(0);
+        }
 
-        LIntake.setPosition(0);
-        RIntake.setPosition(0);
-
-
+        public void FliptoIntake(){
+            flip.FliptoIntake();
+        }
+        public void FliptoClaw(){
+            flip.FliptoClaw();
         }
 
 }
-    //public class HExtend {
-       // private Servo LH;
-       // private Servo RH;
 
-       // public HExtend(Servo lh, Servo rh) {
-           // this.LH = lh;
-           // this.RH = rh;
-
-
-       // public void Ext() {
-           // LH.setPosition(2);
-           // RH.setPosition(2);
-
-
-        //public void Ret() {
-            //LH.setPosition(0);
-            //RH.setPosition(0);
 
 
 
