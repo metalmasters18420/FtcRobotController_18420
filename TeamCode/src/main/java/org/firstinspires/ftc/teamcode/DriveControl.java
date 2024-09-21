@@ -172,7 +172,5 @@ public class DriveControl extends  OpMode {
 
         hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
 
-
-
     }
 }
