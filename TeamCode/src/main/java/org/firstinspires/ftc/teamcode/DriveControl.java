@@ -11,18 +11,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
-    public static final double GRAB_FROM_WALL_POSITION = .75;
-    public static final double ARM_RESTING_POSITION = 0;
-    public static final double HOLDING_SAMPLE = .40;
-    public static final double OPEN_CLAW = 0;
-    public static final double WALL_ROTATION = .1;
-    public static final double INTAKE_ROTATION = .0;
+    public static final double ARM_WALL = .75;
+    public static final double ARM_INTAKE = 0;
+    public static final double CLOSED = .40;
+    public static final double OPEN = 0;
+    public static final double WRIST_WALL = .1;
+    public static final double WRIST_INTAKE = .0;
 
     //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
-    private static final double EXTENDEDPOS = 0.5;
-    private static final double RETRACTEDPOS = 0;
     private static int LOWPOS = 0;
-    private static int MEDIUMPOS = 300;
+    private static int MEDPOS = 300;
     private static int HIGHPOS = 600;
     private static int target = LOWPOS;
     hwRobot hw = new hwRobot();
@@ -69,10 +67,10 @@ public class DriveControl extends  OpMode {
                 x2Toggle = !x2Toggle;
             }
             if (x2Toggle){
-                hw.arm.setPosition(GRAB_FROM_WALL_POSITION);
+                hw.arm.setPosition(ARM_WALL);
             }
             else{
-                hw.arm.setPosition(ARM_RESTING_POSITION);
+                hw.arm.setPosition(ARM_INTAKE);
             }
 
         x2Last = x2Current;
@@ -83,10 +81,10 @@ public class DriveControl extends  OpMode {
                 a2Toggle = !a2Toggle;
             }
             if (a2Toggle){
-                hw.claw.setPosition(HOLDING_SAMPLE);
+                hw.claw.setPosition(CLOSED);
             }
             else{
-                hw.claw.setPosition(OPEN_CLAW);
+                hw.claw.setPosition(OPEN);
             }
 
         a2Last = a2Current;
@@ -97,10 +95,10 @@ public class DriveControl extends  OpMode {
                 b2Toggle = !b2Toggle;
             }
             if (b2Toggle){
-                hw.wrist.setPosition(WALL_ROTATION);
+                hw.wrist.setPosition(WRIST_WALL);
             }
             else{
-                hw.wrist.setPosition(INTAKE_ROTATION);
+                hw.wrist.setPosition(WRIST_INTAKE);
             }
 
         b2Last = b2Current;
@@ -136,7 +134,7 @@ public class DriveControl extends  OpMode {
         if (gamepad2.dpad_down){
             target = LOWPOS;
         }else if (gamepad2.dpad_left || gamepad2.dpad_right){
-            target = MEDIUMPOS;
+            target = MEDPOS;
         } else if (gamepad2.dpad_up){
             target = HIGHPOS;
         }
@@ -161,6 +159,5 @@ public class DriveControl extends  OpMode {
                     hw.RBDrive.setPower(RBP);
 
         hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
-
     }
 }
