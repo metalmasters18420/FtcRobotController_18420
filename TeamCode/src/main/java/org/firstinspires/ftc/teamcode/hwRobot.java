@@ -25,6 +25,9 @@ public class hwRobot
     public Servo extensionRight = null;
     public Servo extensionLeft= null;
 
+    public Servo LHoriz = null;
+    public Servo RHoriz = null;
+
     public IntakeFlip flip = null;
 
     HardwareMap hm = null;
@@ -43,6 +46,8 @@ public class hwRobot
         claw = hm.get(Servo.class, "Claw");
         wrist = hm.get(Servo.class,"Wrist");
         arm = hm.get(Servo.class,"Arm");
+        LHoriz = hm.get(Servo.class, "LH");
+        RHoriz = hm.get(Servo.class, "RH");
 
         rightSlide = hm.get(DcMotor.class, "rightSlide");
         leftSlide = hm.get(DcMotor.class, "leftSlide");

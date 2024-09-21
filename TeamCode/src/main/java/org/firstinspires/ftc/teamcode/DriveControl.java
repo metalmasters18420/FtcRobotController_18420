@@ -19,12 +19,13 @@ import org.firstinspires.ftc.teamcode.SimpleExamples.HorizExten;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
-    private static final double GRAB_FROM_WALL_POSITION = .75;
-    private static final double ARM_RESTING_POSITION = 0;
-    private static final double HOLDING_SAMPLE = .40;
-    private static final double OPEN_CLAW = 0;
-    private static final double WALL_ROTATION = .1;
-    private static final double INTAKE_POSITION = .0;
+    public static final double GRAB_FROM_WALL_POSITION = .75;
+    public static final double ARM_RESTING_POSITION = 0;
+    public static final double HOLDING_SAMPLE = .40;
+    public static final double OPEN_CLAW = 0;
+    public static final double WALL_ROTATION = .1;
+    public static final double INTAKE_ROTATION = .0;
+
     //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
     private static final double EXTENDEDPOS = 0.5;
     private static final double RETRACTEDPOS = 0;
@@ -111,7 +112,7 @@ public class DriveControl extends  OpMode {
                 hw.wrist.setPosition(WALL_ROTATION);
             }
             else{
-                hw.wrist.setPosition(INTAKE_POSITION);
+                hw.wrist.setPosition(INTAKE_ROTATION);
             }
 
         b2Last = b2Current;
