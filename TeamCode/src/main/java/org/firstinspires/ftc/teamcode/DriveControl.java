@@ -25,6 +25,7 @@ public class DriveControl extends  OpMode {
     private static final double OPEN_CLAW = 0;
     private static final double WALL_ROTATION = .1;
     private static final double INTAKE_POSITION = .0;
+    //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
     private static final double EXTENDEDPOS = 0.5;
     private static final double RETRACTEDPOS = 0;
 
@@ -47,6 +48,14 @@ public class DriveControl extends  OpMode {
     Boolean b2Current = false;
     Boolean b2Last = false;
     Boolean b2Toggle = false;
+
+    Boolean lb2Current = false;
+    Boolean lb2Last = false;
+    Boolean lb2Toggle = false;
+
+    //Boolean rb2Current = false;
+    //Boolean rb2Last = false;
+    //Boolean rb2Toggle = false;
 
     Boolean c2Current = false;
     Boolean c2Last = false;
@@ -71,11 +80,9 @@ public class DriveControl extends  OpMode {
             if (x2Current && !x2Last){
                 x2Toggle = !x2Toggle;
             }
-
             if (x2Toggle){
                 hw.arm.setPosition(GRAB_FROM_WALL_POSITION);
             }
-
             else{
                 hw.arm.setPosition(ARM_RESTING_POSITION);
             }
@@ -83,14 +90,12 @@ public class DriveControl extends  OpMode {
         x2Last = x2Current;
 
         a2Current = gamepad2.a;
-
             if (a2Current && !a2Last) {
                 a2Toggle = !a2Toggle;
             }
             if (a2Toggle){
                 hw.claw.setPosition(HOLDING_SAMPLE);
             }
-
             else{
                 hw.claw.setPosition(OPEN_CLAW);
             }
@@ -131,6 +136,20 @@ public class DriveControl extends  OpMode {
              }
 
 
+        lb2Current = gamepad2.left_bumper;
+
+            if (lb2Current && !lb2Last){
+                lb2Toggle = !lb2Toggle;
+            }
+            if (lb2Toggle){
+                hw.FliptoClaw();
+            }
+            else{
+                hw.FliptoIntake();
+            }
+
+        lb2Last = lb2Current;
+
         double Drive = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
         double Strafe = gamepad1.left_stick_x * 1.1;
@@ -151,8 +170,6 @@ public class DriveControl extends  OpMode {
                     hw.RBDrive.setPower(RBP);
 
         hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
-
-        hw.
 
     }
 }

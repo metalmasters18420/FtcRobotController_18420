@@ -25,6 +25,7 @@ public class hwRobot
     public Servo extensionRight = null;
     public Servo extensionLeft= null;
 
+    public IntakeFlip flip = null;
 
     HardwareMap hm = null;
 
@@ -36,6 +37,12 @@ public class hwRobot
         LBDrive = hm.get(DcMotor.class, "LB");
         RFDrive = hm.get(DcMotor.class, "RF");
         RBDrive = hm.get(DcMotor.class, "RB");
+        LIntake = hm.get(Servo.class,"LFlip");
+        RIntake = hm.get(Servo.class, "RFlip");
+        Intake = hm.get(DcMotor.class, "IN");
+        claw = hm.get(Servo.class, "Claw");
+        wrist = hm.get(Servo.class,"Wrist");
+        arm = hm.get(Servo.class,"Arm");
 
         rightSlide = hm.get(DcMotor.class, "rightSlide");
         leftSlide = hm.get(DcMotor.class, "leftSlide");
@@ -69,6 +76,13 @@ public class hwRobot
         RFDrive.setTargetPosition(0);
         RBDrive.setTargetPosition(0);
 
+        flip = new IntakeFlip(LIntake, RIntake);
+
+        LIntake.setPosition(0);
+        RIntake.setPosition(0);
+
+        flip.FliptoIntake();
+
         rightSlide.setTargetPosition(0);
         leftSlide.setTargetPosition(0);
 
@@ -98,20 +112,14 @@ public class hwRobot
 
         }
 
+        public void FliptoIntake(){
+            flip.FliptoIntake();
+        }
+        public void FliptoClaw(){
+            flip.FliptoClaw();
+        }
+
 }
-    //public class HExtend {
-       // private Servo LH;
-       // private Servo RH;
-
-       // public HExtend(Servo lh, Servo rh) {
-           // this.LH = lh;
-           // this.RH = rh;
-
-
-       // public void Ext() {
-           // LH.setPosition(2);
-           // RH.setPosition(2);
-
 
         //public void Ret() {
             //LH.setPosition(0);
