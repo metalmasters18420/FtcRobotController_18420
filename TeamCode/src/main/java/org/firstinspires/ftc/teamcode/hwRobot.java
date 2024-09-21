@@ -20,6 +20,9 @@ public class hwRobot
     public Servo wrist = null;
     public Servo arm = null;
 
+    public Servo LHoriz = null;
+    public Servo RHoriz = null;
+
     public IntakeFlip flip = null;
 
     HardwareMap hm = null;
@@ -38,6 +41,8 @@ public class hwRobot
         claw = hm.get(Servo.class, "Claw");
         wrist = hm.get(Servo.class,"Wrist");
         arm = hm.get(Servo.class,"Arm");
+        LHoriz = hm.get(Servo.class, "LH");
+        RHoriz = hm.get(Servo.class, "RH");
 
         LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
