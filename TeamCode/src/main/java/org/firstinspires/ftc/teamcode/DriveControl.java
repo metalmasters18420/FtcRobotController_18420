@@ -17,8 +17,6 @@ public class DriveControl extends  OpMode {
     public static final double OPEN_CLAW = 0;
     public static final double WALL_ROTATION = .1;
     public static final double INTAKE_ROTATION = .0;
-    public static final double FLIP_INTAKE_POSIION = 0;
-    public static final double FLIP_TRANSFER_POSITION = 1;
 
     //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
 
