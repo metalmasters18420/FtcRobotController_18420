@@ -16,11 +16,15 @@ public class hwRobot
     public DcMotor leftSlide = null;
 
     public DcMotor Intake = null;
+    public Servo LIntake = null;
+    public Servo RIntake = null;
+
     public Servo claw = null;
     public Servo wrist = null;
     public Servo arm = null;
     public Servo extensionRight = null;
     public Servo extensionLeft= null;
+
 
     HardwareMap hm = null;
 
@@ -87,6 +91,9 @@ public class hwRobot
         arm.setPosition(0);
         extensionRight.setPosition(0);
         extensionLeft.setPosition(0);
+
+        LIntake.setPosition(0);
+        RIntake.setPosition(0);
 
 
         }
