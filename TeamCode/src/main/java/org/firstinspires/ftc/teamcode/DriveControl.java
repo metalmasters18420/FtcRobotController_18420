@@ -25,7 +25,13 @@ public class DriveControl extends  OpMode {
     private static final double OPEN_CLAW = 0;
     private static final double WALL_ROTATION = .1;
     private static final double INTAKE_POSITION = .0;
-    //hello
+    private static final double EXTENDEDPOS = 0.5;
+    private static final double RETRACTEDPOS = 0;
+
+    private static int LOWPOS = 0;
+    private static int MEDIUMPOS = 300;
+    private static int HIGHPOS = 600;
+    private static int target = LOWPOS;
     hwRobot hw = new hwRobot();
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -41,6 +47,11 @@ public class DriveControl extends  OpMode {
     Boolean b2Current = false;
     Boolean b2Last = false;
     Boolean b2Toggle = false;
+
+    Boolean c2Current = false;
+    Boolean c2Last = false;
+    Boolean c2Toggle = false;
+
 
     @Override
     public void init() {
@@ -99,6 +110,26 @@ public class DriveControl extends  OpMode {
             }
 
         b2Last = b2Current;
+            c2Current = gamepad2.y;
+                if (c2Current && !c2Last) {
+                    c2Toggle = !c2Toggle;
+                }
+                if (b2Toggle){
+                    hw.extensionLeft.setPosition(EXTENDEDPOS);
+                    hw.extensionRight.setPosition(EXTENDEDPOS);
+                }else{
+                    hw.extensionLeft.setPosition(RETRACTEDPOS);
+                    hw.extensionRight.setPosition(RETRACTEDPOS);
+                }
+         c2Last = c2Current;
+             if (gamepad2.dpad_down)  {
+                 target = LOWPOS;
+             }else if (gamepad2.dpad_left || gamepad2.dpad_right) {
+                 target = MEDIUMPOS;
+             }else if (gamepad2.dpad_up){
+                 target = HIGHPOS;
+             }
+
 
         double Drive = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
