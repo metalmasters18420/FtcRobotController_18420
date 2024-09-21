@@ -40,10 +40,6 @@ public class DriveControl extends  OpMode {
     Boolean lb2Last = false;
     Boolean lb2Toggle = false;
 
-    //Boolean rb2Current = false;
-    //Boolean rb2Last = false;
-    //Boolean rb2Toggle = false;
-
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
