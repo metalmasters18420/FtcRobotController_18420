@@ -46,7 +46,7 @@ public class hwRobot
         arm = hm.get(Servo.class,"Arm");
         LHoriz = hm.get(Servo.class, "LH");
         RHoriz = hm.get(Servo.class, "RH");
-        RVert = hm.get(DcMotor.class, "RV");
+         RVert = hm.get(DcMotor.class, "RV");
         LVert = hm.get(DcMotor.class, "LV");
 
         LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
