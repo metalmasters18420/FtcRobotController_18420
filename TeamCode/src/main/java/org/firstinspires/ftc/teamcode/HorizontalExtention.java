@@ -2,11 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class HorizExten {
+public class HorizontalExtention {
     private Servo leftHoriz;
     private Servo rightHoriz;
 
-    public HorizExten(Servo lh, Servo rh){
+    public HorizontalExtention(Servo lh, Servo rh){
         this.leftHoriz = lh;
         this.rightHoriz = rh;
     }

@@ -19,19 +19,19 @@ import org.firstinspires.ftc.teamcode.SimpleExamples.HorizExten;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
-    public static final double GRAB_FROM_WALL_POSITION = .75;
-    public static final double ARM_RESTING_POSITION = 0;
-    public static final double HOLDING_SAMPLE = .40;
-    public static final double OPEN_CLAW = 0;
-    public static final double WALL_ROTATION = .1;
-    public static final double INTAKE_ROTATION = .0;
+    public static final double ARM_WALL = .75;
+    public static final double ARM_INTAKE = 0;
+    public static final double CLOSED = .40;
+    public static final double OPEN = 0;
+    public static final double WRIST_WALL = .1;
+    public static final double WRIST_INTAKE = .0;
 
     //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
     private static final double EXTENDEDPOS = 0.5;
     private static final double RETRACTEDPOS = 0;
 
     private static int LOWPOS = 0;
-    private static int MEDIUMPOS = 300;
+    private static int MEDPOS = 300;
     private static int HIGHPOS = 600;
     private static int target = LOWPOS;
     hwRobot hw = new hwRobot();
@@ -82,23 +82,24 @@ public class DriveControl extends  OpMode {
                 x2Toggle = !x2Toggle;
             }
             if (x2Toggle){
-                hw.arm.setPosition(GRAB_FROM_WALL_POSITION);
+                hw.arm.setPosition(ARM_WALL);
             }
             else{
-                hw.arm.setPosition(ARM_RESTING_POSITION);
+                hw.arm.setPosition(ARM_INTAKE);
             }
 
         x2Last = x2Current;
 
         a2Current = gamepad2.a;
+
             if (a2Current && !a2Last) {
                 a2Toggle = !a2Toggle;
             }
             if (a2Toggle){
-                hw.claw.setPosition(HOLDING_SAMPLE);
+                hw.claw.setPosition(CLOSED);
             }
             else{
-                hw.claw.setPosition(OPEN_CLAW);
+                hw.claw.setPosition(OPEN);
             }
 
         a2Last = a2Current;
@@ -109,10 +110,10 @@ public class DriveControl extends  OpMode {
                 b2Toggle = !b2Toggle;
             }
             if (b2Toggle){
-                hw.wrist.setPosition(WALL_ROTATION);
+                hw.wrist.setPosition(WRIST_WALL);
             }
             else{
-                hw.wrist.setPosition(INTAKE_ROTATION);
+                hw.wrist.setPosition(WRIST_INTAKE);
             }
 
         b2Last = b2Current;
@@ -136,6 +137,7 @@ public class DriveControl extends  OpMode {
                  target = HIGHPOS;
              }
 
+        y2Last = y2Current;
 
         lb2Current = gamepad2.left_bumper;
 
@@ -150,6 +152,14 @@ public class DriveControl extends  OpMode {
             }
 
         lb2Last = lb2Current;
+
+        if (gamepad2.dpad_down){
+            target = LOWPOS;
+        }else if (gamepad2.dpad_left || gamepad2.dpad_right){
+            target = MEDPOS;
+        } else if (gamepad2.dpad_up){
+            target = HIGHPOS;
+        }
 
         double Drive = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
