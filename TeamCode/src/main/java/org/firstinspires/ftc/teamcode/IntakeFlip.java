@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.DriveControl.FLIP_CLAW;
+import static org.firstinspires.ftc.teamcode.DriveControl.FLIP_INTAKE;
+
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class IntakeFlip {
@@ -13,12 +16,12 @@ public class IntakeFlip {
     }
 
     public void FliptoIntake(){
-        leftFlip.setPosition(0);
-        rightFlip.setPosition(0);
+        leftFlip.setPosition(FLIP_INTAKE); //0
+        rightFlip.setPosition(FLIP_INTAKE); //0
     }
 
     public void FliptoClaw(){
-        leftFlip.setPosition(1);
-        rightFlip.setPosition(1);
+        leftFlip.setPosition(FLIP_CLAW); //1
+        rightFlip.setPosition(FLIP_CLAW); //1
     }
 }

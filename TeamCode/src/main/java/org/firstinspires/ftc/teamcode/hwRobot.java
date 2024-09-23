@@ -122,7 +122,7 @@ public class hwRobot
             flip.FliptoClaw();
         }
 
-        public void HExtend(){
+        public void Hextend(){
             HorExt.HExtend();
         }
         public void HRetract(){

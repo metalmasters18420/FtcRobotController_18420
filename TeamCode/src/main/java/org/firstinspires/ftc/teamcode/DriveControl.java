@@ -11,18 +11,26 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
-    public static final double ARM_WALL = .75;
-    public static final double ARM_INTAKE = 0;
-    public static final double CLOSED = .40;
-    public static final double OPEN = 0;
-    public static final double WRIST_WALL = .1;
-    public static final double WRIST_INTAKE = .0;
+    public static double ARM_WALL = .75;
+    public static double ARM_INTAKE = 0;
+    public static double CLOSED = .40;
+    public static double OPEN = 0;
+    public static double WRIST_WALL = .1;
+    public static double WRIST_INTAKE = .0;
 
     //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
     private static int LOWPOS = 0;
     private static int MEDPOS = 300;
     private static int HIGHPOS = 600;
     private static int target = LOWPOS;
+
+    public static double HORIZ_EXTEND_POS = 0.6;
+    public static double HORIZ_RETRACT_POS = 0.03;
+
+    public static double FLIP_INTAKE = 0;
+    public static double FLIP_CLAW = 1;
+    public static double LOW_BAR = .6;
+
     hwRobot hw = new hwRobot();
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -47,6 +55,10 @@ public class DriveControl extends  OpMode {
     Boolean y2Last = false;
     Boolean y2Toggle = false;
 
+    Boolean rb2Current = false;
+    Boolean rb2Last = false;
+    Boolean rb2Toggle = false;
+
 
     @Override
     public void init() {
@@ -67,10 +79,10 @@ public class DriveControl extends  OpMode {
                 x2Toggle = !x2Toggle;
             }
             if (x2Toggle){
-                hw.arm.setPosition(ARM_WALL);
+                hw.FliptoClaw();
             }
             else{
-                hw.arm.setPosition(ARM_INTAKE);
+                hw.FliptoIntake();
             }
 
         x2Last = x2Current;
@@ -109,10 +121,10 @@ public class DriveControl extends  OpMode {
                 y2Toggle = !y2Toggle;
             }
             if (y2Toggle){
-                hw.HorExt.HExtend();
+                hw.Hextend();
             }
             else{
-                hw.HorExt.HRetract();
+                hw.HRetract();
             }
 
         y2Last = y2Current;
@@ -123,13 +135,27 @@ public class DriveControl extends  OpMode {
                 lb2Toggle = !lb2Toggle;
             }
             if (lb2Toggle){
-                hw.FliptoClaw();
+                hw.arm.setPosition(ARM_WALL);
             }
             else{
-                hw.FliptoIntake();
+                hw.arm.setPosition(ARM_INTAKE);
             }
 
         lb2Last = lb2Current;
+
+//        rb2Current = gamepad2.right_bumper;
+//
+//            if (rb2Current && !rb2Last){
+//                rb2Toggle = !rb2Toggle;
+//            }
+//            if (rb2Toggle){
+//                hw.arm.setPosition(LOW_BAR);
+//            }
+//            else{
+//                hw.arm.setPosition(ARM_INTAKE);
+//            }
+//
+//        rb2Last = rb2Current;
 
         if (gamepad2.dpad_down){
             target = LOWPOS;
