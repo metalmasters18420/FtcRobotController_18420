@@ -11,11 +11,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
-    public static double ARM_WALL = .75;
+    public static double ARM_WALL = .78;
     public static double ARM_INTAKE = 0;
+    public static double ARM_LOW_PRE = .73;
+    public static double ARM_LOW_POST = .95;
     public static double CLOSED = .40;
     public static double OPEN = 0;
-    public static double WRIST_WALL = .1;
+    public static double WRIST_WALL = .15;
     public static double WRIST_INTAKE = .0;
 
     //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
@@ -29,7 +31,6 @@ public class DriveControl extends  OpMode {
 
     public static double FLIP_INTAKE = 0;
     public static double FLIP_CLAW = 1;
-    public static double LOW_BAR = .6;
 
     hwRobot hw = new hwRobot();
 
@@ -143,19 +144,19 @@ public class DriveControl extends  OpMode {
 
         lb2Last = lb2Current;
 
-//        rb2Current = gamepad2.right_bumper;
-//
-//            if (rb2Current && !rb2Last){
-//                rb2Toggle = !rb2Toggle;
-//            }
-//            if (rb2Toggle){
-//                hw.arm.setPosition(LOW_BAR);
-//            }
-//            else{
-//                hw.arm.setPosition(ARM_INTAKE);
-//            }
-//
-//        rb2Last = rb2Current;
+        rb2Current = gamepad2.right_bumper;
+
+            if (rb2Current && !rb2Last){
+                rb2Toggle = !rb2Toggle;
+            }
+            if (rb2Toggle){
+                hw.arm.setPosition(ARM_LOW_PRE);
+            }
+            else{
+                hw.arm.setPosition(ARM_LOW_POST);
+            }
+
+        rb2Last = rb2Current;
 
         if (gamepad2.dpad_down){
             target = LOWPOS;
@@ -170,10 +171,11 @@ public class DriveControl extends  OpMode {
         double Strafe = gamepad1.left_stick_x * 1.1;
 
         double Denom = Math.max(Math.abs(Drive) + Math.abs(Strafe) + Math.abs(Turn), 1);
-        if (gamepad1.right_bumper)
-        {
+
+        if (gamepad1.right_bumper) {
             Denom = Denom * 4;
         }
+
         double LFP = (Drive + Strafe + Turn) / Denom;
         double LBP = (Drive - Strafe + Turn) / Denom;
         double RFP = (Drive - Strafe - Turn) / Denom;
