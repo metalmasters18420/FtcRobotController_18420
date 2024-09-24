@@ -144,17 +144,17 @@ public class DriveControl extends  OpMode {
 
         lb2Last = lb2Current;
 
-        rb2Current = gamepad2.right_bumper;
-
-            if (rb2Current && !rb2Last){
-                rb2Toggle = !rb2Toggle;
-            }
-            if (rb2Toggle){
-                hw.arm.setPosition(ARM_LOW_PRE);
-            }
-            else{
-                hw.arm.setPosition(ARM_LOW_POST);
-            }
+//        rb2Current = gamepad2.right_bumper;
+//
+//            if (rb2Current && !rb2Last){
+//                rb2Toggle = !rb2Toggle;
+//            }
+//            if (rb2Toggle){
+//                hw.arm.setPosition(ARM_LOW_PRE);
+//            }
+//            else{
+//                hw.arm.setPosition(ARM_LOW_POST);
+//            }
 
         rb2Last = rb2Current;
 
