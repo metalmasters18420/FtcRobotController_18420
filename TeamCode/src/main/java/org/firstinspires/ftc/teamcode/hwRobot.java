@@ -7,12 +7,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class hwRobot
 {
+    HardwareMap hm = null;
+
     public DcMotor LFDrive = null;
     public DcMotor LBDrive = null;
     public DcMotor RBDrive = null;
     public DcMotor RFDrive = null;
-    public DcMotor RVert = null;
-    public DcMotor LVert = null;
 
     public DcMotor Intake = null;
     public Servo LIntake = null;
@@ -22,13 +22,15 @@ public class hwRobot
     public Servo wrist = null;
     public Servo arm = null;
 
+    public DcMotor RVert = null;
+    public DcMotor LVert = null;
+
     public Servo LHoriz = null;
     public Servo RHoriz = null;
 
     public IntakeFlip flip = null;
     public HorizontalExtention HorExt = null;
-
-    HardwareMap hm = null;
+    public VerticalExtention VertExt = null;
 
     public hwRobot () {}
     public void init (HardwareMap hmap) {
@@ -46,7 +48,7 @@ public class hwRobot
         arm = hm.get(Servo.class,"Arm");
         LHoriz = hm.get(Servo.class, "LH");
         RHoriz = hm.get(Servo.class, "RH");
-         RVert = hm.get(DcMotor.class, "RV");
+        RVert = hm.get(DcMotor.class, "RV");
         LVert = hm.get(DcMotor.class, "LV");
 
         LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -69,18 +71,6 @@ public class hwRobot
         RFDrive.setTargetPosition(0);
         RBDrive.setTargetPosition(0);
 
-        RVert.setDirection(DcMotorSimple.Direction.FORWARD);
-        LVert.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        RVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        RVert.setPower(0);
-        LVert.setPower(0);
-
-        RVert.setTargetPosition(0);
-        LVert.setTargetPosition(0);
-
         flip = new IntakeFlip(LIntake, RIntake);
 
         LIntake.setPosition(0);
@@ -91,22 +81,37 @@ public class hwRobot
         LHoriz.setPosition(0);
         RHoriz.setPosition(0);
 
+        VertExt = new VerticalExtention(LVert, RVert);
+
+        RVert.setDirection(DcMotorSimple.Direction.FORWARD);
+        LVert.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        RVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+//        RVert.setPower(0);
+//        LVert.setPower(0);
+
+        RVert.setTargetPosition(0);
+        LVert.setTargetPosition(0);
+
         LVert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LVert.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         LVert.setPower(1);
 
+        RVert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RVert.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RVert.setPower(1);
 
-        Intake = hm.get(DcMotor.class, "IN");
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Intake.setPower(0);
         Intake.setTargetPosition(0);
 
-        arm.setDirection(Servo.Direction.REVERSE);
-
         claw.setPosition(0);
         wrist.setPosition(0);
         arm.setPosition(0);
+        arm.setDirection(Servo.Direction.REVERSE);
 
         LIntake.setPosition(0);
         RIntake.setPosition(0);
@@ -127,6 +132,19 @@ public class hwRobot
         }
         public void HRetract(){
             HorExt.HRetract();
+        }
+
+        public void VRest(){
+            VertExt.Vrest();
+        }
+        public void Vbar(){
+            VertExt.Vbar();
+        }
+        public void VLbin(){
+            VertExt.VLbin();
+        }
+        public void VHbin(){
+            VertExt.VHbin();
         }
 
 }

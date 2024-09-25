@@ -11,20 +11,40 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
-    public static double ARM_WALL = .78;
-    public static double ARM_INTAKE = 0;
-    public static double ARM_LOW_PRE = .73;
-    public static double ARM_LOW_POST = .95;
+    public enum Deposit {
+        REST,
+        WALL,
+        LOW_BAR_PRE,
+        LOW_BAR_POST,
+        HIGH_BAR_PRE,
+        HIGH_BAR_POST,
+        LOW_BIN,
+        HIGH_BIN
+    }
+
+    public static double ARM_WALL_POS = .78;
+    public static double ARM_INTAKE_POS = 0;
+    public static double ARM_LOW_PRE_POS = .73;
+    public static double ARM_LOW_POST_POS = .95;
+    public static double ARM_HIGH_PRE_POS = .5;
+    public static double ARM_HIGH_POST_POS = .5;
+
     public static double CLOSED = .40;
     public static double OPEN = 0;
+
     public static double WRIST_WALL = .15;
     public static double WRIST_INTAKE = .0;
 
-    //private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
+//    private static final Logger log = LoggerFactory.getLogger(DriveControl.class);
     private static int LOWPOS = 0;
     private static int MEDPOS = 300;
     private static int HIGHPOS = 600;
     private static int target = LOWPOS;
+
+    public static int VERT_REST = 0;
+    public static int VERT_HIGH_BAR = 1;
+    public static int VERT_LOW_BIN = 1;
+    public static int VERT_HIGH_BIN = 1;
 
     public static double HORIZ_EXTEND_POS = 0.6;
     public static double HORIZ_RETRACT_POS = 0.03;
@@ -55,11 +75,6 @@ public class DriveControl extends  OpMode {
     Boolean y2Current = false;
     Boolean y2Last = false;
     Boolean y2Toggle = false;
-
-    Boolean rb2Current = false;
-    Boolean rb2Last = false;
-    Boolean rb2Toggle = false;
-
 
     @Override
     public void init() {
@@ -136,14 +151,75 @@ public class DriveControl extends  OpMode {
                 lb2Toggle = !lb2Toggle;
             }
             if (lb2Toggle){
-                hw.arm.setPosition(ARM_WALL);
+                hw.arm.setPosition(ARM_WALL_POS);
             }
             else{
-                hw.arm.setPosition(ARM_INTAKE);
+                hw.arm.setPosition(ARM_INTAKE_POS);
             }
 
         lb2Last = lb2Current;
 
+        Deposit armflip = Deposit.REST;
+
+        switch (armflip){
+            case REST:
+                if (gamepad2.right_bumper){
+                    hw.arm.setPosition(ARM_WALL_POS);
+                    hw.wrist.setPosition(WRIST_WALL);
+                    hw.claw.setPosition(OPEN);
+                    hw.VRest();
+                    armflip = Deposit.WALL;
+                }
+                break;
+            case WALL:
+                if (gamepad2.right_bumper){
+                    hw.arm.setPosition(ARM_LOW_PRE_POS);
+                    hw.VRest();
+                    armflip = Deposit.LOW_BAR_PRE;
+                }
+                if (gamepad2.left_bumper){
+                    hw.arm.setPosition(ARM_HIGH_PRE_POS);
+                    hw.Vbar();
+                    armflip = Deposit.HIGH_BAR_PRE;
+                }
+                break;
+            case LOW_BAR_PRE:
+                if (gamepad2.right_bumper){
+                    hw.arm.setPosition(ARM_LOW_POST_POS);
+                    hw.VRest();
+                    armflip = Deposit.LOW_BAR_POST;
+                }
+                break;
+            case LOW_BAR_POST:
+                if (gamepad2.right_bumper){
+                    hw.arm.setPosition(ARM_INTAKE_POS);
+                    hw.VRest();
+                    armflip = Deposit.REST;
+                }
+                break;
+            case HIGH_BAR_PRE:
+                if (gamepad2.left_bumper){
+                    hw.arm.setPosition(ARM_HIGH_POST_POS);
+//                    hw.Vbar();
+                    armflip = Deposit.HIGH_BAR_POST;
+                }
+                break;
+            case HIGH_BAR_POST:
+                if (gamepad2.left_bumper){
+                    hw.arm.setPosition(ARM_INTAKE_POS);
+//                    hw.Vbar();
+                    armflip = Deposit.REST;
+                }
+                break;
+            case LOW_BIN:
+            case HIGH_BIN:
+            default:
+                armflip = Deposit.REST;
+        }
+
+
+//
+//
 //        rb2Current = gamepad2.right_bumper;
 //
 //            if (rb2Current && !rb2Last){
@@ -155,8 +231,8 @@ public class DriveControl extends  OpMode {
 //            else{
 //                hw.arm.setPosition(ARM_LOW_POST);
 //            }
-
-        rb2Last = rb2Current;
+//
+//        rb2Last = rb2Current;
 
         if (gamepad2.dpad_down){
             target = LOWPOS;
