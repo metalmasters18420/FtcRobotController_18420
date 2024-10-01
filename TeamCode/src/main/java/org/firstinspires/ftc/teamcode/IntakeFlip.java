@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.Servo;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_CLAW;
 
 public class IntakeFlip {
-    private Servo leftFlip;
-    private Servo rightFlip;
+    private final Servo leftFlip;
+    private final Servo rightFlip;
 
     public IntakeFlip(Servo lf, Servo rf){
         this.leftFlip = lf;
@@ -13,12 +15,12 @@ public class IntakeFlip {
     }
 
     public void FliptoIntake(){
-        leftFlip.setPosition(0);
-        rightFlip.setPosition(0);
+        leftFlip.setPosition(FLIP_INTAKE);
+        rightFlip.setPosition(FLIP_INTAKE);
     }
 
     public void FliptoClaw(){
-        leftFlip.setPosition(1);
-        rightFlip.setPosition(1);
+        leftFlip.setPosition(FLIP_CLAW);
+        rightFlip.setPosition(FLIP_CLAW);
     }
 }
