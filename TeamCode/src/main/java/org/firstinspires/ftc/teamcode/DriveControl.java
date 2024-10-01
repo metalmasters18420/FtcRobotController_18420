@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.SimpleExamples.HorizExten;
+import org.firstinspires.ftc.teamcode.HorizontalExtention;
 
 @Config
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
@@ -132,12 +132,12 @@ public class DriveControl extends  OpMode {
              if (gamepad2.dpad_down)  {
                  target = LOWPOS;
              }else if (gamepad2.dpad_left || gamepad2.dpad_right) {
-                 target = MEDIUMPOS;
+                 target = MEDPOS;
              }else if (gamepad2.dpad_up){
                  target = HIGHPOS;
              }
 
-        y2Last = y2Current;
+       // y2Last = y2Current;
 
         lb2Current = gamepad2.left_bumper;
 
