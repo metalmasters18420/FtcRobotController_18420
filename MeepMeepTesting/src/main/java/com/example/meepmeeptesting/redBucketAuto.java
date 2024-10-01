@@ -1,4 +1,6 @@
 package com.example.meepmeeptesting;
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 //import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -50,7 +52,7 @@ public class redBucketAuto {
     @SuppressWarnings("SameParameterValue")
     private static Image loadCustomBackgroundFromResource(String name) {
         try {
-            InputStream is = MeepMeepTesting.class.getResourceAsStream(name);
+            InputStream is = MeepMeepTesting2.class.getResourceAsStream(name);
             assert is != null;
             return ImageIO.read(is);
         }

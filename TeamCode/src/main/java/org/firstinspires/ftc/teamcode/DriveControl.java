@@ -83,7 +83,7 @@ public class DriveControl extends  OpMode {
     Boolean c2Last = false;
     Boolean c2Toggle = false;
 
-    private final ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime2 = new ElapsedTime();
 
     @Override
     public void init() {
@@ -215,109 +215,110 @@ public class DriveControl extends  OpMode {
             target = LOWPOS;
         }else if (gamepad2.dpad_left || gamepad2.dpad_right){
             target = MEDPOS;
-        } else if (gamepad2.dpad_up){
+        } else if (gamepad2.dpad_up) {
             target = HIGHPOS;
-        switch (armflip){
-            case REST:
-                if (gamepad2.right_bumper && BUTTON_READY){ //move arm, wrist, claw to wall
-                    hw.arm.setPosition(ARM_WALL_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    buttonDelay.reset();
-                    armflip = Deposit.WALL;
-                }
-                if (gamepad2.left_bumper && BUTTON_READY){ //move arm, wrist, claw to wall
-                    hw.arm.setPosition(ARM_WALL_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    buttonDelay.reset();
-                    armflip = Deposit.WALL;
-                }
-                break;
-            case WALL:
-                if (gamepad2.right_bumper && BUTTON_READY){ //move arm to low bar
-                    hw.arm.setPosition(ARM_LOW_PRE_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    buttonDelay.reset();
-                    armflip = Deposit.LOW_BAR_PRE;
-                }
-                if (gamepad2.left_bumper && BUTTON_READY){ //move arm, wrist to high bar
-                    hw.arm.setPosition(ARM_HIGH_PRE_POS);
-                    hw.wrist.setPosition(WRIST_HIGH);
-                    buttonDelay.reset();
-                    armflip = Deposit.HIGH_BAR_PRE;
-                }
-                break;
-            case LOW_BAR_PRE:
-                if (gamepad2.right_bumper && BUTTON_READY){ //score on low bar
-                    hw.arm.setPosition(ARM_LOW_POST_POS);
-                    buttonDelay.reset();
-                    armflip = Deposit.LOW_BAR_POST;
-                }
-                if (gamepad2.left_bumper && BUTTON_READY) { //move to high pos
-                    hw.arm.setPosition(ARM_HIGH_PRE_POS);
-                    hw.wrist.setPosition(WRIST_HIGH);
-                    buttonDelay.reset();
-                    armflip = Deposit.HIGH_BAR_PRE;
-                }
-                break;
-            case LOW_BAR_POST:
-                if (gamepad2.right_bumper && BUTTON_READY){ //back to resting
-                    hw.arm.setPosition(ARM_INTAKE_POS);
-                    hw.wrist.setPosition(WRIST_INTAKE);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    buttonDelay.reset();
-                    armflip = Deposit.REST;
-                }
-                break;
-            case HIGH_BAR_PRE:
-                if (gamepad2.left_bumper && BUTTON_READY){ //score on high bar
-                    hw.arm.setPosition(ARM_HIGH_POST_POS);
-                    buttonDelay.reset();
-                    armflip = Deposit.HIGH_BAR_POST;
-                }
-                if (gamepad2.right_bumper && BUTTON_READY){ //move to low bar
-                    hw.arm.setPosition(ARM_LOW_PRE_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    buttonDelay.reset();
-                    armflip = Deposit.LOW_BAR_PRE;
-                }
-                break;
-            case HIGH_BAR_POST:
-                if (gamepad2.left_bumper && BUTTON_READY){ //move to resting
-                    hw.arm.setPosition(ARM_INTAKE_POS);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    hw.wrist.setPosition(WRIST_INTAKE);
-                    buttonDelay.reset();
-                    armflip = Deposit.REST;
-                }
-                break;
+            switch (armflip) {
+                case REST:
+                    if (gamepad2.right_bumper && BUTTON_READY) { //move arm, wrist, claw to wall
+                        hw.arm.setPosition(ARM_WALL_POS);
+                        hw.wrist.setPosition(WRIST_WALL);
+                        hw.claw.setPosition(CLAW_OPEN);
+                        buttonDelay.reset();
+                        armflip = Deposit.WALL;
+                    }
+                    if (gamepad2.left_bumper && BUTTON_READY) { //move arm, wrist, claw to wall
+                        hw.arm.setPosition(ARM_WALL_POS);
+                        hw.wrist.setPosition(WRIST_WALL);
+                        hw.claw.setPosition(CLAW_OPEN);
+                        buttonDelay.reset();
+                        armflip = Deposit.WALL;
+                    }
+                    break;
+                case WALL:
+                    if (gamepad2.right_bumper && BUTTON_READY) { //move arm to low bar
+                        hw.arm.setPosition(ARM_LOW_PRE_POS);
+                        hw.wrist.setPosition(WRIST_WALL);
+                        buttonDelay.reset();
+                        armflip = Deposit.LOW_BAR_PRE;
+                    }
+                    if (gamepad2.left_bumper && BUTTON_READY) { //move arm, wrist to high bar
+                        hw.arm.setPosition(ARM_HIGH_PRE_POS);
+                        hw.wrist.setPosition(WRIST_HIGH);
+                        buttonDelay.reset();
+                        armflip = Deposit.HIGH_BAR_PRE;
+                    }
+                    break;
+                case LOW_BAR_PRE:
+                    if (gamepad2.right_bumper && BUTTON_READY) { //score on low bar
+                        hw.arm.setPosition(ARM_LOW_POST_POS);
+                        buttonDelay.reset();
+                        armflip = Deposit.LOW_BAR_POST;
+                    }
+                    if (gamepad2.left_bumper && BUTTON_READY) { //move to high pos
+                        hw.arm.setPosition(ARM_HIGH_PRE_POS);
+                        hw.wrist.setPosition(WRIST_HIGH);
+                        buttonDelay.reset();
+                        armflip = Deposit.HIGH_BAR_PRE;
+                    }
+                    break;
+                case LOW_BAR_POST:
+                    if (gamepad2.right_bumper && BUTTON_READY) { //back to resting
+                        hw.arm.setPosition(ARM_INTAKE_POS);
+                        hw.wrist.setPosition(WRIST_INTAKE);
+                        hw.claw.setPosition(CLAW_OPEN);
+                        buttonDelay.reset();
+                        armflip = Deposit.REST;
+                    }
+                    break;
+                case HIGH_BAR_PRE:
+                    if (gamepad2.left_bumper && BUTTON_READY) { //score on high bar
+                        hw.arm.setPosition(ARM_HIGH_POST_POS);
+                        buttonDelay.reset();
+                        armflip = Deposit.HIGH_BAR_POST;
+                    }
+                    if (gamepad2.right_bumper && BUTTON_READY) { //move to low bar
+                        hw.arm.setPosition(ARM_LOW_PRE_POS);
+                        hw.wrist.setPosition(WRIST_WALL);
+                        buttonDelay.reset();
+                        armflip = Deposit.LOW_BAR_PRE;
+                    }
+                    break;
+                case HIGH_BAR_POST:
+                    if (gamepad2.left_bumper && BUTTON_READY) { //move to resting
+                        hw.arm.setPosition(ARM_INTAKE_POS);
+                        hw.claw.setPosition(CLAW_OPEN);
+                        hw.wrist.setPosition(WRIST_INTAKE);
+                        buttonDelay.reset();
+                        armflip = Deposit.REST;
+                    }
+                    break;
 //            case LOW_BIN:
-            default:
-                armflip = Deposit.REST;
+                default:
+                    armflip = Deposit.REST;
+            }
+
+            double Drive = -gamepad1.left_stick_y;
+            double Turn = gamepad1.right_stick_x;
+            double Strafe = gamepad1.left_stick_x * 1.1;
+
+            double Denom = Math.max(Math.abs(Drive) + Math.abs(Strafe) + Math.abs(Turn), 1);
+
+            if (gamepad1.right_bumper) {
+                Denom = Denom * 4;
+            }
+
+            double LFP = (Drive + Strafe + Turn) / Denom;
+            double LBP = (Drive - Strafe + Turn) / Denom;
+            double RFP = (Drive - Strafe - Turn) / Denom;
+            double RBP = (Drive + Strafe - Turn) / Denom;
+
+            hw.LFDrive.setPower(LFP);
+            hw.LBDrive.setPower(LBP);
+            hw.RFDrive.setPower(RFP);
+            hw.RBDrive.setPower(RBP);
+
+            hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
         }
-
-        double Drive = -gamepad1.left_stick_y;
-        double Turn = gamepad1.right_stick_x;
-        double Strafe = gamepad1.left_stick_x * 1.1;
-
-        double Denom = Math.max(Math.abs(Drive) + Math.abs(Strafe) + Math.abs(Turn), 1);
-
-        if (gamepad1.right_bumper) {
-            Denom = Denom * 4;
-        }
-
-        double LFP = (Drive + Strafe + Turn) / Denom;
-        double LBP = (Drive - Strafe + Turn) / Denom;
-        double RFP = (Drive - Strafe - Turn) / Denom;
-        double RBP = (Drive + Strafe - Turn) / Denom;
-
-                    hw.LFDrive.setPower(LFP);
-                    hw.LBDrive.setPower(LBP);
-                    hw.RFDrive.setPower(RFP);
-                    hw.RBDrive.setPower(RBP);
-
-        hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
 
     }
 }

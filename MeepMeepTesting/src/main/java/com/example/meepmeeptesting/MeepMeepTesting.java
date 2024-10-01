@@ -1,7 +1,7 @@
 package com.example.meepmeeptesting;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.Pose2d;
 //import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
@@ -20,7 +20,7 @@ enum route {
 
     REDOBSERVEAUTO
 }
-public class MeepMeepTesting {
+public class MeepMeepTesting2 {
 
     public static final route ROUTE = route.BLUEBUCKETAUTO;
 
@@ -63,7 +63,7 @@ public class MeepMeepTesting {
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .followTrajectorySequence(drive ->
+                .TrajectoryActionBulilder (drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(10, 57, 0))
                                 .turn(Math.toRadians(90))
                                 .strafeTo(new Vector2d(-5, 35))
