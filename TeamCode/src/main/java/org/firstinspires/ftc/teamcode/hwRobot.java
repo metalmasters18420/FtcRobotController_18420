@@ -5,8 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class hwRobot
-{
+public class hwRobot {
     HardwareMap hm = null;
 
     public DcMotor LFDrive = null;
@@ -22,34 +21,35 @@ public class hwRobot
     public Servo wrist = null;
     public Servo arm = null;
 
-    public DcMotor RVert = null;
-    public DcMotor LVert = null;
+    public Servo VLift = null;
 
     public Servo LHoriz = null;
     public Servo RHoriz = null;
 
     public IntakeFlip flip = null;
     public HorizontalExtention HorExt = null;
-    public VerticalExtention VertExt = null;
+    public VerticalExtention VertExten = null;
+    public Buttons button = null;
 
-    public hwRobot () {}
-    public void init (HardwareMap hmap) {
+    public hwRobot() {
+    }
+
+    public void init(HardwareMap hmap) {
         hm = hmap;
 
         LFDrive = hm.get(DcMotor.class, "LF");
         LBDrive = hm.get(DcMotor.class, "LB");
         RFDrive = hm.get(DcMotor.class, "RF");
         RBDrive = hm.get(DcMotor.class, "RB");
-        LIntake = hm.get(Servo.class,"LFlip");
+        LIntake = hm.get(Servo.class, "LFlip");
         RIntake = hm.get(Servo.class, "RFlip");
         Intake = hm.get(DcMotor.class, "IN");
         claw = hm.get(Servo.class, "Claw");
-        wrist = hm.get(Servo.class,"Wrist");
-        arm = hm.get(Servo.class,"Arm");
+        wrist = hm.get(Servo.class, "Wrist");
+        arm = hm.get(Servo.class, "Arm");
         LHoriz = hm.get(Servo.class, "LH");
         RHoriz = hm.get(Servo.class, "RH");
-        RVert = hm.get(DcMotor.class, "RV");
-        LVert = hm.get(DcMotor.class, "LV");
+        VLift = hm.get(Servo.class, "VL");
 
         LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -81,27 +81,11 @@ public class hwRobot
         LHoriz.setPosition(0);
         RHoriz.setPosition(0);
 
-        VertExt = new VerticalExtention(LVert, RVert);
+        VertExten = new VerticalExtention(VLift);
 
-        RVert.setDirection(DcMotorSimple.Direction.FORWARD);
-        LVert.setDirection(DcMotorSimple.Direction.REVERSE);
+        VLift.setPosition(0);
 
-        RVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LVert.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-//        RVert.setPower(0);
-//        LVert.setPower(0);
-
-        RVert.setTargetPosition(0);
-        LVert.setTargetPosition(0);
-
-        LVert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LVert.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        LVert.setPower(1);
-
-        RVert.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RVert.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RVert.setPower(1);
+        button = new Buttons();
 
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -118,33 +102,29 @@ public class hwRobot
 
         RHoriz.setPosition(0);
         LHoriz.setPosition(0);
-        }
+    }
 
-        public void FliptoIntake(){
-            flip.FliptoIntake();
-        }
-        public void FliptoClaw(){
-            flip.FliptoClaw();
-        }
+    public void FliptoIntake() {
+        flip.FliptoIntake();
+    }
 
-        public void Hextend(){
-            HorExt.HExtend();
-        }
-        public void HRetract(){
-            HorExt.HRetract();
-        }
+    public void FliptoClaw() {
+        flip.FliptoClaw();
+    }
 
-        public void VRest(){
-            VertExt.Vrest();
-        }
-        public void Vbar(){
-            VertExt.Vbar();
-        }
-        public void VLbin(){
-            VertExt.VLbin();
-        }
-        public void VHbin(){
-            VertExt.VHbin();
-        }
+    public void Hextend() {
+        HorExt.HExtend();
+    }
 
+    public void HRetract() {
+        HorExt.HRetract();
+    }
+
+    public void VertRest() {
+        VertExten.VertRest();
+    }
+
+    public void VertExt() {
+        VertExten.VertExt();
+    }
 }

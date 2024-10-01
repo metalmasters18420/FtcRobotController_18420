@@ -1,38 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.DriveControl.VERT_HIGH_BAR;
-import static org.firstinspires.ftc.teamcode.DriveControl.VERT_HIGH_BIN;
-import static org.firstinspires.ftc.teamcode.DriveControl.VERT_LOW_BIN;
-import static org.firstinspires.ftc.teamcode.DriveControl.VERT_REST;
-
-import com.qualcomm.robotcore.hardware.DcMotor;
+import static org.firstinspires.ftc.teamcode.Variables.VREST;
+import static org.firstinspires.ftc.teamcode.Variables.VEXT;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class VerticalExtention {
-    private DcMotor leftvert;
-    private DcMotor rightvert;
+    private final Servo liftServo;
 
-    public VerticalExtention(DcMotor lv, DcMotor rv){
-        this.leftvert = lv;
-        this.rightvert = lv;
+    public VerticalExtention(Servo lift) {
+        this.liftServo = lift;
     }
 
-    public void Vrest(){
-        leftvert.setTargetPosition(VERT_REST);
-        rightvert.setTargetPosition(VERT_REST);
+    public void VertRest(){
+        liftServo.setPosition(VREST);
     }
-
-    public void Vbar(){
-        leftvert.setTargetPosition(VERT_HIGH_BAR);
-        rightvert.setTargetPosition(VERT_HIGH_BAR);
-    }
-
-    public void VLbin(){
-        leftvert.setTargetPosition(VERT_LOW_BIN);
-        rightvert.setTargetPosition(VERT_LOW_BIN);
-    }
-
-    public void VHbin(){
-        leftvert.setTargetPosition(VERT_HIGH_BIN);
-        rightvert.setTargetPosition(VERT_HIGH_BIN);
+    public void VertExt(){
+        liftServo.setPosition(VEXT);
     }
 }

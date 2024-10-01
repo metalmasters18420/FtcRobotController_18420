@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.DriveControl.HORIZ_EXTEND_POS;
-import static org.firstinspires.ftc.teamcode.DriveControl.HORIZ_RETRACT_POS;
-
 import com.qualcomm.robotcore.hardware.Servo;
+import static org.firstinspires.ftc.teamcode.Variables.HORIZ_EXTEND_POS;
+import static org.firstinspires.ftc.teamcode.Variables.HORIZ_RETRACT_POS;
 
 public class HorizontalExtention {
-    private Servo leftHoriz;
-    private Servo rightHoriz;
+    private final Servo leftHoriz;
+    private final Servo rightHoriz;
 
     public HorizontalExtention(Servo lh, Servo rh){
         this.leftHoriz = lh;
@@ -16,12 +15,12 @@ public class HorizontalExtention {
     }
 
     public void HExtend(){
-        leftHoriz.setPosition(HORIZ_EXTEND_POS); //.1
-        rightHoriz.setPosition(HORIZ_EXTEND_POS); //.1
+        leftHoriz.setPosition(HORIZ_EXTEND_POS);
+        rightHoriz.setPosition(HORIZ_EXTEND_POS);
     }
 
     public void HRetract(){
-        leftHoriz.setPosition(HORIZ_RETRACT_POS); //0
-        rightHoriz.setPosition(HORIZ_RETRACT_POS); //0
+        leftHoriz.setPosition(HORIZ_RETRACT_POS);
+        rightHoriz.setPosition(HORIZ_RETRACT_POS);
     }
 }
