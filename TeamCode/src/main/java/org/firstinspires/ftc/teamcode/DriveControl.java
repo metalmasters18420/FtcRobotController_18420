@@ -1,18 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_POST_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_PRE_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_INTAKE_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_BIN_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_POST_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_PRE_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_WALL_POS;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.Variables.DELAY_TIME;
-import static org.firstinspires.ftc.teamcode.Variables.WRIST_HIGH;
-import static org.firstinspires.ftc.teamcode.Variables.WRIST_INTAKE;
-import static org.firstinspires.ftc.teamcode.Variables.WRIST_WALL;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -71,10 +61,6 @@ public class DriveControl extends  OpMode {
         boolean a2Last = false;
         boolean a2Toggle = false;
 
-//        gamepad2.x = hw.button.x2button();
-//        gamepad2.y = hw.button.y2button();
-//        gamepad2.a = hw.button.a2button();
-
         x2Current = gamepad2.x;
 
             if (x2Current && !x2Last){
@@ -117,111 +103,83 @@ public class DriveControl extends  OpMode {
 
         y2Last = y2Current;
 
-//        lb2Current = gamepad2.left_bumper;
-//
-//            if (lb2Current && !lb2Last){
-//                lb2Toggle = !lb2Toggle;
-//            }
-//            if (lb2Toggle){
-//                hw.arm.setPosition(ARM_WALL_POS);
-//            }
-//            else{
-//                hw.arm.setPosition(ARM_INTAKE_POS);
-//            }
-//
-//        lb2Last = lb2Current;
-
         switch (armflip){
             case REST:
-                if (gamepad2.right_bumper && BUTTON_READY){ //move arm, wrist, claw to wall
-                    hw.arm.setPosition(ARM_WALL_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_up && BUTTON_READY){ //move to wall
+                    hw.Wall();
                     armflip = Deposit.WALL;
                 }
-                if (gamepad2.left_bumper && BUTTON_READY){ //move arm, wrist, claw to wall
-                    hw.arm.setPosition(ARM_WALL_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    buttonDelay.reset();
-                    armflip = Deposit.WALL;
+                if (gamepad2.dpad_down && BUTTON_READY){ //move to low bin
+                    hw.LBin();
+                    armflip = Deposit.LOW_BIN;
                 }
                 break;
             case WALL:
-                if (gamepad2.right_bumper && BUTTON_READY){ //move arm to low bar
-                    hw.arm.setPosition(ARM_LOW_PRE_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_right && BUTTON_READY){ //move to low bar
+                    hw.LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
-                if (gamepad2.left_bumper && BUTTON_READY){ //move arm, wrist to high bar
-                    hw.arm.setPosition(ARM_HIGH_PRE_POS);
-                    hw.wrist.setPosition(WRIST_HIGH);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_left && BUTTON_READY){ //move to high bar
+                    hw.HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
-                if (gamepad2.dpad_up && BUTTON_READY){ //move arm, wrist to low bin
-                hw.arm.setPosition(ARM_LOW_BIN_POS);
-                hw.wrist.setPosition(WRIST_WALL);
-                hw.VertExt();
-                buttonDelay.reset();
-                armflip = Deposit.LOW_BIN;
+                if (gamepad2.dpad_down && BUTTON_READY){ //move to rest
+                    hw.Rest();
+                    armflip = Deposit.REST;
                 }
                 break;
             case LOW_BAR_PRE:
-                if (gamepad2.right_bumper && BUTTON_READY){ //score on low bar
-                    hw.arm.setPosition(ARM_LOW_POST_POS);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_right && BUTTON_READY){ //score on low bar
+                    hw.LBarPost();
                     armflip = Deposit.LOW_BAR_POST;
                 }
-                if (gamepad2.left_bumper && BUTTON_READY) { //move to high pos
-                    hw.arm.setPosition(ARM_HIGH_PRE_POS);
-                    hw.wrist.setPosition(WRIST_HIGH);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_left && BUTTON_READY){ //move to high pos
+                    hw.HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
-                break;
-            case LOW_BAR_POST:
-                if (gamepad2.right_bumper && BUTTON_READY){ //back to resting
-                    hw.arm.setPosition(ARM_INTAKE_POS);
-                    hw.wrist.setPosition(WRIST_INTAKE);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_up && BUTTON_READY){ //move to low bin
+                    hw.LBin();
+                    armflip = Deposit.LOW_BIN;
+                }
+                if (gamepad1.dpad_down && BUTTON_READY){ //move to rest
+                    hw.Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case HIGH_BAR_PRE:
-                if (gamepad2.left_bumper && BUTTON_READY){ //score on high bar
-                    hw.arm.setPosition(ARM_HIGH_POST_POS);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_left && BUTTON_READY){ //score on high bar
+                    hw.HBarPost();
                     armflip = Deposit.HIGH_BAR_POST;
                 }
-                if (gamepad2.right_bumper && BUTTON_READY){ //move to low bar
-                    hw.arm.setPosition(ARM_LOW_PRE_POS);
-                    hw.wrist.setPosition(WRIST_WALL);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_right && BUTTON_READY){ //move to low bar
+                    hw.LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
-                break;
-            case HIGH_BAR_POST:
-                if (gamepad2.left_bumper && BUTTON_READY){ //move to resting
-                    hw.arm.setPosition(ARM_INTAKE_POS);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    hw.wrist.setPosition(WRIST_INTAKE);
-                    buttonDelay.reset();
+                if (gamepad2.dpad_up && BUTTON_READY){ //move to low bin
+                    hw.LBin();
+                    armflip = Deposit.LOW_BIN;
+                }
+                if (gamepad2.dpad_down && BUTTON_READY){ //move to rest
+                    hw.Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case LOW_BIN:
-                if (gamepad2.dpad_down){ //move to resting
-                    hw.arm.setPosition(ARM_INTAKE_POS);
-                    hw.claw.setPosition(CLAW_OPEN);
-                    hw.wrist.setPosition(WRIST_INTAKE);
-                    hw.VertRest();
-                    buttonDelay.reset();
+                if (gamepad2.dpad_up){ //move to resting
+                    hw.Rest();
                     armflip = Deposit.REST;
                 }
+            case LOW_BAR_POST:
+            case HIGH_BAR_POST:
+                if (gamepad2.dpad_down && BUTTON_READY){ //move to resting
+                    hw.Rest();
+                    armflip = Deposit.REST;
+                }
+                if (gamepad2.dpad_up && BUTTON_READY){ //move to wall
+                    hw.Wall();
+                    armflip = Deposit.WALL;
+                }
+                break;
             default:
                 armflip = Deposit.REST;
         }

@@ -30,6 +30,7 @@ public class hwRobot {
     public HorizontalExtention HorExt = null;
     public VerticalExtention VertExten = null;
     public Buttons button = null;
+    public Outtake outtake = null;
 
     public hwRobot() {
     }
@@ -85,7 +86,7 @@ public class hwRobot {
 
         VLift.setPosition(0);
 
-        button = new Buttons();
+        outtake = new Outtake();
 
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -104,27 +105,48 @@ public class hwRobot {
         LHoriz.setPosition(0);
     }
 
-    public void FliptoIntake() {
+    public void FliptoIntake(){
         flip.FliptoIntake();
     }
 
-    public void FliptoClaw() {
+    public void FliptoClaw(){
         flip.FliptoClaw();
     }
 
-    public void Hextend() {
+    public void Hextend(){
         HorExt.HExtend();
     }
 
-    public void HRetract() {
+    public void HRetract(){
         HorExt.HRetract();
     }
 
-    public void VertRest() {
+    public void VertRest(){
         VertExten.VertRest();
     }
 
-    public void VertExt() {
+    public void VertExt(){
         VertExten.VertExt();
+    }
+    public void Rest(){
+        outtake.Rest();
+    }
+    public void Wall(){
+        outtake.Wall();
+    }
+    public void LBarPre(){
+        outtake.LBarPre();
+    }
+    public void LBarPost(){
+        outtake.LBarPost();
+    }
+    public void HBarPre(){
+        outtake.HBarPre();
+    }
+    public void HBarPost(){
+        outtake.HBarPost();
+    }
+    public void LBin(){
+        outtake.LBin();
     }
 }
