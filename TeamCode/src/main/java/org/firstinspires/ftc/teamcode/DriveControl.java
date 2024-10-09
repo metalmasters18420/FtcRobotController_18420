@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_POST_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_PRE_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_INTAKE_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_BIN_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_POST_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_PRE_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_WALL_POS;
@@ -58,51 +59,63 @@ public class DriveControl extends  OpMode {
     public void loop() {
         boolean BUTTON_READY = buttonDelay.milliseconds() > DELAY_TIME;
 
-        gamepad2.x = hw.button.x2button();
-        gamepad2.y = hw.button.y2button();
-        gamepad2.a = hw.button.a2button();
+        boolean x2Current = false;
+        boolean x2Last = false;
+        boolean x2Toggle = false;
 
-//        x2Current = gamepad2.x;
-//
-//            if (x2Current && !x2Last){
-//                x2Toggle = !x2Toggle;
-//            }
-//            if (x2Toggle){
-//                hw.FliptoClaw();
-//            }
-//            else{
-//                hw.FliptoIntake();
-//            }
-//
-//        x2Last = x2Current;
-//
-//        a2Current = gamepad2.a;
-//
-//            if (a2Current && !a2Last) {
-//                a2Toggle = !a2Toggle;
-//            }
-//            if (a2Toggle){
-//                hw.claw.setPosition(CLAW_CLOSED);
-//            }
-//            else{
-//                hw.claw.setPosition(CLAW_OPEN);
-//            }
-//
-//        a2Last = a2Current;
-//
-//        y2Current = gamepad2.y;
-//
-//            if (y2Current && !y2Last) {
-//                y2Toggle = !y2Toggle;
-//            }
-//            if (y2Toggle){
-//                hw.Hextend();
-//            }
-//            else{
-//                hw.HRetract();
-//            }
-//
-//        y2Last = y2Current;
+        boolean y2Current = false;
+        boolean y2Last = false;
+        boolean y2Toggle = false;
+
+        boolean a2Current = false;
+        boolean a2Last = false;
+        boolean a2Toggle = false;
+
+//        gamepad2.x = hw.button.x2button();
+//        gamepad2.y = hw.button.y2button();
+//        gamepad2.a = hw.button.a2button();
+
+        x2Current = gamepad2.x;
+
+            if (x2Current && !x2Last){
+                x2Toggle = !x2Toggle;
+            }
+            if (x2Toggle){
+                hw.FliptoClaw();
+            }
+            else{
+                hw.FliptoIntake();
+            }
+
+        x2Last = x2Current;
+
+        a2Current = gamepad2.a;
+
+            if (a2Current && !a2Last) {
+                a2Toggle = !a2Toggle;
+            }
+            if (a2Toggle){
+                hw.claw.setPosition(CLAW_CLOSED);
+            }
+            else{
+                hw.claw.setPosition(CLAW_OPEN);
+            }
+
+        a2Last = a2Current;
+
+        y2Current = gamepad2.y;
+
+            if (y2Current && !y2Last) {
+                y2Toggle = !y2Toggle;
+            }
+            if (y2Toggle){
+                hw.Hextend();
+            }
+            else{
+                hw.HRetract();
+            }
+
+        y2Last = y2Current;
 
 //        lb2Current = gamepad2.left_bumper;
 //
@@ -147,6 +160,13 @@ public class DriveControl extends  OpMode {
                     hw.wrist.setPosition(WRIST_HIGH);
                     buttonDelay.reset();
                     armflip = Deposit.HIGH_BAR_PRE;
+                }
+                if (gamepad2.dpad_up && BUTTON_READY){ //move arm, wrist to low bin
+                hw.arm.setPosition(ARM_LOW_BIN_POS);
+                hw.wrist.setPosition(WRIST_WALL);
+                hw.VertExt();
+                buttonDelay.reset();
+                armflip = Deposit.LOW_BIN;
                 }
                 break;
             case LOW_BAR_PRE:
@@ -193,7 +213,15 @@ public class DriveControl extends  OpMode {
                     armflip = Deposit.REST;
                 }
                 break;
-//            case LOW_BIN:
+            case LOW_BIN:
+                if (gamepad2.dpad_down){ //move to resting
+                    hw.arm.setPosition(ARM_INTAKE_POS);
+                    hw.claw.setPosition(CLAW_OPEN);
+                    hw.wrist.setPosition(WRIST_INTAKE);
+                    hw.VertRest();
+                    buttonDelay.reset();
+                    armflip = Deposit.REST;
+                }
             default:
                 armflip = Deposit.REST;
         }

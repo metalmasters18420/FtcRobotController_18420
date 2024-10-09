@@ -10,6 +10,7 @@ public class Variables {
     public static double ARM_LOW_POST_POS = .95;
     public static double ARM_HIGH_PRE_POS = .5;
     public static double ARM_HIGH_POST_POS = .75;
+    public static double ARM_LOW_BIN_POS = .65;
 
     public static double CLAW_CLOSED = .40;
     public static double CLAW_OPEN = 0;
