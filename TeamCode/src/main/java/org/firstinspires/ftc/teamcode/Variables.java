@@ -16,7 +16,7 @@ public class Variables {
     public static double CLAW_OPEN = 0;
 
     public static double WRIST_WALL = .15;
-    public static double WRIST_INTAKE = .0;
+    public static double WRIST_INTAKE = 0;
     public static double WRIST_HIGH = .1;
 
     public static double HORIZ_EXTEND_POS = 0.6;

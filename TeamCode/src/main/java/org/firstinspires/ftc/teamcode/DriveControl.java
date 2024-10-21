@@ -165,16 +165,16 @@ public class DriveControl extends  OpMode {
                 }
                 break;
             case LOW_BIN:
-                if (gamepad2.dpad_up){ //move to resting
+                if (gamepad2.dpad_up && BUTTON_READY){ //move to resting
                     hw.Rest();
                     armflip = Deposit.REST;
                 }
             case LOW_BAR_POST:
-                if (gamepad2.dpad_down){
+                if (gamepad2.dpad_down && BUTTON_READY){
                     hw.Rest();
                     armflip = Deposit.REST;
                 }
-                if (gamepad2.dpad_right){
+                if (gamepad2.dpad_right && BUTTON_READY){
                     hw.LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
