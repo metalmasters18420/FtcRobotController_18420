@@ -31,7 +31,6 @@ public class hwRobot {
     public HorizontalExtention HorExt = null;
     public VerticalExtention VertExten = null;
     public Buttons button = null;
-    public Outtake outtake = null;
 
     public hwRobot() {
     }
@@ -87,8 +86,6 @@ public class hwRobot {
 
         VLift.setPosition(0);
 
-        outtake = new Outtake(hw);
-
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Intake.setPower(0);
@@ -128,26 +125,5 @@ public class hwRobot {
 
     public void VertExt(){
         VertExten.VertExt();
-    }
-    public void Rest(){
-        outtake.Rest();
-    }
-    public void Wall(){
-        outtake.Wall();
-    }
-    public void LBarPre(){
-        outtake.LBarPre();
-    }
-    public void LBarPost(){
-        outtake.LBarPost();
-    }
-    public void HBarPre(){
-        outtake.HBarPre();
-    }
-    public void HBarPost(){
-        outtake.HBarPost();
-    }
-    public void LBin(){
-        outtake.LBin();
     }
 }
