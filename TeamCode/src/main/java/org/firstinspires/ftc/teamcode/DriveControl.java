@@ -1,8 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_POST_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_PRE_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ARM_INTAKE_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_BIN_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_POST_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_PRE_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ARM_WALL_POS;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.Variables.DELAY_TIME;
+import static org.firstinspires.ftc.teamcode.Variables.WRIST_HIGH;
+import static org.firstinspires.ftc.teamcode.Variables.WRIST_INTAKE;
+import static org.firstinspires.ftc.teamcode.Variables.WRIST_WALL;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -106,85 +116,85 @@ public class DriveControl extends  OpMode {
         switch (armflip){
             case REST:
                 if (gamepad2.dpad_up && BUTTON_READY){ //move to wall
-                    hw.Wall();
+                    Wall();
                     armflip = Deposit.WALL;
                 }
                 if (gamepad2.dpad_down && BUTTON_READY){ //move to low bin
-                    hw.LBin();
+                    LBin();
                     armflip = Deposit.LOW_BIN;
                 }
                 break;
             case WALL:
                 if (gamepad2.dpad_right && BUTTON_READY){ //move to low bar
-                    hw.LBarPre();
+                    LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
                 if (gamepad2.dpad_left && BUTTON_READY){ //move to high bar
-                    hw.HBarPre();
+                    HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
                 if (gamepad2.dpad_down && BUTTON_READY){ //move to rest
-                    hw.Rest();
+                    Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case LOW_BAR_PRE:
                 if (gamepad2.dpad_right && BUTTON_READY){ //score on low bar
-                    hw.LBarPost();
+                    LBarPost();
                     armflip = Deposit.LOW_BAR_POST;
                 }
                 if (gamepad2.dpad_left && BUTTON_READY){ //move to high pos
-                    hw.HBarPre();
+                    HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
                 if (gamepad2.dpad_up && BUTTON_READY){ //move to low bin
-                    hw.LBin();
+                    LBin();
                     armflip = Deposit.LOW_BIN;
                 }
                 if (gamepad1.dpad_down && BUTTON_READY){ //move to rest
-                    hw.Rest();
+                    Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case HIGH_BAR_PRE:
                 if (gamepad2.dpad_left && BUTTON_READY){ //score on high bar
-                    hw.HBarPost();
+                    HBarPost();
                     armflip = Deposit.HIGH_BAR_POST;
                 }
                 if (gamepad2.dpad_right && BUTTON_READY){ //move to low bar
-                    hw.LBarPre();
+                    LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
                 if (gamepad2.dpad_up && BUTTON_READY){ //move to low bin
-                    hw.LBin();
+                    LBin();
                     armflip = Deposit.LOW_BIN;
                 }
                 if (gamepad2.dpad_down && BUTTON_READY){ //move to rest
-                    hw.Rest();
+                    Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case LOW_BIN:
                 if (gamepad2.dpad_up && BUTTON_READY){ //move to resting
-                    hw.Rest();
+                    Rest();
                     armflip = Deposit.REST;
                 }
             case LOW_BAR_POST:
                 if (gamepad2.dpad_down && BUTTON_READY){
-                    hw.Rest();
+                    Rest();
                     armflip = Deposit.REST;
                 }
                 if (gamepad2.dpad_right && BUTTON_READY){
-                    hw.LBarPre();
+                    LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
             case HIGH_BAR_POST:
                 if (gamepad2.dpad_down && BUTTON_READY){ //move to resting
-                    hw.Rest();
+                    Rest();
                     armflip = Deposit.REST;
                 }
                 if (gamepad2.dpad_up && BUTTON_READY){ //move to wall
-                    hw.Wall();
+                    Wall();
                     armflip = Deposit.WALL;
                 }
                 break;
@@ -213,5 +223,42 @@ public class DriveControl extends  OpMode {
                     hw.RBDrive.setPower(RBP);
 
         hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
+    }
+
+    //PUT METHODS HERE
+    public void Rest(){
+        hw.arm.setPosition(ARM_INTAKE_POS);
+        hw.wrist.setPosition(WRIST_INTAKE);
+        hw.claw.setPosition(CLAW_OPEN);
+        hw.VertRest();
+        buttonDelay.reset();
+    }
+    public void Wall(){
+        hw.arm.setPosition(ARM_WALL_POS);
+        hw.wrist.setPosition(WRIST_WALL);
+        hw.claw.setPosition(CLAW_OPEN);
+        buttonDelay.reset();
+    }
+    public void LBarPre(){
+        hw.arm.setPosition(ARM_LOW_PRE_POS);
+        buttonDelay.reset();
+    }
+    public void LBarPost(){
+        hw.arm.setPosition(ARM_LOW_POST_POS);
+        buttonDelay.reset();
+    }
+    public void HBarPre(){
+        hw.arm.setPosition(ARM_HIGH_PRE_POS);
+        hw.wrist.setPosition(WRIST_HIGH);
+        buttonDelay.reset();
+    }
+    public void HBarPost(){
+        hw.arm.setPosition(ARM_HIGH_POST_POS);
+        buttonDelay.reset();
+    }
+    public void LBin(){
+        hw.arm.setPosition(ARM_LOW_BIN_POS);
+        hw.VertExt();
+        buttonDelay.reset();
     }
 }
