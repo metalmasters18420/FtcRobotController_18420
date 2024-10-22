@@ -32,8 +32,7 @@ public class hwRobot {
     public VerticalExtention VertExten = null;
     public Buttons button = null;
 
-    public hwRobot() {
-    }
+    public hwRobot() {}
 
     public void init(HardwareMap hmap) {
         hm = hmap;
