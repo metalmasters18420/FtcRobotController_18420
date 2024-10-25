@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_HALF;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_CLAW;
+
 @Config
+
 public class IntakeFlip {
     private final Servo leftFlip;
     private final Servo rightFlip;
@@ -23,5 +27,10 @@ public class IntakeFlip {
     public void FliptoClaw(){
         leftFlip.setPosition(FLIP_CLAW);
         rightFlip.setPosition(FLIP_CLAW);
+    }
+
+    public void FliptoHalf(){
+        leftFlip.setPosition(FLIP_HALF);
+        rightFlip.setPosition(FLIP_HALF);
     }
 }

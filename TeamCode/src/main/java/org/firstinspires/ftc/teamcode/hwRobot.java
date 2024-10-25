@@ -110,6 +110,10 @@ public class hwRobot {
         flip.FliptoClaw();
     }
 
+    public void FlipHalf(){
+        flip.FliptoHalf();
+    }
+
     public void Hextend(){
         HorExt.HExtend();
     }

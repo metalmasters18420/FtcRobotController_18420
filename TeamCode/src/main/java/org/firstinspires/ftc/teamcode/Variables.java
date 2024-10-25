@@ -6,8 +6,10 @@ import com.acmerobotics.dashboard.config.Config;
 
 public class Variables {
 
-    public static double DELAY_TIME = 500;
-    public static double TransDelay = 500;
+    public static double ButtonDelay = 500;
+    public static double VExtDelay = 500;
+    public static double IntakeDelay = 500;
+    public static double FlipDelay = 100;
 
     public static double ARM_WALL_POS = .99;
     public static double ARM_INTAKE_POS = 0;
@@ -29,6 +31,7 @@ public class Variables {
 
     public static double FLIP_INTAKE = 0.07;
     public static double FLIP_CLAW = 1;
+    public static double FLIP_HALF = .3;
 
     public static double VREST = 0;
     public static double VEXT = .7;
