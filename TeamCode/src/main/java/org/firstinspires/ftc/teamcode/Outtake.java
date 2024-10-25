@@ -59,7 +59,7 @@
 //    }
 //    public void LBin(){
 //        hw.arm.setPosition(ARM_LOW_BIN_POS);
-//        hw.VertExt();
+//        hw.VertLB();
 //        buttonDelay.reset();
 //    }
 //}

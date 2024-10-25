@@ -27,10 +27,10 @@ public class Buttons {}
 //            x2Toggle = !x2Toggle;
 //        }
 //        if (x2Toggle){
-//            hw.FliptoClaw();
+//            hw.FlipClaw();
 //        }
 //        else{
-//          hw.FliptoIntake();
+//          hw.FlipIntake();
 //        }
 //
 //        x2Last = x2Current;

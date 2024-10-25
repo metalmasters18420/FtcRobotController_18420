@@ -37,19 +37,19 @@ public class hwRobot {
     public void init(HardwareMap hmap) {
         hm = hmap;
 
-        LFDrive = hm.get(DcMotor.class, "LF");
-        LBDrive = hm.get(DcMotor.class, "LB");
-        RFDrive = hm.get(DcMotor.class, "RF");
-        RBDrive = hm.get(DcMotor.class, "RB");
-        Intake = hm.get(DcMotor.class, "IN");
-        LIntake = hm.get(Servo.class, "LFlip");
-        RIntake = hm.get(Servo.class, "RFlip");
-        claw = hm.get(Servo.class, "Claw");
-        wrist = hm.get(Servo.class, "Wrist");
-        arm = hm.get(Servo.class, "Arm");
-        LHoriz = hm.get(Servo.class, "LH");
-        RHoriz = hm.get(Servo.class, "RH");
-        VLift = hm.get(Servo.class, "VL");
+        LFDrive = hm.get(DcMotor.class, "LF"); //CH0 motor
+        LBDrive = hm.get(DcMotor.class, "LB"); //CH1 motor
+        RFDrive = hm.get(DcMotor.class, "RF"); //EH2 motor
+        RBDrive = hm.get(DcMotor.class, "RB"); //CH2 motor
+        Intake = hm.get(DcMotor.class, "IN"); //CH3 motor
+        LIntake = hm.get(Servo.class, "LFlip"); //CH2
+        RIntake = hm.get(Servo.class, "RFlip"); //EH2
+        claw = hm.get(Servo.class, "Claw"); //CH0
+        wrist = hm.get(Servo.class, "Wrist"); //CH1
+        arm = hm.get(Servo.class, "Arm"); //EH0
+        LHoriz = hm.get(Servo.class, "LH"); //CH3
+        RHoriz = hm.get(Servo.class, "RH"); //EH1
+        VLift = hm.get(Servo.class, "VL"); //CH4
 
         LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -102,11 +102,11 @@ public class hwRobot {
         LHoriz.setPosition(0);
     }
 
-    public void FliptoIntake(){
+    public void FlipIntake(){
         flip.FliptoIntake();
     }
 
-    public void FliptoClaw(){
+    public void FlipClaw(){
         flip.FliptoClaw();
     }
 
@@ -122,7 +122,11 @@ public class hwRobot {
         VertExten.VertRest();
     }
 
-    public void VertExt(){
-        VertExten.VertExt();
+    public void VertLB(){
+        VertExten.VertLB();
+    }
+
+    public void VertWall(){
+        VertExten.VertWall();
     }
 }

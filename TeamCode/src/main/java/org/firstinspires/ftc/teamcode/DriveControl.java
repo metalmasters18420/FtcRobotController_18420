@@ -10,6 +10,10 @@ import static org.firstinspires.ftc.teamcode.Variables.ARM_WALL_POS;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.Variables.DELAY_TIME;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
+import static org.firstinspires.ftc.teamcode.Variables.HORIZ_RETRACT_POS;
+import static org.firstinspires.ftc.teamcode.Variables.TransDelay;
+import static org.firstinspires.ftc.teamcode.Variables.VREST;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_HIGH;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_WALL;
@@ -25,11 +29,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
 public class DriveControl extends  OpMode {
 
+    public ElapsedTime transitionTimer = new ElapsedTime();
     public ElapsedTime buttonDelay = new ElapsedTime();
 
     public enum Deposit {
         REST,
         WALL,
+        TRANSITION_WALL,
+        TRANSITION_BIN,
         LOW_BAR_PRE,
         LOW_BAR_POST,
         HIGH_BAR_PRE,
@@ -40,9 +47,32 @@ public class DriveControl extends  OpMode {
 
     Deposit armflip = Deposit.REST;
 
+    public enum Pickup {
+        INTAKE,
+        TRANSFER,
+        MIDDLE,
+        PRETRANSFER
+    }
+
+    Pickup intake = Pickup.TRANSFER;
+
     hwRobot hw = new hwRobot();
 
     private final ElapsedTime runtime = new ElapsedTime();
+
+    boolean BUTTON_READY = buttonDelay.milliseconds() > DELAY_TIME;
+
+    boolean x2Current = false;
+    boolean x2Last = false;
+    boolean x2Toggle = false;
+
+    boolean y1Current = false;
+    boolean y1Last = false;
+    boolean y1Toggle = false;
+
+    boolean a2Current = false;
+    boolean a2Last = false;
+    boolean a2Toggle = false;
 
     @Override
     public void init() {
@@ -51,25 +81,24 @@ public class DriveControl extends  OpMode {
         telemetry.addData("Satus", "Initialized");
         hw.init(hardwareMap);
 
-        hw.claw.setPosition(0);
-        hw.arm.setPosition(0);
+        hw.VLift.setPosition(VREST);
+        hw.arm.setPosition(ARM_INTAKE_POS);
+        hw.wrist.setPosition(WRIST_INTAKE);
+        hw.claw.setPosition(CLAW_OPEN);
+        hw.LIntake.setPosition(FLIP_INTAKE);
+        hw.RIntake.setPosition(FLIP_INTAKE);
+        hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
+        hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
+    }
+
+    public void start(){
+        buttonDelay.reset();
+        transitionTimer.reset();
     }
 
     @Override
     public void loop() {
         boolean BUTTON_READY = buttonDelay.milliseconds() > DELAY_TIME;
-
-        boolean x2Current = false;
-        boolean x2Last = false;
-        boolean x2Toggle = false;
-
-        boolean y2Current = false;
-        boolean y2Last = false;
-        boolean y2Toggle = false;
-
-        boolean a2Current = false;
-        boolean a2Last = false;
-        boolean a2Toggle = false;
 
         x2Current = gamepad2.x;
 
@@ -77,10 +106,10 @@ public class DriveControl extends  OpMode {
                 x2Toggle = !x2Toggle;
             }
             if (x2Toggle){
-                hw.FliptoClaw();
+                hw.FlipIntake();
             }
             else{
-                hw.FliptoIntake();
+                hw.FlipClaw();
             }
 
         x2Last = x2Current;
@@ -99,31 +128,44 @@ public class DriveControl extends  OpMode {
 
         a2Last = a2Current;
 
-        y2Current = gamepad2.y;
+        y1Current = gamepad1.y;
 
-            if (y2Current && !y2Last) {
-                y2Toggle = !y2Toggle;
+            if (y1Current && !y1Last) {
+                y1Toggle = !y1Toggle;
             }
-            if (y2Toggle){
+            if (y1Toggle){
                 hw.Hextend();
             }
             else{
                 hw.HRetract();
             }
 
-        y2Last = y2Current;
+        y1Last = y1Current;
 
         switch (armflip){
             case REST:
                 if (gamepad2.dpad_up && BUTTON_READY){ //move to wall
                     Wall();
-                    armflip = Deposit.WALL;
+                    transitionTimer.reset();
+                    armflip = Deposit.TRANSITION_WALL;
                 }
                 if (gamepad2.dpad_down && BUTTON_READY){ //move to low bin
                     LBin();
-                    armflip = Deposit.LOW_BIN;
+                    transitionTimer.reset();
+                    armflip = Deposit.TRANSITION_BIN;
                 }
                 break;
+            case TRANSITION_WALL:
+                if (transitionTimer.milliseconds() > TransDelay){
+                    TransitionWall();
+                    armflip = Deposit.WALL;
+                }
+                break;
+            case TRANSITION_BIN:
+                if (transitionTimer.milliseconds() > TransDelay){
+                    TransitionBin();
+                    armflip = Deposit.LOW_BIN;
+                }
             case WALL:
                 if (gamepad2.dpad_right && BUTTON_READY){ //move to low bar
                     LBarPre();
@@ -201,6 +243,36 @@ public class DriveControl extends  OpMode {
             default:
                 armflip = Deposit.REST;
         }
+        switch (intake) {
+            case TRANSFER:
+                if (gamepad1.b && BUTTON_READY){
+                    hw.Intake.setPower(1);
+                    intake = Pickup.INTAKE;
+                }
+            case INTAKE:
+                if (gamepad1.x && BUTTON_READY){
+                    hw.Intake.setPower(1);
+                    hw.flip.FliptoClaw();
+                    intake = Pickup.MIDDLE;
+                }
+                break;
+            case MIDDLE:
+                if (gamepad2.a && BUTTON_READY){
+                    hw.Intake.setPower(0);
+                    hw.flip.FliptoIntake();
+                    intake = Pickup.PRETRANSFER;
+                }
+                break;
+            case PRETRANSFER:
+                if (gamepad1.b && BUTTON_READY) {
+                    hw.Intake.setPower(0);
+                    hw.flip.FliptoIntake();
+                    intake = Pickup.TRANSFER;
+                }
+                break;
+            default:
+                intake = Pickup.PRETRANSFER;
+        }
 
         double Drive = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
@@ -222,10 +294,9 @@ public class DriveControl extends  OpMode {
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
 
-        hw.Intake.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
+//        hw.Intake.setPower(gamepad1.right_trigger - gamepad2.left_trigger);
     }
 
-    //PUT METHODS HERE
     public void Rest(){
         hw.arm.setPosition(ARM_INTAKE_POS);
         hw.wrist.setPosition(WRIST_INTAKE);
@@ -258,7 +329,12 @@ public class DriveControl extends  OpMode {
     }
     public void LBin(){
         hw.arm.setPosition(ARM_LOW_BIN_POS);
-        hw.VertExt();
         buttonDelay.reset();
+    }
+    public void TransitionWall(){
+        hw.VertWall();
+    }
+    public void TransitionBin(){
+        hw.VertLB();
     }
 }
