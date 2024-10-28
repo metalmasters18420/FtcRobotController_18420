@@ -90,22 +90,22 @@ public class hwRobot {
 
         flip = new IntakeFlip(LIntake, RIntake);
 
-        LIntake.setPosition(0);
-        RIntake.setPosition(0);
+            LIntake.setPosition(0);
+            RIntake.setPosition(0);
 
         HorExt = new HorizontalExtention(LHoriz, RHoriz);
 
-        LHoriz.setPosition(0);
-        RHoriz.setPosition(0);
+            LHoriz.setPosition(0);
+            RHoriz.setPosition(0);
 
         VertExten = new VerticalExtention(VLift);
 
-        VLift.setPosition(0);
+            VLift.setPosition(0);
 
         out = new Outtake(Larm, Rarm);
 
-        Rarm.setPosition(0);
-        Larm.setPosition(0);
+            Rarm.setPosition(0);
+            Larm.setPosition(0);
     }
 
     public void FlipIntake(){
