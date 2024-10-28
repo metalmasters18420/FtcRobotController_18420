@@ -65,15 +65,15 @@ public class DriveControl extends  OpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();
 
-    boolean BUTTON_READY = buttonDelay.milliseconds() > ButtonDelay;
-    boolean VextDelay = VEDelay.milliseconds() > VExtDelay;
-    boolean INDelay = InDelay.milliseconds() > IntakeDelay;
-    boolean FDelay = InDelay.milliseconds() > FlipDelay;
+//    boolean BUTTON_READY = buttonDelay.milliseconds() > ButtonDelay;
+//    boolean VextDelay = VEDelay.milliseconds() > VExtDelay;
+//    boolean INDelay = InDelay.milliseconds() > IntakeDelay;
+//    boolean FDelay = InDelay.milliseconds() > FlipDelay;
 
-//    boolean x2Current = false;
-//    boolean x2Last = false;
-//    boolean x2Toggle = false;
-//
+    boolean x2Current = false;
+    boolean x2Last = false;
+    boolean x2Toggle = false;
+
 //    boolean y1Current = false;
 //    boolean y1Last = false;
 //    boolean y1Toggle = false;
@@ -108,19 +108,19 @@ public class DriveControl extends  OpMode {
     @Override
     public void loop() {
 
-//        x2Current = gamepad2.x;
-//
-//            if (x2Current && !x2Last){
-//                x2Toggle = !x2Toggle;
-//            }
-//            if (x2Toggle){
-//                hw.FlipIntake();
-//            }
-//            else{
-//                hw.FlipClaw();
-//            }
-//
-//        x2Last = x2Current;
+        x2Current = gamepad1.x;
+
+            if (x2Current && !x2Last){
+                x2Toggle = !x2Toggle;
+            }
+            if (x2Toggle){
+                hw.FlipIntake();
+            }
+            else{
+                hw.FlipClaw();
+            }
+
+        x2Last = x2Current;
 
         a2Current = gamepad2.a;
 
@@ -136,7 +136,7 @@ public class DriveControl extends  OpMode {
 
         a2Last = a2Current;
 
-//        y1Current = gamepad1.y;
+//        y1Current = gamepad2.y;
 //
 //            if (y1Current && !y1Last) {
 //                y1Toggle = !y1Toggle;
@@ -145,149 +145,160 @@ public class DriveControl extends  OpMode {
 //                hw.Hextend();
 //            }
 //            else{
-//                hw.HRetract();
+//                hw.Hretract();
 //            }
 //
 //        y1Last = y1Current;
 
         switch (armflip){
             case REST:
-                if (gamepad2.dpad_up && BUTTON_READY){ //move to wall
+                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to wall
                     Wall();
                     VEDelay.reset();
                     armflip = Deposit.TRANSITION_WALL;
                 }
-                if (gamepad2.dpad_down && BUTTON_READY){ //move to low bin
+                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
                     LBin();
                     VEDelay.reset();
                     armflip = Deposit.TRANSITION_BIN;
                 }
                 break;
             case TRANSITION_WALL:
-                if (VextDelay){
+                if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransWall();
                     armflip = Deposit.WALL;
                 }
                 break;
             case TRANSITION_BIN:
-                if (VextDelay){
+                if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransBin();
                     armflip = Deposit.LOW_BIN;
                 }
             case WALL:
-                if (gamepad2.dpad_right && BUTTON_READY){ //move to low bar
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
                     LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
-                if (gamepad2.dpad_left && BUTTON_READY){ //move to high bar
+                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){ //move to high bar
                     HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
-                if (gamepad2.dpad_down && BUTTON_READY){ //move to rest
+                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case LOW_BAR_PRE:
-                if (gamepad2.dpad_right && BUTTON_READY){ //score on low bar
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //score on low bar
                     LBarPost();
                     armflip = Deposit.LOW_BAR_POST;
                 }
-                if (gamepad2.dpad_left && BUTTON_READY){ //move to high pos
+                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){ //move to high pos
                     HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
-                if (gamepad2.dpad_up && BUTTON_READY){ //move to low bin
+                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
                     LBin();
                     armflip = Deposit.LOW_BIN;
                 }
-                if (gamepad1.dpad_down && BUTTON_READY){ //move to rest
+                if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case HIGH_BAR_PRE:
-                if (gamepad2.dpad_left && BUTTON_READY){ //score on high bar
+                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){ //score on high bar
                     HBarPost();
                     armflip = Deposit.HIGH_BAR_POST;
                 }
-                if (gamepad2.dpad_right && BUTTON_READY){ //move to low bar
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
                     LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
-                if (gamepad2.dpad_up && BUTTON_READY){ //move to low bin
+                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
                     LBin();
                     armflip = Deposit.LOW_BIN;
                 }
-                if (gamepad2.dpad_down && BUTTON_READY){ //move to rest
+                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     Rest();
                     armflip = Deposit.REST;
                 }
                 break;
             case LOW_BIN:
-                if (gamepad2.dpad_up && BUTTON_READY){ //move to resting
+                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
                     Rest();
                     armflip = Deposit.REST;
                 }
             case LOW_BAR_POST:
-                if (gamepad2.dpad_down && BUTTON_READY){
+                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     Rest();
                     armflip = Deposit.REST;
                 }
-                if (gamepad2.dpad_right && BUTTON_READY){
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar pre
                     LBarPre();
                     armflip = Deposit.LOW_BAR_PRE;
                 }
             case HIGH_BAR_POST:
-                if (gamepad2.dpad_down && BUTTON_READY){ //move to resting
+                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
                     Rest();
                     armflip = Deposit.REST;
                 }
-                if (gamepad2.dpad_up && BUTTON_READY){ //move to wall
+                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to wall
                     Wall();
                     armflip = Deposit.WALL;
+                }
+                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){
+                    HBarPre();
+                    armflip = Deposit.HIGH_BAR_PRE;
                 }
                 break;
             default:
                 armflip = Deposit.REST;
         }
 
-        switch (intake) {
+        switch (intake){
             case REST:
-                if (gamepad1.y && BUTTON_READY){ //extends
+                hw.Intake.setPower(0);
+                hw.FlipHalf();
+                hw.Hretract();
+                if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //extends
                     hw.Hextend();
                     InDelay.reset();
                     intake = Pickup.EXTENDED;
                 }
+                break;
             case EXTENDED:
-                if (INDelay){ //flips and turns on intake
+                if (InDelay.milliseconds() > IntakeDelay){ //flips and turns on intake
                     hw.Intake.setPower(1);
                     hw.FlipIntake();
                     intake = Pickup.IN_PRE;
                 }
                 break;
             case IN_PRE:
-                if (gamepad1.y && BUTTON_READY){ //flips up
+                if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //flips up
                     hw.FlipClaw();
+                    hw.claw.setPosition(CLAW_OPEN);
                     InDelay.reset();
                     intake = Pickup.IN_POST;
                 }
                 break;
             case IN_POST:
-                if (FDelay){ //turn off intake and retract
+                if (InDelay.milliseconds() > FlipDelay){ //turn off intake and retract
                     hw.Intake.setPower(0);
-                    hw.HRetract();
+                    hw.Hretract();
                     intake = Pickup.RETRACTED;
                 }
                 break;
             case RETRACTED:
-                if (gamepad1.a && BUTTON_READY){ //delay before flip
+                if (gamepad2.a && buttonDelay.milliseconds() > ButtonDelay){ //delay before flip
+                    InDelay.reset();
                     intake = Pickup.TRANSFER;
                 }
                 break;
             case TRANSFER:
-                if (FDelay){ //flips for arm
+                if (InDelay.milliseconds() > FlipDelay){ //flips for arm
                     hw.FlipHalf();
+                    hw.Intake.setPower(0);
                     intake = Pickup.REST;
                 }
                 break;

@@ -39,8 +39,8 @@ public class hwRobot {
 
         LFDrive = hm.get(DcMotor.class, "LF"); //CH0 motor
         LBDrive = hm.get(DcMotor.class, "LB"); //CH1 motor
-        RFDrive = hm.get(DcMotor.class, "RF"); //EH2 motor
-        RBDrive = hm.get(DcMotor.class, "RB"); //CH2 motor
+        RFDrive = hm.get(DcMotor.class, "RF"); //CH2 motor
+        RBDrive = hm.get(DcMotor.class, "RB"); //EH2 motor
         Intake = hm.get(DcMotor.class, "IN"); //CH3 motor
         LIntake = hm.get(Servo.class, "LFlip"); //CH2
         RIntake = hm.get(Servo.class, "RFlip"); //EH2
@@ -110,7 +110,7 @@ public class hwRobot {
         flip.FliptoClaw();
     }
 
-    public void FlipHalf(){
+    public void FlipHalf() {
         flip.FliptoHalf();
     }
 
@@ -118,7 +118,7 @@ public class hwRobot {
         HorExt.HExtend();
     }
 
-    public void HRetract(){
+    public void Hretract(){
         HorExt.HRetract();
     }
 
