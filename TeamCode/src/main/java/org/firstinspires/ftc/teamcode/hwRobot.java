@@ -20,7 +20,8 @@ public class hwRobot {
 
     public Servo claw = null;
     public Servo wrist = null;
-    public Servo arm = null;
+    public Servo Rarm = null;
+    public Servo Larm = null;
 
     public Servo VLift = null;
 
@@ -31,6 +32,7 @@ public class hwRobot {
     public HorizontalExtention HorExt = null;
     public VerticalExtention VertExten = null;
     public Buttons button = null;
+    public Outtake out = null;
 
     public hwRobot() {}
 
@@ -46,7 +48,8 @@ public class hwRobot {
         RIntake = hm.get(Servo.class, "RFlip"); //EH2
         claw = hm.get(Servo.class, "Claw"); //CH0
         wrist = hm.get(Servo.class, "Wrist"); //CH1
-        arm = hm.get(Servo.class, "Arm"); //EH0
+        Rarm = hm.get(Servo.class, "RA"); //EH0
+        Larm = hm.get(Servo.class, "LA"); //somewhere
         LHoriz = hm.get(Servo.class, "LH"); //CH3
         RHoriz = hm.get(Servo.class, "RH"); //EH1
         VLift = hm.get(Servo.class, "VL"); //CH4
@@ -71,6 +74,20 @@ public class hwRobot {
         RFDrive.setTargetPosition(0);
         RBDrive.setTargetPosition(0);
 
+        Intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Intake.setPower(0);
+        Intake.setTargetPosition(0);
+
+        claw.setPosition(0);
+        wrist.setPosition(0);
+
+        LIntake.setPosition(0);
+        RIntake.setPosition(0);
+
+        RHoriz.setPosition(0);
+        LHoriz.setPosition(0);
+
         flip = new IntakeFlip(LIntake, RIntake);
 
         LIntake.setPosition(0);
@@ -85,21 +102,10 @@ public class hwRobot {
 
         VLift.setPosition(0);
 
-        Intake.setDirection(DcMotorSimple.Direction.FORWARD);
-        Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Intake.setPower(0);
-        Intake.setTargetPosition(0);
+        out = new Outtake(Larm, Rarm);
 
-        claw.setPosition(0);
-        wrist.setPosition(0);
-        arm.setPosition(0);
-        arm.setDirection(Servo.Direction.REVERSE);
-
-        LIntake.setPosition(0);
-        RIntake.setPosition(0);
-
-        RHoriz.setPosition(0);
-        LHoriz.setPosition(0);
+        Rarm.setPosition(0);
+        Larm.setPosition(0);
     }
 
     public void FlipIntake(){
@@ -132,5 +138,33 @@ public class hwRobot {
 
     public void VertWall(){
         VertExten.VertWall();
+    }
+
+    public void ArmRest(){
+        out.ArmRest();
+    }
+
+    public void ArmWall(){
+        out.ArmWall();
+    }
+
+    public void ArmLPre(){
+        out.ArmLBPre();
+    }
+
+    public void ArmLPost(){
+        out.ArmLBPost();
+    }
+
+    public void ArmHPre(){
+        out.ArmHBPre();
+    }
+
+    public void ArmHPost(){
+        out.ArmHBPost();
+    }
+
+    public void ArmLB(){
+        out.ArmLB();
     }
 }

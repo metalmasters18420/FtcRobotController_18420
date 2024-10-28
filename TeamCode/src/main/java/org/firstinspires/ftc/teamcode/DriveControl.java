@@ -1,16 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_POST_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_HIGH_PRE_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_INTAKE_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_BIN_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_POST_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_PRE_POS;
-import static org.firstinspires.ftc.teamcode.Variables.ARM_WALL_POS;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.Variables.ButtonDelay;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_HALF;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.FlipDelay;
 import static org.firstinspires.ftc.teamcode.Variables.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.Variables.IntakeDelay;
@@ -90,11 +85,12 @@ public class DriveControl extends  OpMode {
         hw.init(hardwareMap);
 
         hw.VLift.setPosition(VREST);
-        hw.arm.setPosition(ARM_INTAKE_POS);
+        hw.Rarm.setPosition(ARM_INTAKE_POS);
+        hw.Larm.setPosition(ARM_INTAKE_POS);
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);
-        hw.LIntake.setPosition(FLIP_HALF);
-        hw.RIntake.setPosition(FLIP_HALF);
+        hw.LIntake.setPosition(FLIP_INTAKE);
+        hw.RIntake.setPosition(FLIP_INTAKE);
         hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
         hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
     }
@@ -331,38 +327,38 @@ public class DriveControl extends  OpMode {
 
 
     public void Rest(){
-        hw.arm.setPosition(ARM_INTAKE_POS);
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);
+        hw.ArmRest();
         hw.VertRest();
         hw.FlipHalf();
         buttonDelay.reset();
     }
     public void Wall(){
-        hw.arm.setPosition(ARM_WALL_POS);
         hw.wrist.setPosition(WRIST_WALL);
         hw.claw.setPosition(CLAW_OPEN);
+        hw.ArmWall();
         buttonDelay.reset();
     }
     public void LBarPre(){
-        hw.arm.setPosition(ARM_LOW_PRE_POS);
+        hw.ArmLPre();
         buttonDelay.reset();
     }
     public void LBarPost(){
-        hw.arm.setPosition(ARM_LOW_POST_POS);
+        hw.ArmLPost();
         buttonDelay.reset();
     }
     public void HBarPre(){
-        hw.arm.setPosition(ARM_HIGH_PRE_POS);
         hw.wrist.setPosition(WRIST_HIGH);
+        hw.ArmHPre();
         buttonDelay.reset();
     }
     public void HBarPost(){
-        hw.arm.setPosition(ARM_HIGH_POST_POS);
+        hw.ArmHPost();
         buttonDelay.reset();
     }
     public void LBin(){
-        hw.arm.setPosition(ARM_LOW_BIN_POS);
+        hw.ArmLB();
         buttonDelay.reset();
     }
     public void TransWall(){
