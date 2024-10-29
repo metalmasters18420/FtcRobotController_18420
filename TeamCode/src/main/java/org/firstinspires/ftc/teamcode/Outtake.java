@@ -20,8 +20,8 @@ public class Outtake {
     public Outtake(Servo la, Servo ra){
         this.leftarm = la;
         this.rightarm = ra;
-        rightarm.setDirection(Servo.Direction.REVERSE);
-        leftarm.setDirection(Servo.Direction.FORWARD);
+        rightarm.setDirection(Servo.Direction.FORWARD);
+        leftarm.setDirection(Servo.Direction.REVERSE);
     }
 
     public void ArmRest(){

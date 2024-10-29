@@ -321,8 +321,6 @@ public class DriveControl extends  OpMode {
                     hw.LBDrive.setPower(LBP);
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
-
-//        hw.Intake.setPower(gamepad1.right_trigger - gamepad2.left_trigger);
     }
 
 
