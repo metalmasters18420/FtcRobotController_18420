@@ -89,8 +89,8 @@ public class DriveControl extends  OpMode {
         hw.Larm.setPosition(ARM_INTAKE_POS);
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);
-        hw.LIntake.setPosition(FLIP_INTAKE);
-        hw.RIntake.setPosition(FLIP_INTAKE);
+        hw.LIntake.setPosition(FLIP_HALF);
+        hw.RIntake.setPosition(FLIP_HALF);
         hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
         hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
     }
@@ -254,9 +254,11 @@ public class DriveControl extends  OpMode {
 
         switch (intake){
             case REST:
+
                 hw.Intake.setPower(0);
                 hw.FlipHalf();
                 hw.Hretract();
+
                 if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //extends
                     hw.Hextend();
                     InDelay.reset();
@@ -322,8 +324,7 @@ public class DriveControl extends  OpMode {
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
     }
-
-
+    
     public void Rest(){
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);

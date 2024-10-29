@@ -49,7 +49,7 @@ public class hwRobot {
         claw = hm.get(Servo.class, "Claw"); //CH0
         wrist = hm.get(Servo.class, "Wrist"); //CH1
         Rarm = hm.get(Servo.class, "RA"); //EH0
-        Larm = hm.get(Servo.class, "LA"); //somewhere
+        Larm = hm.get(Servo.class, "LA"); //CH5
         LHoriz = hm.get(Servo.class, "LH"); //CH3
         RHoriz = hm.get(Servo.class, "RH"); //EH1
         VLift = hm.get(Servo.class, "VL"); //CH4
