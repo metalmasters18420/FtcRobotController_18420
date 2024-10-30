@@ -1,28 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
 // RR-specific imports
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.Vector2d;
-import com.acmerobotics.roadrunner.ftc.Actions;
 
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@Config
-@Autonomous (name = "BLUEBUCKETAUTO", group = "Autonomous")
-public class blueBucketAuto extends LinearOpMode {
-    public class VLift{
+//@Config
+//@Autonomous (name = "2024Autonomous", group = "Autonomous")
+//public class 2024Autonomous extends LinearOpMode {
+    /*public class VLift{
         private Servo VLift;
 
         public VLift(HardwareMap hwRobot) {
@@ -62,7 +49,7 @@ public class blueBucketAuto extends LinearOpMode {
         private Servo claw;
 
         public Claw(HardwareMap hwRobot) {
-            claw = hardwareMap.get(Servo.class, "Claw");
+            claw = hwRobot.get(Servo.class, "Claw");
         }
     }
     public class Wrist {
@@ -106,14 +93,15 @@ public class blueBucketAuto extends LinearOpMode {
         public RHoriz (HardwareMap hwRobot) {
             RHoriz = hwRobot.get(Servo.class, "RH");
         }
-    }
+    }*/
     //public class intake flip
 
-    @Override
-    public void runOpMode(){
+   // @Override
+    //public void runOpMode(){
+      //  Pose2d initialPose = new Pose2d(11.8, )
 
         //WHERE YOUR RUNNING CODE GOES
 
 
-    }
-}
+  //  }
+//}
