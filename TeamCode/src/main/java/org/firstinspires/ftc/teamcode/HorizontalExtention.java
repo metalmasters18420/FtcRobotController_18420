@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Servo;
 import static org.firstinspires.ftc.teamcode.Variables.HORIZ_EXTEND_POS;
 import static org.firstinspires.ftc.teamcode.Variables.HORIZ_RETRACT_POS;
-
+@Config
 public class HorizontalExtention {
     private final Servo leftHoriz;
     private final Servo rightHoriz;
