@@ -104,19 +104,21 @@ public class DriveControl extends  OpMode {
     @Override
     public void loop() {
 
-        x2Current = gamepad1.x;
 
-            if (x2Current && !x2Last){
-                x2Toggle = !x2Toggle;
-            }
-            if (x2Toggle){
-                hw.FlipIntake();
-            }
-            else{
-                hw.FlipClaw();
-            }
-
-        x2Last = x2Current;
+//
+//        x2Current = gamepad1.x;
+//
+//            if (x2Current && !x2Last){
+//                x2Toggle = !x2Toggle;
+//            }
+//            if (x2Toggle){
+//                hw.FlipIntake();
+//            }
+//            else{
+//                hw.FlipClaw();
+//            }
+//
+//        x2Last = x2Current;
 
         a2Current = gamepad2.a;
 
