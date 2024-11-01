@@ -140,6 +140,10 @@ public class hwRobot {
         VertExten.VertWall();
     }
 
+    public void VertBar(){
+        VertExten.VertBar();
+    }
+
     public void ArmRest(){
         out.ArmRest();
     }

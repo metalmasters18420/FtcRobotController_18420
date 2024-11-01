@@ -56,6 +56,6 @@ public class Outtake {
 
     public void ArmLB(){
         leftarm.setPosition(ARM_LOW_BIN_POS);
-        leftarm.setPosition(ARM_LOW_BIN_POS);
+        rightarm.setPosition(ARM_LOW_BIN_POS);
     }
 }

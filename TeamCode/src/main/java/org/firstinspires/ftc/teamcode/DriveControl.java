@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.Variables.ARM_INTAKE_POS;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.Variables.ButtonDelay;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_HALF;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.FlipDelay;
@@ -89,8 +90,8 @@ public class DriveControl extends  OpMode {
         hw.Larm.setPosition(ARM_INTAKE_POS);
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);
-        hw.LIntake.setPosition(FLIP_HALF);
-        hw.RIntake.setPosition(FLIP_HALF);
+        hw.LIntake.setPosition(FLIP_CLAW);
+        hw.RIntake.setPosition(FLIP_CLAW);
         hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
         hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
     }
@@ -103,7 +104,6 @@ public class DriveControl extends  OpMode {
 
     @Override
     public void loop() {
-
 
 //
 //        x2Current = gamepad1.x;
@@ -258,7 +258,7 @@ public class DriveControl extends  OpMode {
             case REST:
 
                 hw.Intake.setPower(0);
-                hw.FlipHalf();
+//                hw.FlipHalf();
                 hw.Hretract();
 
                 if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //extends
@@ -325,6 +325,9 @@ public class DriveControl extends  OpMode {
                     hw.LBDrive.setPower(LBP);
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
+
+        telemetry.addData("Current Position", hw.Larm.getPosition());
+        telemetry.update();
     }
     
     public void Rest(){
@@ -352,6 +355,7 @@ public class DriveControl extends  OpMode {
     public void HBarPre(){
         hw.wrist.setPosition(WRIST_HIGH);
         hw.ArmHPre();
+        hw.VertBar();
         buttonDelay.reset();
     }
     public void HBarPost(){

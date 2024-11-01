@@ -16,7 +16,7 @@ public class IntakeFlip {
     public IntakeFlip(Servo lf, Servo rf){
         this.leftFlip = lf;
         this.rightFlip = rf;
-        rightFlip.setDirection(Servo.Direction.REVERSE);
+        leftFlip.setDirection(Servo.Direction.REVERSE);
     }
 
     public void FliptoIntake(){
