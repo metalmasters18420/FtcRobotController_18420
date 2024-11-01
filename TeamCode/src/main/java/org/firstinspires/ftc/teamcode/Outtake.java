@@ -8,10 +8,7 @@ import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_POST_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_PRE_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_WALL_POS;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Servo;
-
-@Config
 
 public class Outtake {
     private final Servo leftarm;
