@@ -10,6 +10,7 @@ public class Variables {
     public static double VExtDelay = 500;
     public static double IntakeDelay = 500;
     public static double FlipDelay = 200;
+    public static double ArmDelay = 500;
 
     public static double ARM_WALL_POS = .12; //98
     public static double ARM_INTAKE_POS = 0;

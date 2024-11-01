@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_HALF;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_CLAW;
-
-@Config
 
 public class IntakeFlip {
     private final Servo leftFlip;
