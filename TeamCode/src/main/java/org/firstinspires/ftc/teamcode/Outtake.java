@@ -8,10 +8,7 @@ import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_POST_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_LOW_PRE_POS;
 import static org.firstinspires.ftc.teamcode.Variables.ARM_WALL_POS;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.Servo;
-
-@Config
 
 public class Outtake {
     private final Servo leftarm;
@@ -56,6 +53,6 @@ public class Outtake {
 
     public void ArmLB(){
         leftarm.setPosition(ARM_LOW_BIN_POS);
-        leftarm.setPosition(ARM_LOW_BIN_POS);
+        rightarm.setPosition(ARM_LOW_BIN_POS);
     }
 }

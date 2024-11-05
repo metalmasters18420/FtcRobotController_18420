@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.Variables.VBAR;
 import static org.firstinspires.ftc.teamcode.Variables.VREST;
 import static org.firstinspires.ftc.teamcode.Variables.VEXT;
 import static org.firstinspires.ftc.teamcode.Variables.VWALL;
@@ -22,5 +23,8 @@ public class VerticalExtention {
     }
     public void VertWall(){
         liftServo.setPosition(VWALL);
+    }
+    public void VertBar(){
+        liftServo.setPosition(VBAR);
     }
 }

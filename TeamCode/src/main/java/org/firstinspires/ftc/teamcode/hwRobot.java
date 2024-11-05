@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-@Config
+
 public class hwRobot {
     HardwareMap hm = null;
 
@@ -138,6 +138,10 @@ public class hwRobot {
 
     public void VertWall(){
         VertExten.VertWall();
+    }
+
+    public void VertBar(){
+        VertExten.VertBar();
     }
 
     public void ArmRest(){

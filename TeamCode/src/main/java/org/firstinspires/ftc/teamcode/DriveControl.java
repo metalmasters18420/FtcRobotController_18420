@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.Variables.ARM_INTAKE_POS;
+import static org.firstinspires.ftc.teamcode.Variables.ArmDelay;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.Variables.ButtonDelay;
-import static org.firstinspires.ftc.teamcode.Variables.FLIP_HALF;
-import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.Variables.FlipDelay;
 import static org.firstinspires.ftc.teamcode.Variables.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.Variables.IntakeDelay;
@@ -29,18 +29,19 @@ public class DriveControl extends  OpMode {
     public ElapsedTime InDelay = new ElapsedTime();
     public ElapsedTime VEDelay = new ElapsedTime();
     public ElapsedTime buttonDelay = new ElapsedTime();
+    public ElapsedTime armDelay = new ElapsedTime();
 
     public enum Deposit {
         REST,
         WALL,
         TRANSITION_WALL,
-        TRANSITION_BIN,
-        LOW_BAR_PRE,
-        LOW_BAR_POST,
+        PRE_WALL,
         HIGH_BAR_PRE,
         HIGH_BAR_POST,
-        LOW_BIN,
-        HIGH_BIN
+//      TRANSITION_BIN,
+//      LOW_BAR_POST,
+//        LOW_BIN,
+//        HIGH_BIN
     }
 
     Deposit armflip = Deposit.REST;
@@ -89,8 +90,8 @@ public class DriveControl extends  OpMode {
         hw.Larm.setPosition(ARM_INTAKE_POS);
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);
-        hw.LIntake.setPosition(FLIP_INTAKE);
-        hw.RIntake.setPosition(FLIP_INTAKE);
+        hw.LIntake.setPosition(FLIP_CLAW);
+        hw.RIntake.setPosition(FLIP_CLAW);
         hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
         hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
     }
@@ -99,24 +100,26 @@ public class DriveControl extends  OpMode {
         buttonDelay.reset();
         VEDelay.reset();
         InDelay.reset();
+        armDelay.reset();
     }
 
     @Override
     public void loop() {
 
-        x2Current = gamepad1.x;
-
-            if (x2Current && !x2Last){
-                x2Toggle = !x2Toggle;
-            }
-            if (x2Toggle){
-                hw.FlipIntake();
-            }
-            else{
-                hw.FlipClaw();
-            }
-
-        x2Last = x2Current;
+//
+//        x2Current = gamepad1.x;
+//
+//            if (x2Current && !x2Last){
+//                x2Toggle = !x2Toggle;
+//            }
+//            if (x2Toggle){
+//                hw.FlipIntake();
+//            }
+//            else{
+//                hw.FlipClaw();
+//            }
+//
+//        x2Last = x2Current;
 
         a2Current = gamepad2.a;
 
@@ -153,87 +156,94 @@ public class DriveControl extends  OpMode {
                     VEDelay.reset();
                     armflip = Deposit.TRANSITION_WALL;
                 }
-                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
-                    LBin();
-                    VEDelay.reset();
-                    armflip = Deposit.TRANSITION_BIN;
-                }
-                break;
+//                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
+//                    LBin();
+//                    VEDelay.reset();
+//                    armflip = Deposit.TRANSITION_BIN;
+//                }
+//                break;
             case TRANSITION_WALL:
                 if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransWall();
                     armflip = Deposit.WALL;
                 }
                 break;
-            case TRANSITION_BIN:
-                if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
-                    TransBin();
-                    armflip = Deposit.LOW_BIN;
-                }
+//            case TRANSITION_BIN:
+//                if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
+//                    TransBin();
+//                    armflip = Deposit.LOW_BIN;
+//                }
             case WALL:
-                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
-                    LBarPre();
-                    armflip = Deposit.LOW_BAR_PRE;
-                }
+//                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
+//                    LBarPre();
+//                    armflip = Deposit.LOW_BAR_PRE;
+//                }
                 if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){ //move to high bar
                     HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
+                    hw.VertRest();
+                    armDelay.reset();
+                    armflip = Deposit.PRE_WALL;
+                }
+                break;
+            case PRE_WALL:
+                if (armDelay.milliseconds() > ArmDelay){
                     Rest();
                     armflip = Deposit.REST;
                 }
                 break;
-            case LOW_BAR_PRE:
-                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //score on low bar
-                    LBarPost();
-                    armflip = Deposit.LOW_BAR_POST;
-                }
-                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){ //move to high pos
-                    HBarPre();
-                    armflip = Deposit.HIGH_BAR_PRE;
-                }
-                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
-                    LBin();
-                    armflip = Deposit.LOW_BIN;
-                }
-                if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
-                    Rest();
-                    armflip = Deposit.REST;
-                }
-                break;
+//            case LOW_BAR_PRE:
+//                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //score on low bar
+//                    LBarPost();
+//                    armflip = Deposit.LOW_BAR_POST;
+//                }
+//                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){ //move to high pos
+//                    HBarPre();
+//                    armflip = Deposit.HIGH_BAR_PRE;
+//                }
+//                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
+//                    LBin();
+//                    armflip = Deposit.LOW_BIN;
+//                }
+//                if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
+//                    Rest();
+//                    armflip = Deposit.REST;
+//                }
+//                break;
             case HIGH_BAR_PRE:
                 if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){ //score on high bar
                     HBarPost();
                     armflip = Deposit.HIGH_BAR_POST;
                 }
-                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
-                    LBarPre();
-                    armflip = Deposit.LOW_BAR_PRE;
-                }
-                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
-                    LBin();
-                    armflip = Deposit.LOW_BIN;
-                }
+//                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
+//                    LBarPre();
+//                    armflip = Deposit.LOW_BAR_PRE;
+//                }
+//                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
+//                    LBin();
+//                    armflip = Deposit.LOW_BIN;
+//                }
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     Rest();
                     armflip = Deposit.REST;
                 }
                 break;
-            case LOW_BIN:
-                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
-                    Rest();
-                    armflip = Deposit.REST;
-                }
-            case LOW_BAR_POST:
-                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
-                    Rest();
-                    armflip = Deposit.REST;
-                }
-                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar pre
-                    LBarPre();
-                    armflip = Deposit.LOW_BAR_PRE;
-                }
+//            case LOW_BIN:
+//                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
+//                    Rest();
+//                    armflip = Deposit.REST;
+//                }
+//            case LOW_BAR_POST:
+//                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
+//                    Rest();
+//                    armflip = Deposit.REST;
+//                }
+//                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar pre
+//                    LBarPre();
+//                    armflip = Deposit.LOW_BAR_PRE;
+//                }
             case HIGH_BAR_POST:
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
                     Rest();
@@ -254,9 +264,11 @@ public class DriveControl extends  OpMode {
 
         switch (intake){
             case REST:
+
                 hw.Intake.setPower(0);
-                hw.FlipHalf();
+//                hw.FlipHalf();
                 hw.Hretract();
+
                 if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //extends
                     hw.Hextend();
                     InDelay.reset();
@@ -321,9 +333,11 @@ public class DriveControl extends  OpMode {
                     hw.LBDrive.setPower(LBP);
                     hw.RFDrive.setPower(RFP);
                     hw.RBDrive.setPower(RBP);
+
+        telemetry.addData("Current Position", hw.Larm.getPosition());
+        telemetry.update();
     }
-
-
+    
     public void Rest(){
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);
@@ -338,31 +352,32 @@ public class DriveControl extends  OpMode {
         hw.ArmWall();
         buttonDelay.reset();
     }
-    public void LBarPre(){
-        hw.ArmLPre();
-        buttonDelay.reset();
-    }
-    public void LBarPost(){
-        hw.ArmLPost();
-        buttonDelay.reset();
-    }
+//    public void LBarPre(){
+//        hw.ArmLPre();
+//        buttonDelay.reset();
+//    }
+//    public void LBarPost(){
+//        hw.ArmLPost();
+//        buttonDelay.reset();
+//    }
     public void HBarPre(){
         hw.wrist.setPosition(WRIST_HIGH);
         hw.ArmHPre();
+        hw.VertBar();
         buttonDelay.reset();
     }
     public void HBarPost(){
         hw.ArmHPost();
         buttonDelay.reset();
     }
-    public void LBin(){
-        hw.ArmLB();
-        buttonDelay.reset();
-    }
+//    public void LBin(){
+//        hw.ArmLB();
+//        buttonDelay.reset();
+//    }
     public void TransWall(){
         hw.VertWall();
     }
-    public void TransBin(){
-        hw.VertLB();
-    }
+//    public void TransBin(){
+//        hw.VertLB();
+//    }
 }

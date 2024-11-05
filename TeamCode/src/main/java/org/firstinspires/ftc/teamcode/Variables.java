@@ -10,14 +10,15 @@ public class Variables {
     public static double VExtDelay = 500;
     public static double IntakeDelay = 500;
     public static double FlipDelay = 200;
+    public static double ArmDelay = 500;
 
-    public static double ARM_WALL_POS = .98;
+    public static double ARM_WALL_POS = .12; //98
     public static double ARM_INTAKE_POS = 0;
-    public static double ARM_LOW_PRE_POS = .95;
-    public static double ARM_LOW_POST_POS = 1;
-    public static double ARM_HIGH_PRE_POS = .8;
-    public static double ARM_HIGH_POST_POS = .85;
-    public static double ARM_LOW_BIN_POS = .7;
+    public static double ARM_LOW_PRE_POS = .627; //95
+    public static double ARM_LOW_POST_POS = .66; //1
+    public static double ARM_HIGH_PRE_POS = .375; //8
+    public static double ARM_HIGH_POST_POS = .567; //85
+    public static double ARM_LOW_BIN_POS = .467; //7
 
     public static double CLAW_CLOSED = .4;
     public static double CLAW_OPEN = 0;
@@ -36,4 +37,5 @@ public class Variables {
     public static double VREST = 0.05;
     public static double VEXT = .7;
     public static double VWALL = .5;
+    public static double VBAR = .01;
 }
