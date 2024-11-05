@@ -49,6 +49,7 @@ public class MeepMeepTesting {
                  .lineToX(62)
                  .setTangent(Math.toRadians(90))
                  .lineToY(SHALLOW_END_POINT_RED.y)
+                 ////Lift lift = new Lift(hardwareMap);
 
                  /*
                  .setTangent(Math.toRadians(-50))
