@@ -14,6 +14,8 @@ public class hwRobot {
     public DcMotor RBDrive = null;
     public DcMotor RFDrive = null;
 
+    public DcMotor Hang = null;
+
     public DcMotor Intake = null;
     public Servo LIntake = null;
     public Servo RIntake = null;
@@ -43,6 +45,7 @@ public class hwRobot {
         LBDrive = hm.get(DcMotor.class, "LB"); //CH1 motor
         RFDrive = hm.get(DcMotor.class, "RF"); //CH2 motor
         RBDrive = hm.get(DcMotor.class, "RB"); //EH2 motor
+        Hang = hm.get(DcMotor.class, "UP"); //EH0 motor
         Intake = hm.get(DcMotor.class, "IN"); //CH3 motor
         LIntake = hm.get(Servo.class, "LFlip"); //CH2
         RIntake = hm.get(Servo.class, "RFlip"); //EH2
@@ -73,6 +76,11 @@ public class hwRobot {
         LBDrive.setTargetPosition(0);
         RFDrive.setTargetPosition(0);
         RBDrive.setTargetPosition(0);
+
+        Hang.setDirection(DcMotorSimple.Direction.FORWARD);
+        Hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        Hang.setPower(0);
+        Hang.setTargetPosition(0);
 
         Intake.setDirection(DcMotorSimple.Direction.FORWARD);
         Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

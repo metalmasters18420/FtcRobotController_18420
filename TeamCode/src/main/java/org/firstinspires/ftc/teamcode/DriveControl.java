@@ -65,10 +65,10 @@ public class DriveControl extends  OpMode {
 //    boolean VextDelay = VEDelay.milliseconds() > VExtDelay;
 //    boolean INDelay = InDelay.milliseconds() > IntakeDelay;
 //    boolean FDelay = InDelay.milliseconds() > FlipDelay;
-
-    boolean x2Current = false;
-    boolean x2Last = false;
-    boolean x2Toggle = false;
+//
+//    boolean x2Current = false;
+//    boolean x2Last = false;
+//    boolean x2Toggle = false;
 
 //    boolean y1Current = false;
 //    boolean y1Last = false;
@@ -151,6 +151,7 @@ public class DriveControl extends  OpMode {
 
         switch (armflip){
             case REST:
+//                Rest();
                 if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to wall
                     Wall();
                     VEDelay.reset();
@@ -161,7 +162,7 @@ public class DriveControl extends  OpMode {
 //                    VEDelay.reset();
 //                    armflip = Deposit.TRANSITION_BIN;
 //                }
-//                break;
+                break;
             case TRANSITION_WALL:
                 if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransWall();
@@ -172,7 +173,7 @@ public class DriveControl extends  OpMode {
 //                if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
 //                    TransBin();
 //                    armflip = Deposit.LOW_BIN;
-//                }
+//                } A
             case WALL:
 //                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
 //                    LBarPre();
@@ -227,7 +228,7 @@ public class DriveControl extends  OpMode {
 //                }
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     Rest();
-                    armflip = Deposit.REST;
+                    armflip = Deposit.PRE_WALL;
                 }
                 break;
 //            case LOW_BIN:
@@ -247,12 +248,12 @@ public class DriveControl extends  OpMode {
             case HIGH_BAR_POST:
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
                     Rest();
-                    armflip = Deposit.REST;
+                    armflip = Deposit.PRE_WALL;
                 }
-                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to wall
-                    Wall();
-                    armflip = Deposit.WALL;
-                }
+//                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to wall
+//                    Wall();
+//                    armflip = Deposit.WALL;
+//                }
                 if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){
                     HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
@@ -335,7 +336,13 @@ public class DriveControl extends  OpMode {
                     hw.RBDrive.setPower(RBP);
 
         telemetry.addData("Current Position", hw.Larm.getPosition());
+        telemetry.addData("Vert Position", hw.VLift.getPosition());
+        telemetry.addData("Arm State", armflip);
+        telemetry.addData("Horiz Position", intake);
         telemetry.update();
+
+
+        hw.Hang.setPower(gamepad1.right_trigger - gamepad1.left_trigger);
     }
     
     public void Rest(){
