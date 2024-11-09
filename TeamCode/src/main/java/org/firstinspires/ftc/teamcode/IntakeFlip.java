@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_HALF;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_CLAW;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_WALL;
 
 public class IntakeFlip {
     private final Servo leftFlip;
@@ -24,6 +25,11 @@ public class IntakeFlip {
     public void FliptoClaw(){
         leftFlip.setPosition(FLIP_CLAW);
         rightFlip.setPosition(FLIP_CLAW);
+    }
+
+    public void FliptoWall(){
+        leftFlip.setPosition(FLIP_WALL);
+        rightFlip.setPosition(FLIP_WALL);
     }
 
     public void FliptoHalf(){

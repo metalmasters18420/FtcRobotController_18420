@@ -124,6 +124,10 @@ public class hwRobot {
         flip.FliptoClaw();
     }
 
+    public void FlipWall(){
+        flip.FliptoWall();
+    }
+
     public void FlipHalf() {
         flip.FliptoHalf();
     }

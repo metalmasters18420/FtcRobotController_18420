@@ -11,6 +11,7 @@ import static org.firstinspires.ftc.teamcode.Variables.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.Variables.IntakeDelay;
 import static org.firstinspires.ftc.teamcode.Variables.VExtDelay;
 import static org.firstinspires.ftc.teamcode.Variables.VREST;
+import static org.firstinspires.ftc.teamcode.Variables.WRIST_BIN;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_HIGH;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_WALL;
@@ -38,10 +39,8 @@ public class DriveControl extends  OpMode {
         PRE_WALL,
         HIGH_BAR_PRE,
         HIGH_BAR_POST,
-//      TRANSITION_BIN,
-//      LOW_BAR_POST,
-//        LOW_BIN,
-//        HIGH_BIN
+        TRANSITION_BIN,
+        LOW_BIN,
     }
 
     Deposit armflip = Deposit.REST;
@@ -151,29 +150,31 @@ public class DriveControl extends  OpMode {
 
         switch (armflip){
             case REST:
-//                Rest();
                 if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to wall
                     Wall();
                     VEDelay.reset();
                     armflip = Deposit.TRANSITION_WALL;
                 }
-//                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
-//                    LBin();
-//                    VEDelay.reset();
-//                    armflip = Deposit.TRANSITION_BIN;
-//                }
+                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
+                    LBin();
+                    VEDelay.reset();
+                    armflip = Deposit.TRANSITION_BIN;
+                }
                 break;
             case TRANSITION_WALL:
                 if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransWall();
+                    hw.wrist.setPosition(WRIST_WALL);
                     armflip = Deposit.WALL;
                 }
                 break;
-//            case TRANSITION_BIN:
-//                if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
-//                    TransBin();
-//                    armflip = Deposit.LOW_BIN;
-//                } A
+            case TRANSITION_BIN:
+                if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
+                    TransBin();
+                    hw.wrist.setPosition(WRIST_BIN);
+                    armflip = Deposit.LOW_BIN;
+                }
+                break;
             case WALL:
 //                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar
 //                    LBarPre();
@@ -185,6 +186,7 @@ public class DriveControl extends  OpMode {
                 }
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     hw.VertRest();
+                    hw.wrist.setPosition(WRIST_INTAKE);
                     armDelay.reset();
                     armflip = Deposit.PRE_WALL;
                 }
@@ -231,11 +233,13 @@ public class DriveControl extends  OpMode {
                     armflip = Deposit.PRE_WALL;
                 }
                 break;
-//            case LOW_BIN:
-//                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
-//                    Rest();
-//                    armflip = Deposit.REST;
-//                }
+            case LOW_BIN:
+                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
+                    hw.VertRest();
+                    armDelay.reset();
+                    armflip = Deposit.PRE_WALL;
+                }
+                break;
 //            case LOW_BAR_POST:
 //                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
 //                    Rest();
@@ -258,6 +262,10 @@ public class DriveControl extends  OpMode {
                     HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
+                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){
+                    Wall();
+                    armflip = Deposit.TRANSITION_WALL;
+                }
                 break;
             default:
                 armflip = Deposit.REST;
@@ -267,7 +275,6 @@ public class DriveControl extends  OpMode {
             case REST:
 
                 hw.Intake.setPower(0);
-//                hw.FlipHalf();
                 hw.Hretract();
 
                 if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //extends
@@ -354,9 +361,9 @@ public class DriveControl extends  OpMode {
         buttonDelay.reset();
     }
     public void Wall(){
-        hw.wrist.setPosition(WRIST_WALL);
         hw.claw.setPosition(CLAW_OPEN);
         hw.ArmWall();
+        hw.FlipWall();
         buttonDelay.reset();
     }
 //    public void LBarPre(){
@@ -371,20 +378,21 @@ public class DriveControl extends  OpMode {
         hw.wrist.setPosition(WRIST_HIGH);
         hw.ArmHPre();
         hw.VertBar();
+        hw.FlipHalf();
         buttonDelay.reset();
     }
     public void HBarPost(){
         hw.ArmHPost();
         buttonDelay.reset();
     }
-//    public void LBin(){
-//        hw.ArmLB();
-//        buttonDelay.reset();
-//    }
+    public void LBin(){
+        hw.ArmLB();
+        buttonDelay.reset();
+    }
     public void TransWall(){
         hw.VertWall();
     }
-//    public void TransBin(){
-//        hw.VertLB();
-//    }
+    public void TransBin(){
+        hw.VertLB();
+    }
 }
