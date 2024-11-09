@@ -28,7 +28,7 @@ public class Variables {
     public static double WRIST_HIGH = .16;
     public static double WRIST_BIN = 0;
 
-    public static double HORIZ_EXTEND_POS = 0.6;
+    public static double HORIZ_EXTEND_POS = 0.3;
     public static double HORIZ_RETRACT_POS = 0;
 
     public static double FLIP_INTAKE = 0.07;

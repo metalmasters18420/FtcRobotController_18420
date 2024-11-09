@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -20,6 +21,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 // RR-specific imports
 import com.acmerobotics.dashboard.config.Config;
 
+import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 
@@ -39,6 +41,8 @@ public class BlueBucketAuto extends LinearOpMode {
         Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(-48, 60);
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, BlueBucketPose);
+        AutoArm arm = new AutoArm(hardwareMap);
+        AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
 
@@ -46,14 +50,32 @@ public class BlueBucketAuto extends LinearOpMode {
 
 
         TrajectoryActionBuilder tab3 = drive.actionBuilder(BlueBucketPose)
-                .setTangent(42)
-                .lineToY(34)
-                //.splineToSplineHeading(new Pose2d(48, 48, 0), Math.PI / 2)
+                //.setTangent(Math.toRadians(180))
+                .splineTo(new Vector2d(11,40),Math.toRadians(-90))
                 .turn(Math.toRadians(180))
                 .lineToY(32.5)
                 .waitSeconds(2)
-                .setTangent(Math.toRadians(180))
-                .splineTo(DEEP_END_POINT_BLUE,Math.toRadians(90));
+                .lineToY(35)
+                .setTangent(Math.toRadians(-180))
+                .splineTo(new Vector2d(-38,10),Math.toRadians(270))
+                .turnTo(Math.toRadians(180))
+                .setTangent(Math.toRadians(0))
+                .lineToX(-48)
+                .turnTo(Math.toRadians(270))
+                .setTangent(Math.toRadians(90))
+                .lineToY(SHALLOW_END_POINT_BLUE.y)
+                .setTangent(Math.toRadians(90))
+                .lineToY(10)
+                .setTangent(Math.toRadians(0))
+                .lineToX(-58)
+                .setTangent(Math.toRadians(90))
+                .lineToY(SHALLOW_END_POINT_BLUE.y)
+                .setTangent(Math.toRadians(90))
+                .lineToY(10)
+                .setTangent(Math.toRadians(0))
+                .lineToX(-62)
+                .setTangent(Math.toRadians(90))
+                .lineToY(SHALLOW_END_POINT_BLUE.y);
 
         Action trajectoryActionCloseOut = tab3.fresh()
                 .strafeTo(new Vector2d(48, 12))
@@ -61,10 +83,21 @@ public class BlueBucketAuto extends LinearOpMode {
 
         Action tab33;
         tab33 = tab3.build();
-        Actions.runBlocking(
+        /* Actions.runBlocking(
                 new SequentialAction(
                         tab33,
                         trajectoryActionCloseOut
+                )
+        ); */
+        Actions.runBlocking(
+                new SequentialAction(
+                        arm.rotateUp(),
+                        new SleepAction(1),
+                        claw.clawDrop(),
+                        new SleepAction(1),
+                        arm.rotateDown(),
+                        new SleepAction(1),
+                        claw.clawRestore()
                 )
         );
 
