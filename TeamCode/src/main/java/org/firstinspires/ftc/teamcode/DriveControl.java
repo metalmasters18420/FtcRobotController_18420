@@ -155,7 +155,7 @@ public class DriveControl extends  OpMode {
                     VEDelay.reset();
                     armflip = Deposit.TRANSITION_WALL;
                 }
-                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bin
                     LBin();
                     VEDelay.reset();
                     armflip = Deposit.TRANSITION_BIN;
@@ -254,10 +254,6 @@ public class DriveControl extends  OpMode {
                     Rest();
                     armflip = Deposit.PRE_WALL;
                 }
-//                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){ //move to wall
-//                    Wall();
-//                    armflip = Deposit.WALL;
-//                }
                 if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){
                     HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
