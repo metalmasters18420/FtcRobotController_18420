@@ -19,9 +19,16 @@ import static org.firstinspires.ftc.teamcode.Variables.WRIST_WALL;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.RoadRunner.Drawing;
+import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 @Config
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
@@ -321,8 +328,33 @@ public class DriveControl extends  OpMode {
             default:
                 intake = Pickup.REST;
         }
+        //MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
 
-        double Drive = -gamepad1.left_stick_y;
+
+        hw.drive.setDrivePowers(new PoseVelocity2d(
+                new Vector2d(
+                        -gamepad1.left_stick_y,
+                        -gamepad1.left_stick_x
+                ),
+                -gamepad1.right_stick_x
+        ));
+
+        hw.drive.updatePoseEstimate();
+
+        telemetry.addData("x", hw.drive.pose.position.x);
+        telemetry.addData("y", hw.drive.pose.position.y);
+        telemetry.addData("heading (deg)", Math.toDegrees(hw.drive.pose.heading.toDouble()));
+        telemetry.update();
+
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.fieldOverlay().setStroke("#3F51B5");
+        Drawing.drawRobot(packet.fieldOverlay(), hw.drive.pose);
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+
+
+        //SAVE IN CASE OF BAD THINGS
+
+       /* double Drive = -gamepad1.left_stick_y;
         double Turn = gamepad1.right_stick_x;
         double Strafe = gamepad1.left_stick_x * 1.1;
 
@@ -332,6 +364,7 @@ public class DriveControl extends  OpMode {
             Denom = Denom * 4;
         }
 
+
         double LFP = (Drive + Strafe + Turn) / Denom;
         double LBP = (Drive - Strafe + Turn) / Denom;
         double RFP = (Drive - Strafe - Turn) / Denom;
@@ -340,7 +373,9 @@ public class DriveControl extends  OpMode {
                     hw.LFDrive.setPower(LFP);
                     hw.LBDrive.setPower(LBP);
                     hw.RFDrive.setPower(RFP);
-                    hw.RBDrive.setPower(RBP);
+                    hw.RBDrive.setPower(RBP);  */
+
+        //END SAVE SECTION
 
         telemetry.addData("Current Position", hw.Larm.getPosition());
         telemetry.addData("Vert Position", hw.VLift.getPosition());

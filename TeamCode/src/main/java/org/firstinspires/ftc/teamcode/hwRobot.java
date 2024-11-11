@@ -1,18 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
+
 public class hwRobot {
     HardwareMap hm = null;
 
-    public DcMotor LFDrive = null;
-    public DcMotor LBDrive = null;
-    public DcMotor RBDrive = null;
-    public DcMotor RFDrive = null;
+//    public DcMotor LFDrive = null;
+//    public DcMotor LBDrive = null;
+//    public DcMotor RBDrive = null;
+//    public DcMotor RFDrive = null;
+
+    MecanumDrive drive = null;
 
     public DcMotor Hang = null;
 
@@ -41,12 +46,14 @@ public class hwRobot {
     public void init(HardwareMap hmap) {
         hm = hmap;
 
-        LFDrive = hm.get(DcMotor.class, "LF"); //CH0 motor
-        LBDrive = hm.get(DcMotor.class, "LB"); //CH1 motor
-        RFDrive = hm.get(DcMotor.class, "RF"); //CH2 motor
-        RBDrive = hm.get(DcMotor.class, "RB"); //EH2 motor
+
+
+//        LFDrive = hm.get(DcMotor.class, "LF"); //CH0 motor
+//        LBDrive = hm.get(DcMotor.class, "LB"); //CH1 motor
+//        RFDrive = hm.get(DcMotor.class, "RF"); //CH2 motor
+//        RBDrive = hm.get(DcMotor.class, "RB"); //CH3 motor
         Hang = hm.get(DcMotor.class, "UP"); //EH0 motor
-        Intake = hm.get(DcMotor.class, "IN"); //CH3 motor
+        Intake = hm.get(DcMotor.class, "IN"); //EH2 motor
         LIntake = hm.get(Servo.class, "LFlip"); //CH2
         RIntake = hm.get(Servo.class, "RFlip"); //EH2
         claw = hm.get(Servo.class, "Claw"); //CH0
@@ -57,25 +64,27 @@ public class hwRobot {
         RHoriz = hm.get(Servo.class, "RH"); //EH1
         VLift = hm.get(Servo.class, "VL"); //CH4
 
-        LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-        RFDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        RBDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+//        LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+//        LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+//        RFDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+//        RBDrive.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        LFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        LBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        RBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        drive = new MecanumDrive(hmap,new Pose2d(0,0,0));
 
-        LFDrive.setPower(0);
-        LBDrive.setPower(0);
-        RFDrive.setPower(0);
-        RBDrive.setPower(0);
+//        LFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        LBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        RFDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        RBDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        LFDrive.setTargetPosition(0);
-        LBDrive.setTargetPosition(0);
-        RFDrive.setTargetPosition(0);
-        RBDrive.setTargetPosition(0);
+//        LFDrive.setPower(0);
+//        LBDrive.setPower(0);
+//        RFDrive.setPower(0);
+//        RBDrive.setPower(0);
+//
+//        LFDrive.setTargetPosition(0);
+//        LBDrive.setTargetPosition(0);
+//        RFDrive.setTargetPosition(0);
+//        RBDrive.setTargetPosition(0);
 
         Hang.setDirection(DcMotorSimple.Direction.FORWARD);
         Hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
