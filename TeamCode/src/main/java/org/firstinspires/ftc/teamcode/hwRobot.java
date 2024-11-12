@@ -44,9 +44,9 @@ public class hwRobot {
         LFDrive = hm.get(DcMotor.class, "LF"); //CH0 motor
         LBDrive = hm.get(DcMotor.class, "LB"); //CH1 motor
         RFDrive = hm.get(DcMotor.class, "RF"); //CH2 motor
-        RBDrive = hm.get(DcMotor.class, "RB"); //EH2 motor SWAP
+        RBDrive = hm.get(DcMotor.class, "RB"); //CH3 motor
         Hang = hm.get(DcMotor.class, "UP"); //EH0 motor
-        Intake = hm.get(DcMotor.class, "IN"); //CH3 motor SWAP
+        Intake = hm.get(DcMotor.class, "IN"); //EH2 motor
         LIntake = hm.get(Servo.class, "LFlip"); //CH2
         RIntake = hm.get(Servo.class, "RFlip"); //EH2
         claw = hm.get(Servo.class, "Claw"); //CH0
