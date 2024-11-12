@@ -65,22 +65,40 @@ public class AutoArm {
             return false;
         }
     }
+    public class RotateUpMore implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            armLeft.setPosition(0.4);
+            armRight.setPosition(0.4);
+
+            return false;
+        }
+    }
+    public class Vliftarmhookposition implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            VLift.setPosition(0.2);
+
+            return false;
+        }
+    }
+    public class VLiftGoDown implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            VLift.setPosition(0.1);
+
+            return false;
+        }
+    }
     public class ArmHook implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             armLeft.setPosition(ARM_HIGH_POST_POS);
             armRight.setPosition(ARM_HIGH_POST_POS);
-
-            return false;
-        }
-    }
-    public class RotateDown implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            armLeft.setPosition(ARM_INTAKE_POS);
-            armRight.setPosition(ARM_INTAKE_POS);
 
             return false;
         }
@@ -93,7 +111,15 @@ public class AutoArm {
             return false;
         }
     }
-    public class ClawRestore implements Action {
+    public class ArmRestore implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            VLift.setPosition(0.5);
+            return false;
+        }
+    }
+    public class ClawGoBack implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -103,12 +129,19 @@ public class AutoArm {
     }
     public Action rotateUp(){
         return new SequentialAction(
-                new RotateUp(),
+//                new RotateUp(),
+                (telemetryPacket) -> {
+                    armLeft.setPosition(ARM_HIGH_PRE_POS);
+                    armRight.setPosition(ARM_HIGH_PRE_POS);
+                    return false;
+                },
                 new SleepAction(2));
     }
     public Action rotateDown(){
         return new SequentialAction(
-                new RotateDown(),
+                telemetryPacket -> {
+                    return false;
+                },
                 new SleepAction(2));
     }
     public Action clawDrop(){
@@ -117,9 +150,9 @@ public class AutoArm {
                 new SleepAction(2));
         //return new ClawDrop();
     }
-    public Action clawRestore(){
+    public Action armRestore(){
         return new SequentialAction(
-                new ClawRestore(),
+                new ArmRestore(),
                 new SleepAction(2)
         );
         //return new ClawRestore();
@@ -128,6 +161,40 @@ public class AutoArm {
         return new SequentialAction(
                 new ArmHook(),
                 new SleepAction(2));
+    }
+    public Action VLift(){
+        return new SequentialAction(
+                new Vliftarmhookposition(),
+                new SleepAction(2));
+    }
+    public Action clawgoBack(){
+        return new SequentialAction(
+                new ClawGoBack(),
+                new SleepAction(2));
+    }
+    public Action rotateupmore(){
+        return new SequentialAction(
+                new RotateUpMore(),
+                new SleepAction(2));
+    }
+    public Action vLiftGoDown(){
+        return new SequentialAction(
+                new VLiftGoDown(),
+                new SleepAction(2));
+    }
+
+    public Action scoreSpecimen(){
+        return new SequentialAction(
+                    rotateUp(),
+                     VLift(),
+                    rotateupmore(),
+                    vLiftGoDown(),
+                    clawDrop(),
+                  //  new ClawGoBack(),
+                    //claw.armHook(),
+                     armRestore(),
+                    rotateDown());
+
     }
 
 }

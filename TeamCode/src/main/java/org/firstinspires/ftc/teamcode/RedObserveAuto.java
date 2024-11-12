@@ -96,9 +96,9 @@ public class RedObserveAuto extends LinearOpMode {
                         new SleepAction(1),
                         arm.rotateDown(),
                         new SleepAction(1),
-                        claw.clawRestore()
-                )
-        );
+                        claw.armRestore()
+
+                ));
 
 
     }

@@ -106,14 +106,9 @@ public class BlueObserveAuto extends LinearOpMode {
          Actions.runBlocking(
                 new SequentialAction(
                         drivetosubmersible1,
-                        claw.rotateUp(),
-                        claw.armHook(),
-                        claw.clawDrop(),
-                        claw.rotateDown(),
-                        claw.clawRestore()
-                        //drivetospecimen1
-                )
-        );
+                        claw.scoreSpecimen()
+                ));
+
 
 //        waitForStart();
 //        Actions.runBlocking(
