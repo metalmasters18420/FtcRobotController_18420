@@ -59,6 +59,7 @@ public class DriveControl extends  OpMode {
         IN_POST,
         RETRACTED,
         TRANSFER,
+        EXTEND_NF
     }
 
     Pickup intake = Pickup.REST;
@@ -284,6 +285,17 @@ public class DriveControl extends  OpMode {
                     hw.Hextend();
                     InDelay.reset();
                     intake = Pickup.EXTENDED;
+                }
+                if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.Hextend();
+                    intake = Pickup.EXTEND_NF;
+                }
+                break;
+            case EXTEND_NF:
+                if (gamepad1.x && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.FlipIntake();
+                    hw.Intake.setPower(1);
+                    intake = Pickup.IN_PRE;
                 }
                 break;
             case EXTENDED:
