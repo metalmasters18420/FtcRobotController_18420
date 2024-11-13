@@ -76,9 +76,9 @@ public class DriveControl extends  OpMode {
 //    boolean x2Last = false;
 //    boolean x2Toggle = false;
 
-    boolean b1Current = false;
-    boolean b1Last = false;
-    boolean b1Toggle = false;
+//    boolean b1Current = false;
+//    boolean b1Last = false;
+//    boolean b1Toggle = false;
 
     boolean a2Current = false;
     boolean a2Last = false;
