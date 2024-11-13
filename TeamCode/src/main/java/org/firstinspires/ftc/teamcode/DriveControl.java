@@ -24,7 +24,6 @@ import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.Drawing;
@@ -42,7 +41,7 @@ public class DriveControl extends  OpMode {
         REST,
         WALL,
         TRANSITION_WALL,
-        PRE_WALL,
+        PRE_REST,
         HIGH_BAR_PRE,
         HIGH_BAR_POST,
         TRANSITION_BIN,
@@ -58,7 +57,8 @@ public class DriveControl extends  OpMode {
         IN_POST,
         RETRACTED,
         TRANSFER,
-        EXTEND_NF
+        EXTEND_NF,
+        FLIPPED_NE
     }
 
     Pickup intake = Pickup.REST;
@@ -202,12 +202,17 @@ public class DriveControl extends  OpMode {
                     hw.VertRest();
                     hw.wrist.setPosition(WRIST_INTAKE);
                     armDelay.reset();
-                    armflip = Deposit.PRE_WALL;
+                    armflip = Deposit.PRE_REST;
+                }
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.VertLB();
+                    hw.wrist.setPosition(WRIST_INTAKE);
+                    armflip = Deposit.LOW_BIN;
                 }
                 break;
-            case PRE_WALL:
+            case PRE_REST:
                 if (armDelay.milliseconds() > ArmDelay){
-                    Rest();
+                    Arm_Rest();
                     armflip = Deposit.REST;
                 }
                 break;
@@ -225,7 +230,7 @@ public class DriveControl extends  OpMode {
 //                    armflip = Deposit.LOW_BIN;
 //                }
 //                if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
-//                    Rest();
+//                    Arm_Rest();
 //                    armflip = Deposit.REST;
 //                }
 //                break;
@@ -243,20 +248,29 @@ public class DriveControl extends  OpMode {
 //                    armflip = Deposit.LOW_BIN;
 //                }
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
-                    Rest();
-                    armflip = Deposit.PRE_WALL;
+                    Arm_Rest();
+                    armflip = Deposit.PRE_REST;
+                }
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.VertLB();
+                    hw.wrist.setPosition(WRIST_INTAKE);
+                    armflip = Deposit.LOW_BIN;
                 }
                 break;
             case LOW_BIN:
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
                     hw.VertRest();
                     armDelay.reset();
-                    armflip = Deposit.PRE_WALL;
+                    armflip = Deposit.PRE_REST;
+                }
+                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay) {
+                    HBarPre();
+                    armflip = Deposit.HIGH_BAR_PRE;
                 }
                 break;
 //            case LOW_BAR_POST:
 //                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
-//                    Rest();
+//                    Arm_Rest();
 //                    armflip = Deposit.REST;
 //                }
 //                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){ //move to low bar pre
@@ -265,7 +279,7 @@ public class DriveControl extends  OpMode {
 //                }
             case HIGH_BAR_POST:
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
-                    Rest();
+                    Arm_Rest();
                     armflip = Deposit.REST;
                 }
                 if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){
@@ -275,6 +289,11 @@ public class DriveControl extends  OpMode {
                 if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){
                     Wall();
                     armflip = Deposit.TRANSITION_WALL;
+                }
+                if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.VertLB();
+                    hw.wrist.setPosition(WRIST_INTAKE);
+                    armflip = Deposit.LOW_BIN;
                 }
                 break;
             default:
@@ -294,15 +313,20 @@ public class DriveControl extends  OpMode {
                 }
                 if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){
                     hw.Hextend();
+                    hw.FlipHalf();
                     intake = Pickup.EXTEND_NF;
                 }
                 if (gamepad1.x && buttonDelay.milliseconds() > ButtonDelay){
                     hw.FlipClaw();
                     intake = Pickup.RETRACTED;
                 }
+                if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.FlipIntake();
+                    intake = Pickup.IN_PRE;
+                }
                 break;
             case EXTEND_NF:
-                if (gamepad1.x && buttonDelay.milliseconds() > ButtonDelay){
+                if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){
                     hw.FlipIntake();
                     intake = Pickup.IN_PRE;
                 }
@@ -338,6 +362,15 @@ public class DriveControl extends  OpMode {
                 if (gamepad2.a && buttonDelay.milliseconds() > ButtonDelay){ //delay before flip
                     InDelay.reset();
                     intake = Pickup.TRANSFER;
+                }
+                if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.Hextend();
+                    hw.FlipIntake();
+                    intake = Pickup.IN_PRE;
+                }
+                if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.FlipIntake();
+                    intake = Pickup.IN_PRE;
                 }
                 break;
             case TRANSFER:
@@ -400,7 +433,7 @@ public class DriveControl extends  OpMode {
         //END SAVE SECTION
 
         telemetry.addData("Current Position", hw.Larm.getPosition());
-        telemetry.addData("Vert Position", hw.VLift.getPosition());\/
+        telemetry.addData("Vert Position", hw.VLift.getPosition());
         telemetry.addData("Arm State", armflip);
         telemetry.addData("Horiz Position", intake);
         telemetry.update();
@@ -409,7 +442,7 @@ public class DriveControl extends  OpMode {
         hw.Hang.setPower(gamepad1.right_trigger - gamepad1.left_trigger);
     }
     
-    public void Rest(){
+    public void Arm_Rest() {
         hw.wrist.setPosition(WRIST_INTAKE);
         hw.claw.setPosition(CLAW_OPEN);
         hw.ArmRest();
@@ -417,7 +450,7 @@ public class DriveControl extends  OpMode {
         hw.FlipHalf();
         buttonDelay.reset();
     }
-    public void Wall(){
+    public void Wall() {
         hw.claw.setPosition(CLAW_OPEN);
         hw.ArmWall();
         hw.FlipWall();
