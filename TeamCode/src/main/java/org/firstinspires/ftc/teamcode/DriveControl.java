@@ -20,15 +20,14 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.Drawing;
-import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 @Config
 @TeleOp(name = "Driver Control 2025", group = "TeleOp")
@@ -77,9 +76,9 @@ public class DriveControl extends  OpMode {
 //    boolean x2Last = false;
 //    boolean x2Toggle = false;
 
-//    boolean y1Current = false;
-//    boolean y1Last = false;
-//    boolean y1Toggle = false;
+    boolean b1Current = false;
+    boolean b1Last = false;
+    boolean b1Toggle = false;
 
     boolean a2Current = false;
     boolean a2Last = false;
@@ -142,19 +141,26 @@ public class DriveControl extends  OpMode {
 
         a2Last = a2Current;
 
-//        y1Current = gamepad2.y;
+//        b1Current = gamepad1.b;
 //
-//            if (y1Current && !y1Last) {
-//                y1Toggle = !y1Toggle;
+//            if (b1Current && !b1Last) {
+//                b1Toggle = !b1Toggle;
 //            }
-//            if (y1Toggle){
-//                hw.Hextend();
+//            if (b1Toggle){
+//                hw.Intake.setDirection(DcMotorSimple.Direction.REVERSE);
 //            }
 //            else{
-//                hw.Hretract();
+//                hw.Intake.setDirection(DcMotorSimple.Direction.FORWARD);
 //            }
 //
-//        y1Last = y1Current;
+//        b1Last = b1Current;
+
+//        if (gamepad1.b){
+//            hw.Intake.setDirection(DcMotorSimple.Direction.REVERSE);
+//        }
+//        else{
+//            hw.Intake.setDirection(DcMotorSimple.Direction.FORWARD);
+//        }
 
         switch (armflip){
             case REST:
@@ -260,7 +266,7 @@ public class DriveControl extends  OpMode {
             case HIGH_BAR_POST:
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to resting
                     Rest();
-                    armflip = Deposit.PRE_WALL;
+                    armflip = Deposit.REST;
                 }
                 if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){
                     HBarPre();
@@ -290,22 +296,30 @@ public class DriveControl extends  OpMode {
                     hw.Hextend();
                     intake = Pickup.EXTEND_NF;
                 }
+                if (gamepad1.x && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.FlipClaw();
+                    intake = Pickup.RETRACTED;
+                }
                 break;
             case EXTEND_NF:
                 if (gamepad1.x && buttonDelay.milliseconds() > ButtonDelay){
                     hw.FlipIntake();
-                    hw.Intake.setPower(1);
                     intake = Pickup.IN_PRE;
                 }
                 break;
             case EXTENDED:
                 if (InDelay.milliseconds() > IntakeDelay){ //flips and turns on intake
-                    hw.Intake.setPower(1);
                     hw.FlipIntake();
                     intake = Pickup.IN_PRE;
                 }
                 break;
             case IN_PRE:
+                if(gamepad1.b){
+                    hw.Intake.setPower(-.75);
+                }
+                else {
+                    hw.Intake.setPower(.75);
+                }
                 if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //flips up
                     hw.FlipClaw();
                     hw.claw.setPosition(CLAW_OPEN);
@@ -386,7 +400,7 @@ public class DriveControl extends  OpMode {
         //END SAVE SECTION
 
         telemetry.addData("Current Position", hw.Larm.getPosition());
-        telemetry.addData("Vert Position", hw.VLift.getPosition());
+        telemetry.addData("Vert Position", hw.VLift.getPosition());\/
         telemetry.addData("Arm State", armflip);
         telemetry.addData("Horiz Position", intake);
         telemetry.update();

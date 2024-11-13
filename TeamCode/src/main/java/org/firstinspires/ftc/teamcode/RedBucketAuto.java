@@ -30,7 +30,6 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class RedBucketAuto extends LinearOpMode {
     public class IntakeEat {
         private Servo In;
-
     }
     @Override
     public void runOpMode() {
