@@ -399,7 +399,7 @@ public class DriveControl extends  OpMode {
         telemetry.addData("x", hw.drive.pose.position.x);
         telemetry.addData("y", hw.drive.pose.position.y);
         telemetry.addData("heading (deg)", Math.toDegrees(hw.drive.pose.heading.toDouble()));
-        telemetry.update();
+//        telemetry.update();
 
         TelemetryPacket packet = new TelemetryPacket();
         packet.fieldOverlay().setStroke("#3F51B5");
