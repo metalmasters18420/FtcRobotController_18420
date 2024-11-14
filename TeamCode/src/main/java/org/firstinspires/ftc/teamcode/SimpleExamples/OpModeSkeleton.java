@@ -10,8 +10,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /*
  * Demonstrates an empty iterative OpMode structure
  */
-@TeleOp(name = "OpMode Skeleton", group = "Simple Examples")
 @Disabled
+@TeleOp(name = "OpMode Skeleton", group = "Simple Examples")
+//@Disabled
 public class OpModeSkeleton extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();

@@ -11,9 +11,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Config
-@TeleOp(name="Two Wheel Drive", group="Simple Examples")
+//@Config
 @Disabled
+@TeleOp(name="Two Wheel Drive", group="Simple Examples")
+//@Disabled
 public class TwoWheelDrive extends OpMode
 {
     // Declare OpMode members.

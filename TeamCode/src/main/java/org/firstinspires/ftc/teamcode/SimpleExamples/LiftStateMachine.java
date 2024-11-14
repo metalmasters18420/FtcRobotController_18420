@@ -13,9 +13,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /*
  * Demonstrates a lift that has 2 set positions and transition using a state machine
  */
-@Config
-@TeleOp(name = "Lift: State Machine", group = "Simple Examples")
+//@Config
 @Disabled
+@TeleOp(name = "Lift: State Machine", group = "Simple Examples")
+//@Disabled
 public class LiftStateMachine extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();

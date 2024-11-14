@@ -17,7 +17,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
  * Translated example to an Iterative OpMode
  */
 
-@TeleOp(name="FtcDashboard Basic Camera OpMode", group="Simple Examples")
+//@TeleOp(name="FtcDashboard Basic Camera OpMode", group="Simple Examples")
 public class FtcDashboard_Camera_Iterative_Basic extends OpMode {
     FtcDashboard_BasicProcessor processor = new FtcDashboard_BasicProcessor();
     @Override
