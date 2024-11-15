@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.SimpleExamples.VisionProcessorExamples.Processors.EmptyVisionProcessor;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-@TeleOp(name = "Empty Vision Dashboard Processor OpMode", group = "Simple Examples")
+//@TeleOp(name = "Empty Vision Dashboard Processor OpMode", group = "Simple Examples")
 public class EmptyVisionProcessorOpMode extends OpMode {
 
     private VisionPortal visionPortal;

@@ -13,9 +13,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /*
  * Demonstrates an empty iterative OpMode
  */
-@Config
-@TeleOp(name = "Lift: Run To Position", group = "Simple Examples")
+//@Config
 @Disabled
+@TeleOp(name = "Lift: Run To Position", group = "Simple Examples")
+//@Disabled
 public class LiftRunToPosition extends OpMode {
 
   private ElapsedTime runtime = new ElapsedTime();

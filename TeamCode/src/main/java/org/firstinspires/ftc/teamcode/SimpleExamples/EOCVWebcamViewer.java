@@ -18,9 +18,9 @@ import org.openftc.easyopencv.OpenCvWebcam;
 /**
  * The original webcam viewer from EOCV samples for reference.  Do not need to read unless necessary.
  */
-
-@TeleOp(name="Webcam Viewer Linear", group="Simple Examples")
 @Disabled
+@TeleOp(name="Webcam Viewer Linear", group="Simple Examples")
+//@Disabled
 public class EOCVWebcamViewer extends LinearOpMode
 {
     //webcam object

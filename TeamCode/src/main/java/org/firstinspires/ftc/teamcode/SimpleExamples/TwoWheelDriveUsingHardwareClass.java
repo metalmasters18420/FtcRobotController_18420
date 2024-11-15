@@ -15,9 +15,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 //"Encapsulation" and it helps keep the logic separated into distinct bites.  When writing your own code, think about inputs and outputs.
 //What information needs to come in and what needs to go out, and then you can write a class or a method that encapsulates that information
 //Keeping all of the logic locked inside.
-
-@TeleOp(name="Two Wheel Drive Using Hardware Class", group="Simple Examples")
 @Disabled
+@TeleOp(name="Two Wheel Drive Using Hardware Class", group="Simple Examples")
+//@Disabled
 public class TwoWheelDriveUsingHardwareClass extends OpMode
 {
     ElapsedTime clock = new ElapsedTime();

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -13,6 +14,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 /*
  * Translates the Linear OpMode Example to a Iterative OpMode to only display on the Driver Station (not Dashboard)
  */
+@Disabled
 @TeleOp(name = "Webcam Viewer Iterative OpMode", group = "Simple Examples")
 //@Disabled
 public class EOCVWebcamViewerOpMode extends OpMode {

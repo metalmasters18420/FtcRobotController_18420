@@ -11,7 +11,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.opencv.core.Scalar;
 
 //@Disabled // remove this line to have this show up on your robot
-@Autonomous
+//@Autonomous
 public class ColourMassDetectionOpMode extends OpMode {
 	private VisionPortal visionPortal;
 	private ColourMassDetectionProcessor colourMassDetectionProcessor;

@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.SimpleExamples.VisionProcessorExamples.Processors.DrawRectangleProcessor;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-@TeleOp(name = "Draw Rectangle OpMode", group = "Simple Examples")
+//@TeleOp(name = "Draw Rectangle OpMode", group = "Simple Examples")
 public class DrawRectangleOpMode extends OpMode {
     private DrawRectangleProcessor drawRectangleProcessor;
     private VisionPortal visionPortal;

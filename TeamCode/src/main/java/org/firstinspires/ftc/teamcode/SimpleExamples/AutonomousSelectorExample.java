@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Autonomous Selector Example", group="Simple Examples")
+//@Autonomous(name="Autonomous Selector Example", group="Simple Examples")
 @Disabled
 public class AutonomousSelectorExample extends LinearOpMode {
 

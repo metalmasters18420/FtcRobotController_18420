@@ -18,8 +18,8 @@ import org.opencv.core.Scalar;
  * https://www.youtube.com/watch?v=vJhmmyvNqC0
  */
 
-@Config
-@TeleOp(name="FtcDashboard PeopleMasking Camera Opmode", group="Simple Examples")
+//@Config
+//@TeleOp(name="FtcDashboard PeopleMasking Camera Opmode", group="Simple Examples")
 public class FtcDashboard_PeopleMasking_Camera_OpMode extends OpMode {
     public static boolean MASK_TOGGLE = false;
     public static Scalar RANGE_LOW = new Scalar(50,50,50,0);

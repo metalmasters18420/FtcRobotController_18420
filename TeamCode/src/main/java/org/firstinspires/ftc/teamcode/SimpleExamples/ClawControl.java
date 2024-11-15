@@ -12,9 +12,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Config
-@TeleOp(name="Claw Control", group="Simple Examples")
+//@Config
 @Disabled
+@TeleOp(name="Claw Control", group="Simple Examples")
+//@Disabled
 public class ClawControl extends OpMode
 {
     // Declare OpMode members.

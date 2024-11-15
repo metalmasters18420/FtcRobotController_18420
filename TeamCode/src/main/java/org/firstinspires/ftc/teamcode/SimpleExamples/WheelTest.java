@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 /**
  * This opmode is a simple test of the direction of the wheels for a 4 motor robot.
  */
-
+@Disabled
 @TeleOp(name="Wheel Test", group="Simple Examples")
 //@Disabled
 public class WheelTest extends OpMode
