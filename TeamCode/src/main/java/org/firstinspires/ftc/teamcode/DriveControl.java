@@ -267,6 +267,10 @@ public class DriveControl extends  OpMode {
                     HBarPre();
                     armflip = Deposit.HIGH_BAR_PRE;
                 }
+                if (gamepad2.dpad_up && buttonDelay.milliseconds() > ButtonDelay){
+                    Wall();
+                    armflip = Deposit.WALL;
+                }
                 break;
 //            case LOW_BAR_POST:
 //                if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
