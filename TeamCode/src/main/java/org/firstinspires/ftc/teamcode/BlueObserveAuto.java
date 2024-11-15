@@ -44,20 +44,20 @@ public class BlueObserveAuto extends LinearOpMode {
         TrajectoryActionBuilder drivetosubmersible = drive.actionBuilder(BlueObservePose)
                 //.splineToLinearHeading(new Pose2d(-11,40,Math.toRadians(90)),Math.toRadians(-90))
                 .setTangent(-1.23412150741)
-                .lineToXSplineHeading(-11, Math.toRadians(90))
+                .lineToXSplineHeading(-11, Math.toRadians(-90))
                 //.turn(Math.toRadians(180))
                 .setTangent(Math.toRadians(90))
-                .lineToY(32.5);
+                .lineToY(28);
                 //.waitSeconds(2)
         TrajectoryActionBuilder drivetospecimenuno = drivetosubmersible.fresh()
                 .setTangent(Math.toRadians(90))
                 .lineToY(35)
                 .setTangent(Math.toRadians(-180))
-                .splineTo(new Vector2d(-35,5),Math.toRadians(270))
-                .turnTo(Math.toRadians(180))
+                .splineTo(new Vector2d(-40,5),Math.toRadians(270))
+                //.turnTo(Math.toRadians(180))
                 .setTangent(Math.toRadians(0))
-                .lineToX(-45)
-                .turnTo(Math.toRadians(270))
+                .lineToX(-50)
+                //.turnTo(Math.toRadians(270))
                 .setTangent(Math.toRadians(90))
                 .lineToY(SHALLOW_END_POINT_BLUE.y)
                 .setTangent(Math.toRadians(90))
@@ -65,9 +65,9 @@ public class BlueObserveAuto extends LinearOpMode {
                 .setTangent(Math.toRadians(0))
                 .lineToX(-58)
                 .setTangent(Math.toRadians(90))
-                .lineToY(SHALLOW_END_POINT_BLUE.y)
-                .setTangent(-.53172067259)
-                .lineToXSplineHeading(-11, Math.toRadians(90));
+                .lineToY(SHALLOW_END_POINT_BLUE.y);
+                //.setTangent(-.53172067259)
+                //.lineToXSplineHeading(-11, Math.toRadians(90));
 
 //                .lineToY(35)
 //                .setTangent(Math.toRadians(-180))
@@ -105,8 +105,11 @@ public class BlueObserveAuto extends LinearOpMode {
 
          Actions.runBlocking(
                 new SequentialAction(
+                        //claw.rotateUp(),
                         drivetosubmersible1,
-                        claw.scoreSpecimen()
+                        claw.rotateUp(),
+                        claw.scoreSpecimen(),
+                        drivetospecimen1
                 ));
 
 

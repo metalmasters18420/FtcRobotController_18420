@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -32,7 +33,7 @@ public class BlueBucketAuto extends LinearOpMode {
         Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(-48, 50);
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, BlueBucketPose);
-        AutoArm arm = new AutoArm(hardwareMap);
+        //AutoArm arm = new AutoArm(hardwareMap);
         AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
@@ -40,60 +41,93 @@ public class BlueBucketAuto extends LinearOpMode {
 
 
 
-        TrajectoryActionBuilder tab3 = drive.actionBuilder(BlueBucketPose)
-                //.setTangent(Math.toRadians(180))
-                .splineTo(new Vector2d(11,40),Math.toRadians(-90))
-                .turn(Math.toRadians(180))
-                .lineToY(32.5)
-                .waitSeconds(2)
+        TrajectoryActionBuilder drivetosubmersible = drive.actionBuilder(BlueBucketPose)
+                //.splineToLinearHeading(new Pose2d(-11,40,Math.toRadians(90)),Math.toRadians(-90))
+                .setTangent(-1.23412150741)
+                .lineToXSplineHeading(-11, Math.toRadians(-90))
+                //.turn(Math.toRadians(180))
+                .setTangent(Math.toRadians(90))
+                .lineToY(28);
+        //.waitSeconds(2)
+        TrajectoryActionBuilder drivetospecimenuno = drivetosubmersible.fresh()
+                .setTangent(Math.toRadians(90))
                 .lineToY(35)
                 .setTangent(Math.toRadians(-180))
-                .splineTo(new Vector2d(-30,5),Math.toRadians(270))
-                .turnTo(Math.toRadians(180))
+                .splineTo(new Vector2d(-40,5),Math.toRadians(270))
+                //.turnTo(Math.toRadians(180))
                 .setTangent(Math.toRadians(0))
-                .lineToX(-43)
+                .lineToX(-50)
                 //.turnTo(Math.toRadians(270))
                 .setTangent(Math.toRadians(90))
                 .lineToY(SHALLOW_END_POINT_BLUE.y)
                 .setTangent(Math.toRadians(90))
                 .lineToY(5)
                 .setTangent(Math.toRadians(0))
-                .lineToX(-53)
-                .setTangent(Math.toRadians(90))
-                .lineToY(SHALLOW_END_POINT_BLUE.y)
-                .setTangent(Math.toRadians(90))
-                .lineToY(5)
-                .setTangent(Math.toRadians(0))
-                .lineToX(-62)
+                .lineToX(-58)
                 .setTangent(Math.toRadians(90))
                 .lineToY(SHALLOW_END_POINT_BLUE.y);
+        //.setTangent(-.53172067259)
+        //.lineToXSplineHeading(-11, Math.toRadians(90));
+
+//                .lineToY(35)
+//                .setTangent(Math.toRadians(-180))
+//                .splineTo(new Vector2d(-35,5),Math.toRadians(270))
+//                .turnTo(Math.toRadians(180))
+//                .setTangent(Math.toRadians(0))
+//                .lineToX(-45)
+//                //.turnTo(Math.toRadians(270))
+//                .setTangent(Math.toRadians(90))
+//                .lineToY(SHALLOW_END_POINT_BLUE.y)
+//                .setTangent(Math.toRadians(90))
+//                .lineToY(5)
+//                .setTangent(Math.toRadians(0))
+//                .lineToX(-58)
+//                .setTangent(Math.toRadians(90))
+//                .lineToY(SHALLOW_END_POINT_BLUE.y);
+
+
+//                .setTangent(Math.toRadians(90))
+//                .lineToY(5)
+//                .setTangent(Math.toRadians(0))
+//                .lineToX(-62)
+//                .setTangent(Math.toRadians(90))
+//                .lineToY(SHALLOW_END_POINT_BLUE.y);
 
 
 
-        Action tab33;
-        tab33 = tab3.build();
+        Action drivetosubmersible1;
+        drivetosubmersible1 = drivetosubmersible.build();
+
+        Action drivetospecimen1;
+        drivetospecimen1 = drivetospecimenuno.build();
 
         waitForStart();
 
         Actions.runBlocking(
                 new SequentialAction(
-                        tab33
-                )
-        );
-       /* Actions.runBlocking(
-                new SequentialAction(
-                        arm.rotateUp(),
-                        new SleepAction(1),
-                        claw.clawDrop(),
-                        new SleepAction(1),
-                        arm.rotateDown(),
-                        new SleepAction(1),
-                        claw.clawRestore()
-                )
-        ); */
+                        //claw.rotateUp(),
+                        drivetosubmersible1,
+                        claw.rotateUp(),
+                        claw.scoreSpecimen(),
+                        drivetospecimen1
+                ));
+
+
+//        waitForStart();
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        claw.rotateUp(),
+//                        claw.armHook(),
+//                        claw.clawDrop(),
+//                        claw.rotateDown(),
+//                        claw.clawRestore()
+//
+//                )
+//        );
 
 
 
     }
 }
+
 
