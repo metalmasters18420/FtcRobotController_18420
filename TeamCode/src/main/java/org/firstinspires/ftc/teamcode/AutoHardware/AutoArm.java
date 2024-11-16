@@ -16,6 +16,7 @@ import static org.firstinspires.ftc.teamcode.Variables.VREST;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_HIGH;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_INTAKE;
 
+import androidx.annotation.HalfFloat;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -25,6 +26,7 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.sun.tools.javac.code.Lint;
 
 // RR-specific imports
 
@@ -34,7 +36,6 @@ public class AutoArm {
     private Servo armLeft;
     private Servo claw;
     private Servo LIntake;
-    private Servo RIntake;
     private Servo VLift;
     private ElapsedTime clawTimer = null;
     private Servo wrist;
@@ -46,7 +47,6 @@ public class AutoArm {
         armRight = hwm.get(Servo.class, "RA");
         claw = hwm.get(Servo.class, "Claw");
         LIntake = hwm.get(Servo.class, "LFlip"); //CH2
-        RIntake = hwm.get(Servo.class, "RFlip"); //EH2
         VLift = hwm.get(Servo.class, "VL"); //CH4
         wrist = hwm.get(Servo.class, "Wrist");
         Lhoriz = hwm.get(Servo.class, "LH");
@@ -56,7 +56,6 @@ public class AutoArm {
         armRight.setDirection(Servo.Direction.FORWARD);
         claw.setDirection(Servo.Direction.FORWARD);
         LIntake.setDirection(Servo.Direction.REVERSE);
-        RIntake.setDirection(Servo.Direction.FORWARD);
         VLift.setDirection(Servo.Direction.REVERSE);
         wrist.setDirection((Servo.Direction.FORWARD));
         Rhoriz.setDirection(Servo.Direction.REVERSE);
@@ -66,7 +65,6 @@ public class AutoArm {
         armRight.setPosition(0.15);
         claw.setPosition(CLAW_CLOSED);
         LIntake.setPosition(FLIP_CLAW);
-        RIntake.setPosition(FLIP_CLAW);
         clawTimer = new ElapsedTime();
         VLift.setPosition(VREST);
         wrist.setPosition(WRIST_INTAKE);
@@ -137,11 +135,29 @@ public class AutoArm {
             return false;
         }
     }
+    public class ArmWall implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            armLeft.setPosition(ARM_WALL_POS);
+            armRight.setPosition(ARM_WALL_POS);
+
+            return false;
+        }
+    }
     public class ClawDrop implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             claw.setPosition(CLAW_OPEN);
+            return false;
+        }
+    }
+    public class ClawPickup implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            claw.setPosition(CLAW_CLOSED);
             return false;
         }
     }
@@ -182,9 +198,13 @@ public class AutoArm {
     }
     public Action clawDrop(){
         return new SequentialAction(
-                new ClawDrop(),
-                new SleepAction(0.5));
-        //return new ClawDrop();
+                new ClawDrop());
+//                new SleepAction(0.5));
+    }
+    public Action clawPickup(){
+        return new SequentialAction(
+                new ClawPickup(),
+                new SleepAction(.25));
     }
     public Action armRestore(){
         return new SequentialAction(
@@ -223,7 +243,6 @@ public class AutoArm {
                 new VLiftGoDown(),
                 new SleepAction(0.5));
     }
-
     public Action scoreSpecimen(){
         return new SequentialAction(
                      prepareVlifttoscore(),
@@ -231,8 +250,17 @@ public class AutoArm {
                     clawDrop(),
                     vLiftGoDown());
 //                     armRestore(),
-                    //rotateDown());
+//                    rotateDown());
 
     }
-
+    public Action setToWall(){
+        return new SequentialAction(
+                telemetryPacket -> {
+                    LIntake.setPosition(FLIP_HALF);
+                    claw.setPosition(CLAW_OPEN);
+                    return false;
+                },
+                new ArmWall(),
+                new SleepAction(.5));
+    }
 }
