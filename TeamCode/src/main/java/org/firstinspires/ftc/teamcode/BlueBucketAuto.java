@@ -30,7 +30,7 @@ public class BlueBucketAuto extends LinearOpMode {
         Vector2d DEEP_END_POINT_RED = new Vector2d(60, -60);
         Vector2d SHALLOW_END_POINT_RED = new Vector2d(48, -60);
         Vector2d DEEP_END_POINT_BLUE = new Vector2d(-60, 60);
-        Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(-48, 50);
+        Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(48, 50);
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, BlueObservePose);
         //AutoArm arm = new AutoArm(hardwareMap);

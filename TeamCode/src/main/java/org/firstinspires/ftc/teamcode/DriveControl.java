@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.Variables.ButtonDelay;
 import static org.firstinspires.ftc.teamcode.Variables.FLIP_CLAW;
+import static org.firstinspires.ftc.teamcode.Variables.FLIP_HALF;
 import static org.firstinspires.ftc.teamcode.Variables.FlipDelay;
 import static org.firstinspires.ftc.teamcode.Variables.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.Variables.IntakeDelay;
@@ -15,6 +16,8 @@ import static org.firstinspires.ftc.teamcode.Variables.WRIST_BIN;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_HIGH;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_WALL;
+
+import android.widget.Button;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -46,6 +49,7 @@ public class DriveControl extends  OpMode {
         HIGH_BAR_POST,
         TRANSITION_BIN,
         LOW_BIN,
+        TRANSITION_BAR
     }
 
     Deposit armflip = Deposit.REST;
@@ -90,16 +94,6 @@ public class DriveControl extends  OpMode {
 
         telemetry.addData("Status", "Initialized");
         hw.init(hardwareMap);
-
-        hw.VLift.setPosition(VREST);
-        hw.Rarm.setPosition(ARM_INTAKE_POS);
-        hw.Larm.setPosition(ARM_INTAKE_POS);
-        hw.wrist.setPosition(WRIST_INTAKE);
-        hw.claw.setPosition(CLAW_OPEN);
-        hw.LIntake.setPosition(FLIP_CLAW);
-        hw.RIntake.setPosition(FLIP_CLAW);
-        hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
-        hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
     }
 
     public void start(){
@@ -107,6 +101,16 @@ public class DriveControl extends  OpMode {
         VEDelay.reset();
         InDelay.reset();
         armDelay.reset();
+
+        hw.VLift.setPosition(VREST);
+        hw.Rarm.setPosition(ARM_INTAKE_POS);
+        hw.Larm.setPosition(ARM_INTAKE_POS);
+        hw.wrist.setPosition(WRIST_INTAKE);
+        hw.claw.setPosition(CLAW_OPEN);
+        hw.LIntake.setPosition(FLIP_HALF);
+        hw.RIntake.setPosition(FLIP_HALF);
+        hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
+        hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
     }
 
     @Override
@@ -174,7 +178,17 @@ public class DriveControl extends  OpMode {
                     VEDelay.reset();
                     armflip = Deposit.TRANSITION_BIN;
                 }
+                if (gamepad2.dpad_left && buttonDelay.milliseconds() > ButtonDelay){
+                    hw.ArmHPre();
+                    VEDelay.reset();
+                    armflip = Deposit.TRANSITION_BAR;
+                }
                 break;
+            case TRANSITION_BAR:
+                if (VEDelay.milliseconds() > VExtDelay){
+                    HBarPre();
+                    armflip = Deposit.HIGH_BAR_PRE;
+                }
             case TRANSITION_WALL:
                 if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransWall();
@@ -318,6 +332,7 @@ public class DriveControl extends  OpMode {
                 if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){
                     hw.Hextend();
                     hw.FlipHalf();
+                    buttonDelay.reset();
                     intake = Pickup.EXTEND_NF;
                 }
                 if (gamepad1.x && buttonDelay.milliseconds() > ButtonDelay){
@@ -332,6 +347,7 @@ public class DriveControl extends  OpMode {
             case EXTEND_NF:
                 if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){
                     hw.FlipIntake();
+                    buttonDelay.reset();
                     intake = Pickup.IN_PRE;
                 }
                 break;
@@ -343,14 +359,22 @@ public class DriveControl extends  OpMode {
                 break;
             case IN_PRE:
                 if(gamepad1.b){
-                    hw.Intake.setPower(-.75);
+                    hw.Intake.setPower(1);
                 }
                 else {
-                    hw.Intake.setPower(.75);
+                    hw.Intake.setPower(1);
                 }
                 if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //flips up
                     hw.FlipClaw();
                     hw.claw.setPosition(CLAW_OPEN);
+                    buttonDelay.reset();
+                    InDelay.reset();
+                    intake = Pickup.IN_POST;
+                }
+                if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){ //flips up
+                    hw.FlipClaw();
+                    hw.claw.setPosition(CLAW_OPEN);
+                    buttonDelay.reset();
                     InDelay.reset();
                     intake = Pickup.IN_POST;
                 }
@@ -370,10 +394,12 @@ public class DriveControl extends  OpMode {
                 if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){
                     hw.Hextend();
                     hw.FlipIntake();
+                    buttonDelay.reset();
                     intake = Pickup.IN_PRE;
                 }
                 if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){
                     hw.FlipIntake();
+                    buttonDelay.reset();
                     intake = Pickup.IN_PRE;
                 }
                 break;
@@ -381,6 +407,7 @@ public class DriveControl extends  OpMode {
                 if (InDelay.milliseconds() > FlipDelay){ //flips for arm
                     hw.FlipHalf();
                     hw.Intake.setPower(0);
+                    InDelay.reset();
                     intake = Pickup.REST;
                 }
                 break;

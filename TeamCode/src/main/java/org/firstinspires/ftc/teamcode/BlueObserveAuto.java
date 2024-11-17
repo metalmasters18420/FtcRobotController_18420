@@ -95,7 +95,7 @@ public class BlueObserveAuto extends LinearOpMode {
 
         TrajectoryActionBuilder DriveToWall = DriveToSpecimen.fresh()
                 .setTangent(Math.toRadians(90))
-                .lineToY(50);
+                .lineToY(52);  //52,44
 
 //                .turn(Math.toRadians(90));
 //                .lineToYSplineHeading(55, Math.toRadians(90));
@@ -106,7 +106,7 @@ public class BlueObserveAuto extends LinearOpMode {
 
 
         TrajectoryActionBuilder Cycle = DriveToWall.fresh()
-                .setTangent(-0.2449) //Math.atan((40-55)/((0)-(-60))))
+                .setTangent(-0.2449) //Math.atan((52-55)/((0)-(-60))))
                 .lineToXSplineHeading(0, Math.toRadians(-90))     // -60,55 -> -11,28
                 .setTangent(Math.toRadians(90))
                 .lineToY(28);
@@ -192,7 +192,8 @@ public class BlueObserveAuto extends LinearOpMode {
 //                        cycle3,
 //                        claw.scoreSpecimen(),
                         Park1,
-                        claw.Resting()                  //set everything to teleop ready positions
+                        claw.Resting(),               //set everything to teleop ready positions
+                        new SleepAction(2)
                 ));
 //
 //

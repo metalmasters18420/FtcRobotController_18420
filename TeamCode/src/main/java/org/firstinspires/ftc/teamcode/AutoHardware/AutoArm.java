@@ -77,199 +77,199 @@ public class AutoArm {
 
 
     }
-    public class ArmHPre implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            armLeft.setPosition(ARM_HIGH_PRE_POS);
-            armRight.setPosition(ARM_HIGH_PRE_POS);
-
-
-            return false;
-        }
-    }
-
-    public class VextHbar implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            VLift.setPosition(VBAR);
-            wrist.setPosition(WRIST_HIGH);
-
-
-            return false;
-        }
-    }
-    public class RotateUpMore implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            armLeft.setPosition(0.4);
-            armRight.setPosition(0.4);
-            wrist.setPosition(WRIST_HIGH);
-
-            return false;
-        }
-    }
-    public class Vliftarmhookposition implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            VLift.setPosition(0.3);
-
-            return false;
-        }
-    }
-    public class Vextdown implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            VLift.setPosition(0.1);
-
-            return false;
-        }
-    }
-    public class ArmHPost implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            armLeft.setPosition(ARM_HIGH_POST_POS);
-            armRight.setPosition(ARM_HIGH_POST_POS);
-
-            return false;
-        }
-    }
-//    /public class ArmWall implements Action {
-///
+//    public class ArmHPre implements Action {
+//
 //        @Override
 //        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-//            armLeft.setPosition(ARM_WALL_POS);
-//            armRight.setPosition(ARM_WALL_POS);
+//            armLeft.setPosition(ARM_HIGH_PRE_POS);
+//            armRight.setPosition(ARM_HIGH_PRE_POS);
+//
 //
 //            return false;
 //        }
 //    }
-    public class ClawOpen implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            claw.setPosition(CLAW_OPEN);
-            return false;
-        }
-    }
-    public class ClawClose implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            claw.setPosition(CLAW_CLOSED);
-            return false;
-        }
-    }
-    public class ArmRestore implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            VLift.setPosition(0.5);
-            return false;
-        }
-    }
-    public class ClawGoBack implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            claw.setPosition(CLAW_CLOSED);
-            return false;
-        }
-    }
-    public class IntakeFlip implements Action {
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            InFlip.setPosition(FLIP_CLAW);
-            return false;
-        }
-    }
-
-
-
-    public Action rotateUp(){
-        return new SequentialAction(
-//                new RotateUp(),
-                (telemetryPacket) -> {
-                    armLeft.setPosition(ARM_HIGH_PRE_POS);
-                    armRight.setPosition(ARM_HIGH_PRE_POS);
-                    return false;
-                },
-                new SleepAction(0.5));
-    }
-    public Action rotateDown(){
-        return new SequentialAction(
-                telemetryPacket -> {
-                    armLeft.setPosition(ARM_HIGH_POST_POS);
-                    armRight.setPosition(ARM_HIGH_POST_POS);
-                    return false;
-                },
-                new SleepAction(0.5));
-    }
-    public Action clawDrop(){
-        return new SequentialAction(
-                new ClawOpen());
+//
+//    public class VextHbar implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            VLift.setPosition(VBAR);
+//            wrist.setPosition(WRIST_HIGH);
+//
+//
+//            return false;
+//        }
+//    }
+//    public class RotateUpMore implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            armLeft.setPosition(0.4);
+//            armRight.setPosition(0.4);
+//            wrist.setPosition(WRIST_HIGH);
+//
+//            return false;
+//        }
+//    }
+//    public class Vliftarmhookposition implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            VLift.setPosition(0.3);
+//
+//            return false;
+//        }
+//    }
+//    public class Vextdown implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            VLift.setPosition(0.1);
+//
+//            return false;
+//        }
+//    }
+//    public class ArmHPost implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            armLeft.setPosition(ARM_HIGH_POST_POS);
+//            armRight.setPosition(ARM_HIGH_POST_POS);
+//
+//            return false;
+//        }
+//    }
+////    /public class ArmWall implements Action {
+/////
+////        @Override
+////        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+////            armLeft.setPosition(ARM_WALL_POS);
+////            armRight.setPosition(ARM_WALL_POS);
+////
+////            return false;
+////        }
+////    }
+//    public class ClawOpen implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            claw.setPosition(CLAW_OPEN);
+//            return false;
+//        }
+//    }
+//    public class ClawClose implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            claw.setPosition(CLAW_CLOSED);
+//            return false;
+//        }
+//    }
+//    public class ArmRestore implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            VLift.setPosition(0.5);
+//            return false;
+//        }
+//    }
+//    public class ClawGoBack implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            claw.setPosition(CLAW_CLOSED);
+//            return false;
+//        }
+//    }
+//    public class IntakeFlip implements Action {
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            InFlip.setPosition(FLIP_CLAW);
+//            return false;
+//        }
+//    }
+//
+//
+//
+//    public Action rotateUp(){
+//        return new SequentialAction(
+////                new RotateUp(),
+//                (telemetryPacket) -> {
+//                    armLeft.setPosition(ARM_HIGH_PRE_POS);
+//                    armRight.setPosition(ARM_HIGH_PRE_POS);
+//                    return false;
+//                },
 //                new SleepAction(0.5));
-    }
-    public Action Flipclaw(){
-        return new SequentialAction(
-                new IntakeFlip());
-    }
-    public Action clawPickup(){
-        return new SequentialAction(
-                new ClawClose(),
-                new SleepAction(.25));
-    }
-    public Action armRestore(){
-        return new SequentialAction(
-                new ArmRestore(),
-                new SleepAction(0.5));
-        //return new ClawRestore();
-    }
-    public Action armHook(){
-        return new SequentialAction(
-                new ArmHPost(),
-                new SleepAction(0.5));
-    }
-    public Action VLift(){
-        return new SequentialAction(
-                new Vliftarmhookposition(),
-                new SleepAction(0.5));
-    }
-    public Action clawgoBack(){
-        return new SequentialAction(
-                new ClawGoBack(),
-                new SleepAction(0.5));
-    }
-    public Action rotateupmore(){
-        return new SequentialAction(
-                new RotateUpMore(),
-                new SleepAction(0.5));
-    }
-    public Action prepareVlifttoscore(){
-        return new SequentialAction(
-                new VextHbar(),
-                new SleepAction(0.5));
-    }
-    public Action vLiftGoDown(){
-        return new SequentialAction(
-                new Vextdown(),
-                new SleepAction(0.5));
-    }
-    public Action scoreSpecimen(){
-        return new SequentialAction(
-                     prepareVlifttoscore(),
-                    rotateDown(),
-                    clawDrop(),
-                    vLiftGoDown());
-//                     armRestore(),
-//                    rotateDown());
-
-    }
+//    }
+//    public Action rotateDown(){
+//        return new SequentialAction(
+//                telemetryPacket -> {
+//                    armLeft.setPosition(ARM_HIGH_POST_POS);
+//                    armRight.setPosition(ARM_HIGH_POST_POS);
+//                    return false;
+//                },
+//                new SleepAction(0.5));
+//    }
+//    public Action clawDrop(){
+//        return new SequentialAction(
+//                new ClawOpen());
+////                new SleepAction(0.5));
+//    }
+//    public Action Flipclaw(){
+//        return new SequentialAction(
+//                new IntakeFlip());
+//    }
+//    public Action clawPickup(){
+//        return new SequentialAction(
+//                new ClawClose(),
+//                new SleepAction(.25));
+//    }
+//    public Action armRestore(){
+//        return new SequentialAction(
+//                new ArmRestore(),
+//                new SleepAction(0.5));
+//        //return new ClawRestore();
+//    }
+//    public Action armHook(){
+//        return new SequentialAction(
+//                new ArmHPost(),
+//                new SleepAction(0.5));
+//    }
+//    public Action VLift(){
+//        return new SequentialAction(
+//                new Vliftarmhookposition(),
+//                new SleepAction(0.5));
+//    }
+//    public Action clawgoBack(){
+//        return new SequentialAction(
+//                new ClawGoBack(),
+//                new SleepAction(0.5));
+//    }
+//    public Action rotateupmore(){
+//        return new SequentialAction(
+//                new RotateUpMore(),
+//                new SleepAction(0.5));
+//    }
+//    public Action prepareVlifttoscore(){
+//        return new SequentialAction(
+//                new VextHbar(),
+//                new SleepAction(0.5));
+//    }
+//    public Action vLiftGoDown(){
+//        return new SequentialAction(
+//                new Vextdown(),
+//                new SleepAction(0.5));
+//    }
+//    public Action scoreSpecimen(){
+//        return new SequentialAction(
+//                     prepareVlifttoscore(),
+//                    rotateDown(),
+//                    clawDrop(),
+//                    vLiftGoDown());
+////                     armRestore(),
+////                    rotateDown());
+//
+//    }
 //    public Action setToWall(){
 //        return new SequentialAction(
 //                telemetryPacket -> {
@@ -457,11 +457,9 @@ public class AutoArm {
         return new SequentialAction(
                 new intakeOut(),
                 new vertRest(),
-                new armRest(),
+                new armHpost(),
                 new clawopen(),
-                new wristRest(),
-                new SleepAction(.2),
-                new intakeHalf());
+                new wristRest());
     }
 
 }
