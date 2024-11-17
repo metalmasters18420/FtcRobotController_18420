@@ -102,7 +102,7 @@ public class DriveControl extends  OpMode {
         hw.VLift.setPosition(VREST);
         hw.Rarm.setPosition(ARM_INTAKE_POS);
         hw.Larm.setPosition(ARM_INTAKE_POS);
-        hw.wrist.setPosition(WRIST_INTAKE);
+        hw.OUTwrist.setPosition(WRIST_INTAKE);
         hw.OUTclaw.setPosition(CLAW_OPEN);
         hw.LIntake.setPosition(FLIP_HALF);
         hw.RIntake.setPosition(FLIP_HALF);
@@ -189,14 +189,14 @@ public class DriveControl extends  OpMode {
             case TRANSITION_WALL:
                 if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransWall();
-                    hw.wrist.setPosition(WRIST_WALL);
+                    hw.OUTwrist.setPosition(WRIST_WALL);
                     armflip = Deposit.WALL;
                 }
                 break;
             case TRANSITION_BIN:
                 if (VEDelay.milliseconds() > VExtDelay){ //extend after timer
                     TransBin();
-                    hw.wrist.setPosition(WRIST_BIN);
+                    hw.OUTwrist.setPosition(WRIST_BIN);
                     armflip = Deposit.LOW_BIN;
                 }
                 break;
@@ -211,13 +211,13 @@ public class DriveControl extends  OpMode {
                 }
                 if (gamepad2.dpad_down && buttonDelay.milliseconds() > ButtonDelay){ //move to rest
                     hw.VertRest();
-                    hw.wrist.setPosition(WRIST_INTAKE);
+                    hw.OUTwrist.setPosition(WRIST_INTAKE);
                     armDelay.reset();
                     armflip = Deposit.PRE_REST;
                 }
                 if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){
                     hw.VertLB();
-                    hw.wrist.setPosition(WRIST_INTAKE);
+                    hw.OUTwrist.setPosition(WRIST_INTAKE);
                     armflip = Deposit.LOW_BIN;
                 }
                 break;
@@ -264,7 +264,7 @@ public class DriveControl extends  OpMode {
                 }
                 if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){
                     hw.VertLB();
-                    hw.wrist.setPosition(WRIST_INTAKE);
+                    hw.OUTwrist.setPosition(WRIST_INTAKE);
                     armflip = Deposit.LOW_BIN;
                 }
                 break;
@@ -307,7 +307,7 @@ public class DriveControl extends  OpMode {
                 }
                 if (gamepad2.dpad_right && buttonDelay.milliseconds() > ButtonDelay){
                     hw.VertLB();
-                    hw.wrist.setPosition(WRIST_INTAKE);
+                    hw.OUTwrist.setPosition(WRIST_INTAKE);
                     armflip = Deposit.LOW_BIN;
                 }
                 break;
@@ -471,7 +471,7 @@ public class DriveControl extends  OpMode {
     }
     
     public void Arm_Rest() {
-        hw.wrist.setPosition(WRIST_INTAKE);
+        hw.OUTwrist.setPosition(WRIST_INTAKE);
         hw.OUTclaw.setPosition(CLAW_OPEN);
         hw.ArmRest();
         hw.VertRest();
@@ -493,7 +493,7 @@ public class DriveControl extends  OpMode {
 //        buttonDelay.reset();
 //    }
     public void HBarPre(){
-        hw.wrist.setPosition(WRIST_HIGH);
+        hw.OUTwrist.setPosition(WRIST_HIGH);
         hw.ArmHPre();
         hw.VertBar();
         hw.FlipHalf();

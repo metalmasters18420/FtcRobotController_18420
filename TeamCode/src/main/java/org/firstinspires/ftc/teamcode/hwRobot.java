@@ -28,7 +28,7 @@ public class hwRobot {
     public Servo RIntake = null;
 
     public Servo OUTclaw = null;
-    public Servo wrist = null;
+    public Servo OUTwrist = null;
     public Servo Rarm = null;
     public Servo Larm = null;
 
@@ -37,6 +37,7 @@ public class hwRobot {
     public Servo LHoriz = null;
     public Servo RHoriz = null;
     public Servo INclaw = null;
+    public Servo INwrist = null;
 
     public IntakeFlip flip = null;
     public HorizontalExtention HorExt = null;
@@ -62,7 +63,8 @@ public class hwRobot {
         RIntake = hm.get(Servo.class, "RFlip"); //EH2
         OUTclaw = hm.get(Servo.class, "OC"); //CH0
         INclaw = hm.get(Servo.class, "IC"); //somewhere
-        wrist = hm.get(Servo.class, "Wrist"); //CH1
+        OUTwrist = hm.get(Servo.class, "OW"); //CH1
+        INwrist = hm.get(Servo.class,"IW"); //somewhere
         Larm = hm.get(Servo.class, "LA"); //CH5
         LHoriz = hm.get(Servo.class, "LH"); //CH3
         RHoriz = hm.get(Servo.class, "RH"); //EH1
@@ -103,7 +105,8 @@ public class hwRobot {
 
         OUTclaw.setPosition(0);
         INclaw.setPosition(0);
-        wrist.setPosition(0);
+        OUTwrist.setPosition(0);
+        INwrist.setPosition(0);
 
         LIntake.setPosition(0);
         RIntake.setPosition(0);
