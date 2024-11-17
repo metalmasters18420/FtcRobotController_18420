@@ -28,6 +28,9 @@ public class MeepMeepTesting {
 
           myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(18, 60, Math.toRadians(-90)))
 
+                //this is pathing for hook, plow all 3 yellows, and park
+
+
 //                  TrajectoryActionBuilder DriveToSubmerse = drive.actionBuilder(BlueObservePose)
                           //.splineToLinearHeading(new Pose2d(-11,40,Math.toRadians(90)),Math.toRadians(-90))
                           .setTangent(1.23412150741)

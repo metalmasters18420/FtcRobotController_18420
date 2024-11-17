@@ -74,13 +74,13 @@ public class BlueBucketAuto extends LinearOpMode {
 
         waitForStart();
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        drivetosubmersible1,
-                        claw.rotateUp(),
-                        claw.scoreSpecimen(),
-                        pushyellow1
-                ));
+//        Actions.runBlocking(
+//                new SequentialAction(
+//                        drivetosubmersible1,
+//                        claw.rotateUp(),
+//                        claw.scoreSpecimen(),
+//                        pushyellow1
+//                ));
     }
 }
 //    @Override
