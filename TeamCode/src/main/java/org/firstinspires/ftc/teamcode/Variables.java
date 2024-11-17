@@ -12,13 +12,13 @@ public class Variables {
     public static double FlipDelay = 400;
     public static double ArmDelay = 500;
 
-    public static double ARM_WALL_POS = .12; //98
+    public static double ARM_WALL_POS = .12;
     public static double ARM_INTAKE_POS = 0;
-    public static double ARM_LOW_PRE_POS = .627; //95
-    public static double ARM_LOW_POST_POS = .66; //1
-    public static double ARM_HIGH_PRE_POS = .375; //8
-    public static double ARM_HIGH_POST_POS = .2; //85
-    public static double ARM_LOW_BIN_POS = .375; //7
+    public static double ARM_LOW_PRE_POS = .627;
+    public static double ARM_LOW_POST_POS = .66;
+    public static double ARM_HIGH_PRE_POS = .375;
+    public static double ARM_HIGH_POST_POS = .2;
+    public static double ARM_LOW_BIN_POS = .375;
 
     public static double CLAW_CLOSED = .4;
     public static double CLAW_OPEN = 0;
@@ -40,4 +40,14 @@ public class Variables {
     public static double VEXT = .7;
     public static double VWALL = .5;
     public static double VBAR = .17;
+
+    public static double LIFTLBAR = 1;
+    public static double LIFTHBAR = 2;
+    public static double LIFTLBIN = 1;
+    public static double LIFTHBIN = 2;
+    public static double LIFTWALL = .5;
+    public static double LIFTHANG1 = 1;
+    public static double LIFTHANG2 = 2;
+    public static double LIFTREST = 0;
+    public static double CountsPerin = 10;
 }

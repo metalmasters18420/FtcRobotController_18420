@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,13 +18,16 @@ public class hwRobot {
 
     MecanumDrive drive = null;
 
+    public DcMotor lLift = null;
+    public DcMotor rLift = null;
+
     public DcMotor Hang = null;
 
     public DcMotor Intake = null;
     public Servo LIntake = null;
     public Servo RIntake = null;
 
-    public Servo claw = null;
+    public Servo OUTclaw = null;
     public Servo wrist = null;
     public Servo Rarm = null;
     public Servo Larm = null;
@@ -34,35 +36,38 @@ public class hwRobot {
 
     public Servo LHoriz = null;
     public Servo RHoriz = null;
+    public Servo INclaw = null;
 
     public IntakeFlip flip = null;
     public HorizontalExtention HorExt = null;
     public VerticalExtention VertExten = null;
     public Buttons button = null;
     public Outtake out = null;
+    public Lift lift = null;
 
     public hwRobot() {}
 
     public void init(HardwareMap hmap) {
         hm = hmap;
 
-
-
 //        LFDrive = hm.get(DcMotor.class, "LF"); //CH0 motor
 //        LBDrive = hm.get(DcMotor.class, "LB"); //CH1 motor
 //        RFDrive = hm.get(DcMotor.class, "RF"); //CH2 motor
 //        RBDrive = hm.get(DcMotor.class, "RB"); //CH3 motor
+
         Hang = hm.get(DcMotor.class, "UP"); //EH0 motor
         Intake = hm.get(DcMotor.class, "IN"); //EH2 motor
-        LIntake = hm.get(Servo.class, "LFlip"); //CH2
+        lLift = hm.get(DcMotor.class, "LL"); //somewhere motor
+        rLift = hm.get(DcMotor.class, "RL"); //somewhere motorLIntake = hm.get(Servo.class, "LFlip"); //CH2
         RIntake = hm.get(Servo.class, "RFlip"); //EH2
-        claw = hm.get(Servo.class, "Claw"); //CH0
+        OUTclaw = hm.get(Servo.class, "OC"); //CH0
+        INclaw = hm.get(Servo.class, "IC"); //somewhere
         wrist = hm.get(Servo.class, "Wrist"); //CH1
-        Rarm = hm.get(Servo.class, "RA"); //EH0
         Larm = hm.get(Servo.class, "LA"); //CH5
         LHoriz = hm.get(Servo.class, "LH"); //CH3
         RHoriz = hm.get(Servo.class, "RH"); //EH1
         VLift = hm.get(Servo.class, "VL"); //CH4
+//        Rarm = hm.get(Servo.class, "RA"); //EH0
 
 //        LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 //        LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -96,7 +101,8 @@ public class hwRobot {
         Intake.setPower(0);
         Intake.setTargetPosition(0);
 
-        claw.setPosition(0);
+        OUTclaw.setPosition(0);
+        INclaw.setPosition(0);
         wrist.setPosition(0);
 
         LIntake.setPosition(0);
@@ -123,6 +129,11 @@ public class hwRobot {
 
             Rarm.setPosition(0);
             Larm.setPosition(0);
+
+        lift = new Lift(lLift, rLift);
+
+            lLift.setTargetPosition(0);
+            rLift.setTargetPosition(0);
     }
 
     public void FlipIntake(){
@@ -191,5 +202,37 @@ public class hwRobot {
 
     public void ArmLB(){
         out.ArmLB();
+    }
+
+    public void liftLbin(){
+        lift.Llowbin();
+    }
+
+    public void liftHbin(){
+        lift.Lhighbin();
+    }
+
+    public void liftHbar(){
+        lift.Lhighbar();
+    }
+
+    public void liftLbar(){
+        lift.Llowbar();
+    }
+
+    public void liftwall(){
+        lift.Lwall();
+    }
+
+    public void liftrest(){
+        lift.Lrest();
+    }
+
+    public void liftLhang(){
+        lift.Lhang1();
+    }
+
+    public void liftHhang(){
+        lift.Lhang2();
     }
 }
