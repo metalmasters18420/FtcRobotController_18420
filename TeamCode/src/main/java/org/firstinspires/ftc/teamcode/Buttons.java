@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-import static org.firstinspires.ftc.teamcode.Variables.CLAW_CLOSED;
-import static org.firstinspires.ftc.teamcode.Variables.CLAW_OPEN;
-
 public class Buttons {}
 //    hwRobot hw = new hwRobot();
 //

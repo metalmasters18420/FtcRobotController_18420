@@ -1,8 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_BAR;
+import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_BIN;
+import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_REST;
+import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_WALL;
+import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BAR;
+import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BIN;
+import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_INTAKE;
+import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_WALL;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_INTAKE;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
+
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -10,40 +24,26 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 public class hwRobot {
     HardwareMap hm = null;
-
 //    public DcMotor LFDrive = null;
 //    public DcMotor LBDrive = null;
 //    public DcMotor RBDrive = null;
 //    public DcMotor RFDrive = null;
-
     MecanumDrive drive = null;
 
     public DcMotor lLift = null;
     public DcMotor rLift = null;
 
-    public DcMotor Hang = null;
-
-    public DcMotor Intake = null;
-    public Servo LIntake = null;
-    public Servo RIntake = null;
-
-    public Servo OUTclaw = null;
-    public Servo OUTwrist = null;
-    public Servo Rarm = null;
-    public Servo Larm = null;
-
-    public Servo VLift = null;
+    public Servo oclaw = null;
+    public Servo owrist = null;
+    public Servo arm = null;
 
     public Servo LHoriz = null;
     public Servo RHoriz = null;
-    public Servo INclaw = null;
-    public Servo INwrist = null;
+    public Servo iclaw = null;
+    public Servo iwrist = null;
+    public Servo iflip = null;
 
-    public IntakeFlip flip = null;
     public HorizontalExtention HorExt = null;
-    public VerticalExtention VertExten = null;
-    public Buttons button = null;
-    public Outtake out = null;
     public Lift lift = null;
 
     public hwRobot() {}
@@ -56,20 +56,16 @@ public class hwRobot {
 //        RFDrive = hm.get(DcMotor.class, "RF"); //CH2 motor
 //        RBDrive = hm.get(DcMotor.class, "RB"); //CH3 motor
 
-        Hang = hm.get(DcMotor.class, "UP"); //EH0 motor
-        Intake = hm.get(DcMotor.class, "IN"); //EH2 motor
-        lLift = hm.get(DcMotor.class, "LL"); //somewhere motor
-        rLift = hm.get(DcMotor.class, "RL"); //somewhere motorLIntake = hm.get(Servo.class, "LFlip"); //CH2
-        RIntake = hm.get(Servo.class, "RFlip"); //EH2
-        OUTclaw = hm.get(Servo.class, "OC"); //CH0
-        INclaw = hm.get(Servo.class, "IC"); //somewhere
-        OUTwrist = hm.get(Servo.class, "OW"); //CH1
-        INwrist = hm.get(Servo.class,"IW"); //somewhere
-        Larm = hm.get(Servo.class, "LA"); //CH5
-        LHoriz = hm.get(Servo.class, "LH"); //CH3
+        lLift = hm.get(DcMotor.class, "LL"); //EH2 motor
+        rLift = hm.get(DcMotor.class, "RL"); //EH3 motor
+        oclaw = hm.get(Servo.class, "OC"); //CH1
+        iclaw = hm.get(Servo.class, "IC"); //CH5
+        owrist = hm.get(Servo.class, "OW"); //CH0
+        iwrist = hm.get(Servo.class,"IW"); //CH4
+        arm = hm.get(Servo.class, "arm"); //CH2
+        LHoriz = hm.get(Servo.class, "LH"); //EH0
         RHoriz = hm.get(Servo.class, "RH"); //EH1
-        VLift = hm.get(Servo.class, "VL"); //CH4
-//        Rarm = hm.get(Servo.class, "RA"); //EH0
+        iflip = hm.get(Servo.class, "IF"); //CH3
 
 //        LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 //        LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -93,149 +89,108 @@ public class hwRobot {
 //        RFDrive.setTargetPosition(0);
 //        RBDrive.setTargetPosition(0);
 
-        Hang.setDirection(DcMotorSimple.Direction.FORWARD);
-        Hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Hang.setPower(0);
-        Hang.setTargetPosition(0);
+        oclaw.setPosition(CLAW_OPEN);
+        oclaw.setDirection(Servo.Direction.REVERSE);
 
-        Intake.setDirection(DcMotorSimple.Direction.FORWARD);
-        Intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Intake.setPower(0);
-        Intake.setTargetPosition(0);
+        owrist.setPosition(OWRIST_INTAKE);
+        owrist.setDirection(Servo.Direction.FORWARD);
 
-        OUTclaw.setPosition(0);
-        INclaw.setPosition(0);
-        OUTwrist.setPosition(0);
-        INwrist.setPosition(0);
+        iclaw.setPosition(CLAW_OPEN);
+        iclaw.setDirection(Servo.Direction.REVERSE);
 
-        LIntake.setPosition(0);
-        RIntake.setPosition(0);
+        iwrist.setPosition(IWRIST_MIDDLE);
+        iwrist.setDirection(Servo.Direction.FORWARD);
 
-        RHoriz.setPosition(0);
-        LHoriz.setPosition(0);
+        arm.setPosition(ARM_REST);
+        arm.setDirection(Servo.Direction.FORWARD);
 
-        flip = new IntakeFlip(LIntake, RIntake);
+        LHoriz.setPosition(HORIZ_RETRACT_POS);
+        RHoriz.setPosition(HORIZ_RETRACT_POS);
 
-            LIntake.setPosition(0);
-            RIntake.setPosition(0);
+        iflip.setPosition(FLIP_CLAW);
+        iflip.setDirection(Servo.Direction.FORWARD);
 
         HorExt = new HorizontalExtention(LHoriz, RHoriz);
 
             LHoriz.setPosition(0);
             RHoriz.setPosition(0);
 
-        VertExten = new VerticalExtention(VLift);
+        lift = new Lift(lLift,rLift);
 
-            VLift.setPosition(0);
-
-        out = new Outtake(Larm, Rarm);
-
-            Rarm.setPosition(0);
-            Larm.setPosition(0);
-
-        lift = new Lift(lLift, rLift);
-
-            lLift.setTargetPosition(0);
-            rLift.setTargetPosition(0);
-    }
-
-    public void FlipIntake(){
-        flip.FliptoIntake();
-    }
-
-    public void FlipClaw(){
-        flip.FliptoClaw();
-    }
-
-    public void FlipWall(){
-        flip.FliptoWall();
-    }
-
-    public void FlipHalf() {
-        flip.FliptoHalf();
-    }
-
-    public void Hextend(){
-        HorExt.HExtend();
-    }
-
-    public void Hretract(){
-        HorExt.HRetract();
-    }
-
-    public void VertRest(){
-        VertExten.VertRest();
-    }
-
-    public void VertLB(){
-        VertExten.VertLB();
-    }
-
-    public void VertWall(){
-        VertExten.VertWall();
-    }
-
-    public void VertBar(){
-        VertExten.VertBar();
     }
 
     public void ArmRest(){
-        out.ArmRest();
-    }
-
-    public void ArmWall(){
-        out.ArmWall();
-    }
-
-    public void ArmLPre(){
-        out.ArmLBPre();
-    }
-
-    public void ArmLPost(){
-        out.ArmLBPost();
-    }
-
-    public void ArmHPre(){
-        out.ArmHBPre();
-    }
-
-    public void ArmHPost(){
-        out.ArmHBPost();
-    }
-
-    public void ArmLB(){
-        out.ArmLB();
-    }
-
-    public void liftLbin(){
-        lift.Llowbin();
-    }
-
-    public void liftHbin(){
-        lift.Lhighbin();
-    }
-
-    public void liftHbar(){
-        lift.Lhighbar();
-    }
-
-    public void liftLbar(){
-        lift.Llowbar();
-    }
-
-    public void liftwall(){
-        lift.Lwall();
-    }
-
-    public void liftrest(){
         lift.Lrest();
+        oclaw.setPosition(CLAW_OPEN);
+        owrist.setPosition(OWRIST_INTAKE);
+        arm.setPosition(ARM_REST);
+    }
+    public void InRest(){
+        iwrist.setPosition(IWRIST_MIDDLE);
+        HorExt.HRetract();
+    }
+    public void HBPre(){
+        lift.Lhbarpre();
+        arm.setPosition(ARM_BAR);
+        owrist.setPosition(OWRIST_BAR);
+    }
+    public void HBPost(){
+        lift.Llbarpost();
+    }
+    public void Hbin(){
+        lift.Lhbin();
+        arm.setPosition(ARM_BIN);
+        owrist.setPosition(OWRIST_BIN);
+    }
+    public void Lbin(){
+        lift.Llbin();
+        arm.setPosition(ARM_BIN);
+        owrist.setPosition(OWRIST_BIN);
+    }
+    public void LBPre(){
+        lift.Llbarpre();
+        arm.setPosition(ARM_BAR);
+        owrist.setPosition(OWRIST_BAR);
+    }
+    public void LBPost(){
+        lift.Llbarpost();
+    }
+    public void Wall(){
+        lift.Lwall();
+        arm.setPosition(ARM_WALL);
+        owrist.setPosition(OWRIST_WALL);
     }
 
-    public void liftLhang(){
-        lift.Lhang1();
-    }
 
-    public void liftHhang(){
-        lift.Lhang2();
-    }
+//    public void liftLbin(){
+//        lift.Llowbin();
+//    }
+//
+//    public void liftHbin(){
+//        lift.Lhighbin();
+//    }
+//
+//    public void liftHbar(){
+//        lift.Lhighbar();
+//    }
+//
+//    public void liftLbar(){
+//        lift.Llowbar();
+//    }
+//
+//    public void liftwall(){
+//        lift.Lwall();
+//    }
+//
+//    public void liftrest(){
+//        lift.Lrest();
+//    }
+//
+//    public void liftLhang(){
+//        lift.Lhang1();
+//    }
+//
+//    public void liftHhang(){
+//        lift.Lhang2();
+//    }
 }

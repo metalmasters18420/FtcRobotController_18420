@@ -170,20 +170,20 @@ public class BlueObserveAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        claw.HBPre(),
-                        DriveSubmersible,
-                        claw.HBPost(),
-                        DriveSpecimen,
-                        claw.Wall(),
-                        new SleepAction(1),
-                        DriveWall,
-                        new SleepAction(.5),
-                        claw.CloseClaw(),
-                        new SleepAction(1),
-                        claw.HBPre(),
-                        claw.flipIn(),
-                        Cycle1,
-                        claw.HBPost(),
+//                        claw.HBPre(),
+//                        DriveSubmersible,
+//                        claw.HBPost(),
+//                        DriveSpecimen,
+//                        claw.Wall(),
+//                        new SleepAction(1),
+//                        DriveWall,
+//                        new SleepAction(.5),
+//                        claw.CloseClaw(),
+//                        new SleepAction(1),
+//                        claw.HBPre(),
+//                        claw.flipIn(),
+//                        Cycle1,
+//                        claw.HBPost(),
                         //intakeit1,
 //                        claw.setToWall(),
 //                        drivetowall3,
@@ -192,7 +192,7 @@ public class BlueObserveAuto extends LinearOpMode {
 //                        cycle3,
 //                        claw.scoreSpecimen(),
                         Park1,
-                        claw.Resting(),               //set everything to teleop ready positions
+//                        claw.Resting(),               //set everything to teleop ready positions
                         new SleepAction(2)
                 ));
 //

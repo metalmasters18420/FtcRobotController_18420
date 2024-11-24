@@ -92,13 +92,13 @@ public class RedBucketAuto extends LinearOpMode {
         );*/
         Actions.runBlocking(
                 new SequentialAction(
-                        arm.rotateUp(),
-                        new SleepAction(1),
-                        claw.clawDrop(),
-                        new SleepAction(1),
-                        arm.rotateDown(),
-                        new SleepAction(1),
-                        claw.armRestore()
+//                        arm.rotateUp(),
+//                        new SleepAction(1),
+//                        claw.clawDrop(),
+//                        new SleepAction(1),
+//                        arm.rotateDown(),
+//                        new SleepAction(1),
+//                        claw.armRestore()
                 )
         );
 

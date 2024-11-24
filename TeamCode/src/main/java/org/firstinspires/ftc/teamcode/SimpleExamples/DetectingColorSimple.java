@@ -1,28 +1,31 @@
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
-import android.graphics.Color;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_CLOSED;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
-import com.qualcomm.robotcore.hardware.SwitchableLight;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.hwRobot;
 
 /*
  * OpMode showing how to detect color and activate a servo based on a measurement and turn on the BlinkinLED Light
  */
-@Disabled
+//@Disabled
 @TeleOp(name = "Detecting Color Simple", group = "Simple Examples")
 //@Disabled
 public class DetectingColorSimple extends OpMode {
+
+  hwRobot hw = new hwRobot();
+
   private ElapsedTime runtime = new ElapsedTime();
   NormalizedColorSensor colorSensor;
   float gain = 2;
@@ -31,7 +34,12 @@ public class DetectingColorSimple extends OpMode {
   public void init() {
     telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     telemetry.addData("Status", "Initialized");
+    hw.init(hardwareMap);
+    colorSensor = hardwareMap.get(NormalizedColorSensor.class,"COLOR");
 
+    hw.iwrist.setPosition(IWRIST_MIDDLE);
+    hw.iflip.setPosition(FLIP_RAISED);
+    hw.iclaw.setPosition(CLAW_CLOSED);
   }
 
   @Override

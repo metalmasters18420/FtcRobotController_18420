@@ -1,83 +1,111 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.Variables.CountsPerin;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTHANG1;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTHANG2;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTHBAR;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTHBIN;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTLBAR;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTLBIN;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTREST;
-import static org.firstinspires.ftc.teamcode.Variables.LIFTWALL;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG1;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG2;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBARPOST;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBARPRE;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBIN;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBARPOST;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBARPRE;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBIN;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTREST;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTWALL;
+import static org.firstinspires.ftc.teamcode.VariablesLift.kD;
+import static org.firstinspires.ftc.teamcode.VariablesLift.kI;
+import static org.firstinspires.ftc.teamcode.VariablesLift.kP;
+import static org.firstinspires.ftc.teamcode.VariablesLift.summax;
+import static org.firstinspires.ftc.teamcode.VariablesLift.threshold;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Lift {
-    private final DcMotor leftLift;
-    private final DcMotor rightLift;
 
-    public int newTarget = 0;
+    private ElapsedTime timer = new ElapsedTime();
+    private DcMotor left;
+    private DcMotor right;
 
-    public Lift(DcMotor ll, DcMotor rl){
-        this.leftLift = ll;
-        this.rightLift = rl;
+    double lastError = 0;
+    double sum = 0;
 
-        leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
+    public Lift(DcMotor ll, DcMotor rl) {
+        this.left = ll;
+        this.right = rl;
 
-        leftLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        right = hardwareMap.get(DcMotor.class, "rl");
+        right.setDirection(DcMotorSimple.Direction.REVERSE);
+        right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        right.setPower(0);
 
-        leftLift.setTargetPosition(0);
-        rightLift.setTargetPosition(0);
-
-        leftLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        leftLift.setPower(1);
-        rightLift.setPower(1);
-
+//        left = hardwareMap.get(DcMotor.class, "ll");
+        left.setDirection(DcMotorSimple.Direction.FORWARD);
+        left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        left.setPower(0);
     }
 
-    public void Llowbin(){
-        newTarget = (int) (LIFTLBIN * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
+    public void Lhbin(){
+        this.setPosition(LIFTHBIN);
     }
-    public void Lhighbin(){
-        newTarget = (int) (LIFTHBIN * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
+    public void Llbin(){
+        this.setPosition(LIFTLBIN);
     }
-    public void Lhighbar(){
-        newTarget = (int) (LIFTHBAR * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
+    public void Lhbarpre(){
+        this.setPosition(LIFTHBARPRE);
     }
-    public void Llowbar(){
-        newTarget = (int) (LIFTLBAR * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
+    public void Lhbarpost(){
+        this.setPosition(LIFTHBARPOST);
+    }
+    public void Llbarpre(){
+        this.setPosition(LIFTLBARPRE);
+    }
+    public void Llbarpost(){
+        this.setPosition(LIFTLBARPOST);
     }
     public void Lwall(){
-        newTarget = (int) (LIFTWALL * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
-    }
-    public void Lrest(){
-        newTarget = (int) (LIFTREST * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
+        this.setPosition(LIFTWALL);
     }
     public void Lhang1(){
-        newTarget = (int) (LIFTHANG1 * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
+        this.setPosition(LIFTHANG1);
     }
     public void Lhang2(){
-        newTarget = (int) (LIFTHANG2 * CountsPerin);
-        leftLift.setTargetPosition(newTarget);
-        rightLift.setTargetPosition(newTarget);
+        this.setPosition(LIFTHANG2);
+    }
+    public void Lrest(){
+        this.setPosition(LIFTREST);
     }
 
+    private void setPosition(int target){
+        double output = liftControl(target, left.getCurrentPosition(),threshold);
+        left.setPower(output);
+        right.setPower(output);
+    }
+
+    private double liftControl(int target, int current, int thresh){
+        int error = target - current;
+        double deriv = (error - lastError) / timer.seconds();
+        sum += error;
+
+        if (sum > summax) {
+            sum = summax;
+        }
+        if (sum < summax) {
+            sum = -summax;
+        }
+
+        lastError = error;
+        timer.reset();
+        double output = kP * error + kD * deriv + kI * sum;
+
+        if (Math.abs(error) < thresh) {
+            return 0;
+        } else {
+            return output;
+        }
+    }
 }
