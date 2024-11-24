@@ -35,7 +35,7 @@ import kotlin.sequences.SequenceScope;
 // RR-specific imports
 
 
-public class AutoArm {
+public class AutoActions {
     private Servo armRight;
     private Servo armLeft;
     private Servo claw;
@@ -46,7 +46,7 @@ public class AutoArm {
     private Servo Lhoriz;
     private Servo Rhoriz;
 
-    public AutoArm(HardwareMap hwm){
+    public AutoActions(HardwareMap hwm){
         armLeft = hwm.get(Servo.class, "LA");
         armRight = hwm.get(Servo.class, "RA");
         claw = hwm.get(Servo.class, "Claw");
@@ -78,7 +78,7 @@ public class AutoArm {
 
     }
 
-//    public Action HBPost() {
+    //    public Action HBPost() {
 //        return
 //    }
     public class ArmHPre implements Action {
@@ -266,10 +266,10 @@ public class AutoArm {
     }
     public Action scoreSpecimen(){
         return new SequentialAction(
-                     prepareVlifttoscore(),
-                    rotateDown(),
-                    clawDrop(),
-                    vLiftGoDown());
+                prepareVlifttoscore(),
+                rotateDown(),
+                clawDrop(),
+                vLiftGoDown());
 //                     armRestore(),
 //                    rotateDown());
 
@@ -318,9 +318,9 @@ public class AutoArm {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-        armLeft.setPosition(ARM_HIGH_POST_POS);
-        armRight.setPosition(ARM_HIGH_POST_POS);
-        return false;
+            armLeft.setPosition(ARM_HIGH_POST_POS);
+            armRight.setPosition(ARM_HIGH_POST_POS);
+            return false;
         }
     }
     public class armWall implements Action{
@@ -521,3 +521,4 @@ public class AutoArm {
     }
 
 }
+
