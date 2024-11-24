@@ -17,6 +17,9 @@ import static org.firstinspires.ftc.teamcode.Variables.VWALL;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_HIGH;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.Variables.WRIST_WALL;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_CLOSED;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
 
 import android.view.ActionProvider;
 
