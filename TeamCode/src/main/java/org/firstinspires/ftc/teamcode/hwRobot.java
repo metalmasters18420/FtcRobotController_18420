@@ -8,6 +8,7 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BAR;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BIN;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_WALL;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_INTAKE;
@@ -15,7 +16,10 @@ import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -213,4 +217,26 @@ public class hwRobot {
 //    public void liftHhang(){
 //        lift.Lhang2();
 //    }
+    //public Action armRest(){
+    //    return new InstantAction(()->ArmRest());
+    //}
+
+    public Action preparetoscore(){
+        return new InstantAction(()->HBPre());
+    }
+    public Action scorespecimen(){
+        return new InstantAction(()->HBPost());
+    }
+    public Action highbin(){
+        return new InstantAction(()->Hbin());
+    }
+    public Action wall(){
+        return new InstantAction(()->Wall());
+    }
+    public Action clawclose(){return new InstantAction(()-> oclaw.setPosition(CLAW_CLOSED));}
+    public Action clawopen(){return new InstantAction(()-> oclaw.setPosition(CLAW_OPEN));}
+    public Action iclawopen(){return new InstantAction(()-> iclaw.setPosition(CLAW_OPEN));}
+    public Action iclawclose(){return new InstantAction(()-> iclaw.setPosition(CLAW_CLOSED));}
+    public Action horizextend(){return new InstantAction(()->HorExt.HExtend());}
+    public Action horizretract(){return new InstantAction(()->HorExt.HRetract());}
 }

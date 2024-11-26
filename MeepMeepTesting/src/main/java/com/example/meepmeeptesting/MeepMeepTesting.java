@@ -22,7 +22,7 @@ public class MeepMeepTesting {
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(78, 78, Math.toRadians(180), Math.toRadians(180), 15)
                 .build(); //used to be 60, 60
 
           /* myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-12, -60, Math.toRadians(90)))
@@ -66,7 +66,7 @@ public class MeepMeepTesting {
                  //.waitSeconds(2)
 
 
-          /* myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(18, -60, Math.toRadians(-90)))
+           myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(18, -60, Math.toRadians(-90)))
                   //.setTangent(Math.toRadians(180))
                           .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                           //.turn(Math.toRadians(180))
@@ -79,8 +79,9 @@ public class MeepMeepTesting {
                   .strafeToSplineHeading(new Vector2d(38, -40),Math.toRadians(40))
                   .turnTo(Math.toRadians(-40))
                   .strafeToSplineHeading(new Vector2d(48, -40),Math.toRadians(40))
-                  .turnTo(Math.toRadians(-40))
-                  .strafeToSplineHeading(new Vector2d(62, -40),Math.toRadians(90))
+                   .turnTo(Math.toRadians(-40))
+                  .strafeToSplineHeading(new Vector2d(47, SHALLOW_END_POINT_RED.y),Math.toRadians(90))
+
 
                           //.splineTo(new Vector2d(42,-10),Math.toRadians(90))
                           //.turnTo(Math.toRadians(0))
@@ -106,14 +107,15 @@ public class MeepMeepTesting {
                   .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                           .setTangent(Math.toRadians(130))
                   .lineToY(-32.5)
-                  .strafeToSplineHeading(new Vector2d(62, -60),Math.toRadians(90))
+                  .strafeToSplineHeading(new Vector2d(47, SHALLOW_END_POINT_RED.y),Math.toRadians(90))
                   .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                   .setTangent(Math.toRadians(140))
                   .lineToY(-32.5)
-                  .strafeToSplineHeading(new Vector2d(62, -60),Math.toRadians(90))
+                  .strafeToSplineHeading(new Vector2d(47, SHALLOW_END_POINT_RED.y),Math.toRadians(90))
                   .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                   .setTangent(Math.toRadians(150))
-                  .lineToY(-32.5) */
+                  .lineToY(-32.5)
+                   .strafeToSplineHeading(new Vector2d(62, -62),Math.toRadians(270))
 
                           ////Lift lift = new Lift(hardwareMap); */
 //             myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(12, 60, Math.toRadians(-90)))
@@ -145,7 +147,7 @@ public class MeepMeepTesting {
 //                    .lineToY(SHALLOW_END_POINT_BLUE.y)
 
 
-          myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-12, -60, Math.toRadians(-90)))
+        /*  myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-12, -60, Math.toRadians(-90)))
                   //.setTangent(Math.atan((28 - 60) / (11 - 18)))
                   //.lineToXSplineHeading(11, Math.toRadians(-90));            //  12,60 -> 11,28
                   //.setTangent(Math.toRadians(180))
@@ -176,8 +178,9 @@ public class MeepMeepTesting {
                   .strafeToSplineHeading(new Vector2d(-55,-50.4),Math.toRadians(45))
                   .strafeToSplineHeading(new Vector2d(-24,-11),Math.toRadians(0))
                   .strafeToSplineHeading(new Vector2d(-55,-50.4),Math.toRadians(45))
+                  .strafeToSplineHeading(new Vector2d(-24,-11),Math.toRadians(0))
 
-                .endTrajectory()// works cited: tommy
+                .endTrajectory()// works cited: tommy */
 
 
 //                  .setTangent(Math.toRadians(90))

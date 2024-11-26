@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 // RR-specific imports
 
-import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
+//import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 
@@ -32,13 +32,14 @@ public class BlueBucketAuto extends LinearOpMode {
         Vector2d DEEP_END_POINT_BLUE = new Vector2d(-60, 60);
         Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(48, 50);
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap, BlueObservePose);
+        //MecanumDrive drive = new MecanumDrive(hardwareMap, BlueObservePose);
         //AutoArm arm = new AutoArm(hardwareMap);
-        AutoArm claw = new AutoArm(hardwareMap);
+        //AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
+        hwRobot robot = new hwRobot();
 
-        TrajectoryActionBuilder drivetosubmersible = drive.actionBuilder(BlueBucketPose)
+        TrajectoryActionBuilder drivetosubmersible = robot.drive.actionBuilder(BlueBucketPose)
                 //.setTangent(Math.atan((28 - 60) / (11 - 18)))
                 //.lineToXSplineHeading(11, Math.toRadians(-90));            //  12,60 -> 11,28
                 //.setTangent(Math.toRadians(180))
@@ -70,7 +71,25 @@ public class BlueBucketAuto extends LinearOpMode {
         TrajectoryActionBuilder drivetoscoresample3location = drivetosample3.fresh()
                 .turnTo(Math.toRadians(45))
                 .endTrajectory();
-        TrajectoryActionBuilder park = drivetoscoresample3location.fresh()
+        TrajectoryActionBuilder Cycle1part1 = drivetoscoresample3location.fresh()
+                .strafeToSplineHeading(new Vector2d(-24,-11),Math.toRadians(0))
+                .endTrajectory();
+        TrajectoryActionBuilder Cycle1part2 = Cycle1part1.fresh()
+                .strafeToSplineHeading(new Vector2d(-55,-50.4),Math.toRadians(45))
+                .endTrajectory();
+        TrajectoryActionBuilder Cycle2part1 = Cycle1part2.fresh()
+                .strafeToSplineHeading(new Vector2d(-24,-11),Math.toRadians(0))
+                .endTrajectory();
+        TrajectoryActionBuilder Cycle2part2 = Cycle2part1.fresh()
+                .strafeToSplineHeading(new Vector2d(-55,-50.4),Math.toRadians(45))
+                .endTrajectory();
+        TrajectoryActionBuilder Cycle3part1 = Cycle2part2.fresh()
+                .strafeToSplineHeading(new Vector2d(-24,-11),Math.toRadians(0))
+                .endTrajectory();
+        TrajectoryActionBuilder Cycle3part2 = Cycle3part1.fresh()
+                .strafeToSplineHeading(new Vector2d(-55,-50.4),Math.toRadians(45))
+                .endTrajectory();
+        TrajectoryActionBuilder park = Cycle3part2.fresh()
                 .strafeToSplineHeading(new Vector2d(-24,-11),Math.toRadians(0))
                 .endTrajectory();// works cited: tommy
 
@@ -112,6 +131,18 @@ public class BlueBucketAuto extends LinearOpMode {
 
         Action drivetoscoresample3location1 = drivetoscoresample3location.build();
 
+        Action cycle1part1 = Cycle1part1.build();
+
+        Action cycle1part2 = Cycle1part2.build();
+
+        Action cycle2part1 = Cycle2part1.build();
+
+        Action cycle2part2 = Cycle2part2.build();
+
+        Action cycle3part1 = Cycle3part1.build();
+
+        Action cycle3part2 = Cycle3part2.build();
+
         Action park1 = park.build();
 
 //        Action pushyellow1;
@@ -122,16 +153,39 @@ public class BlueBucketAuto extends LinearOpMode {
         Actions.runBlocking(
                new SequentialAction(
                         drivetosubmersible1,
+                       robot.preparetoscore(),
+                       robot.scorespecimen(),
+                       robot.clawopen(),
                        drivetosample11,
+                       robot.iclawclose(),
                        drivetoscoresample1location1,
+                       robot.highbin(),
                        drivetosample21,
+                       robot.iclawclose(),
                        drivetoscoresample2location1,
+                       robot.highbin(),
                        drivetosample31,
+                       robot.clawclose(),
                        drivetoscoresample3location1,
-                       park1,
+                       robot.highbin(),
+                       cycle1part1,
+                       robot.horizextend(),
+                       //color sensor stuff
+                       cycle1part2,
+                       robot.highbin(),
+                       cycle2part1,
+                       //color sensor stuff
+                       cycle2part2,
+                       robot.highbin(),
+                       cycle3part1,
+                       //color sensor stuff
+                       cycle3part2,
+                       robot.highbin(),
+                       park1
+
 
                        // claw.HBPre(),
-                        claw.scoreSpecimen()
+                        //claw.scoreSpecimen()
 
 //                        pushyellow1
                 ));
