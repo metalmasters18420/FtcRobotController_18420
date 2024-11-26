@@ -12,9 +12,11 @@ import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBIN;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTREST;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTWALL;
 import static org.firstinspires.ftc.teamcode.VariablesLift.kD;
+import static org.firstinspires.ftc.teamcode.VariablesLift.kG;
 import static org.firstinspires.ftc.teamcode.VariablesLift.kI;
 import static org.firstinspires.ftc.teamcode.VariablesLift.kP;
 import static org.firstinspires.ftc.teamcode.VariablesLift.summax;
+import static org.firstinspires.ftc.teamcode.VariablesLift.targetpos;
 import static org.firstinspires.ftc.teamcode.VariablesLift.threshold;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -26,7 +28,7 @@ public class Lift {
     private ElapsedTime timer = new ElapsedTime();
     private DcMotor left;
     private DcMotor right;
-
+    int target = 0;
     double lastError = 0;
     double sum = 0;
 
@@ -35,14 +37,14 @@ public class Lift {
         this.right = rl;
 
 //        right = hardwareMap.get(DcMotor.class, "rl");
-        right.setDirection(DcMotorSimple.Direction.REVERSE);
+        right.setDirection(DcMotorSimple.Direction.FORWARD);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         right.setPower(0);
 
 //        left = hardwareMap.get(DcMotor.class, "ll");
-        left.setDirection(DcMotorSimple.Direction.FORWARD);
+        left.setDirection(DcMotorSimple.Direction.REVERSE);
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -81,12 +83,16 @@ public class Lift {
     }
 
     private void setPosition(int target){
-        double output = liftControl(target, left.getCurrentPosition(),threshold);
+        this.target = target;
+        int currentpos = left.getCurrentPosition();
+
+        double output = liftControl(target, currentpos ,threshold) + kG;
         left.setPower(output);
         right.setPower(output);
     }
 
     private double liftControl(int target, int current, int thresh){
+
         int error = target - current;
         double deriv = (error - lastError) / timer.seconds();
         sum += error;
@@ -107,5 +113,9 @@ public class Lift {
         } else {
             return output;
         }
+    }
+
+    public void update(){
+        setPosition(this.target);
     }
 }

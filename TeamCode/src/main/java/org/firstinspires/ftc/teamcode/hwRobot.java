@@ -16,8 +16,11 @@ import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
@@ -43,6 +46,9 @@ public class hwRobot {
     public Servo iwrist = null;
     public Servo iflip = null;
 
+    public RevColorSensorV3 colorSensor = null;
+    float gain = 2;
+
     public HorizontalExtention HorExt = null;
     public Lift lift = null;
 
@@ -66,6 +72,8 @@ public class hwRobot {
         LHoriz = hm.get(Servo.class, "LH"); //EH0
         RHoriz = hm.get(Servo.class, "RH"); //EH1
         iflip = hm.get(Servo.class, "IF"); //CH3
+        colorSensor = hm.get(RevColorSensorV3.class, "COLOR");
+
 
 //        LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
 //        LBDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -88,6 +96,8 @@ public class hwRobot {
 //        LBDrive.setTargetPosition(0);
 //        RFDrive.setTargetPosition(0);
 //        RBDrive.setTargetPosition(0);
+
+        colorSensor.setGain(gain);
 
         oclaw.setPosition(CLAW_OPEN);
         oclaw.setDirection(Servo.Direction.REVERSE);
@@ -160,6 +170,16 @@ public class hwRobot {
         arm.setPosition(ARM_WALL);
         owrist.setPosition(OWRIST_WALL);
     }
+//    public void PreIntake(){
+//        HorExt.HExtend();
+//        iflip.setPosition(FLIP_RAISED);
+//        iclaw.setPosition(CLAW_OPEN);
+//    }
+//    public void Intaking(){
+//        HorExt.HExtend();
+//        iflip.setPosition(FLIP_RAISED);
+//
+//    }
 
 
 //    public void liftLbin(){

@@ -20,7 +20,7 @@ public class VariablesArm {
     public static double ARM_WALL = .875;
     public static double ARM_RAISED = .1;
     public static double OWRIST_INTAKE = 0.3;
-    public static double OWRIST_BIN = 1;
-    public static double OWRIST_BAR = 1;
-    public static double OWRIST_WALL = 1;
+    public static double OWRIST_BIN = .6;
+    public static double OWRIST_BAR = .5;
+    public static double OWRIST_WALL = .5;
 }

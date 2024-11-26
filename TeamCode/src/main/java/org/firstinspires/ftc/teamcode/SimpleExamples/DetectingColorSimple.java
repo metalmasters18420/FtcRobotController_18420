@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -27,7 +28,7 @@ public class DetectingColorSimple extends OpMode {
   hwRobot hw = new hwRobot();
 
   private ElapsedTime runtime = new ElapsedTime();
-  NormalizedColorSensor colorSensor;
+  RevColorSensorV3 colorSensor;
   float gain = 2;
 
   @Override
@@ -35,7 +36,7 @@ public class DetectingColorSimple extends OpMode {
     telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     telemetry.addData("Status", "Initialized");
     hw.init(hardwareMap);
-    colorSensor = hardwareMap.get(NormalizedColorSensor.class,"COLOR");
+    colorSensor = hardwareMap.get(RevColorSensorV3.class,"COLOR");
 
     hw.iwrist.setPosition(IWRIST_MIDDLE);
     hw.iflip.setPosition(FLIP_RAISED);
@@ -77,7 +78,6 @@ public class DetectingColorSimple extends OpMode {
     if (colorSensor instanceof DistanceSensor) {
       telemetry.addData("Distance (cm)", "%.3f", ((DistanceSensor) colorSensor).getDistance(DistanceUnit.CM));
     }
-
   }
 
   @Override
