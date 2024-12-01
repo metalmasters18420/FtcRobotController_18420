@@ -21,7 +21,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 // RR-specific imports
 import com.acmerobotics.dashboard.config.Config;
 
-import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
+//import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 
@@ -41,8 +41,8 @@ public class RedObserveAuto extends LinearOpMode {
         Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(-48, 60);
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, RedObservePose);
-        AutoArm arm = new AutoArm(hardwareMap);
-        AutoArm claw = new AutoArm(hardwareMap);
+        //AutoArm arm = new AutoArm(hardwareMap);
+        //AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
 
