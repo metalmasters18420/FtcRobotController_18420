@@ -99,7 +99,7 @@ public class LiftPIDExample extends OpMode {
 
     int error = target - current; // determine the amount of error between where you want to be and where you are
     double derivative = (error-lastError)/timer.seconds();  // calculate how quickly the errors are changing
-    integralSum+=error; //add up all of the errors
+  integralSum+=error; //add up all of the errors
 
     //Prevent the integral sum of errors from getting arbitrarily high.  Helpful when tuning Ki term.
     if (integralSum > INTEGRALSUM_MAX){

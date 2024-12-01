@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_BAR;
+import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_BAR2;
 import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_BIN;
+import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_RAISED;
 import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_REST;
 import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_WALL;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BAR;
@@ -11,7 +13,6 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_WALL;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_INTAKE;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 
@@ -19,8 +20,6 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
@@ -137,15 +136,16 @@ public class hwRobot {
     }
     public void InRest(){
         iwrist.setPosition(IWRIST_MIDDLE);
+        iflip.setPosition(FLIP_INTAKE);
         HorExt.HRetract();
     }
     public void HBPre(){
-        lift.Lhbarpre();
+        lift.Lhbar();
         arm.setPosition(ARM_BAR);
         owrist.setPosition(OWRIST_BAR);
     }
     public void HBPost(){
-        lift.Llbarpost();
+        arm.setPosition(ARM_BAR2);
     }
     public void Hbin(){
         lift.Lhbin();
@@ -158,17 +158,24 @@ public class hwRobot {
         owrist.setPosition(OWRIST_BIN);
     }
     public void LBPre(){
-        lift.Llbarpre();
+        lift.Llbar();
         arm.setPosition(ARM_BAR);
         owrist.setPosition(OWRIST_BAR);
     }
     public void LBPost(){
-        lift.Llbarpost();
+        arm.setPosition(ARM_BAR2);
     }
     public void Wall(){
         lift.Lwall();
         arm.setPosition(ARM_WALL);
         owrist.setPosition(OWRIST_WALL);
+    }
+    public void PreTrans(){
+//        iwrist.setPosition(IWRIST_MIDDLE);
+        iflip.setPosition(FLIP_CLAW);
+        arm.setPosition(ARM_RAISED);
+        owrist.setPosition(OWRIST_INTAKE);
+        oclaw.setPosition(CLAW_OPEN);
     }
 //    public void PreIntake(){
 //        HorExt.HExtend();

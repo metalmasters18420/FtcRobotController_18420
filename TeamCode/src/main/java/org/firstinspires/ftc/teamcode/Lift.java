@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG1;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG2;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBARPOST;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBARPRE;
+//import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBARPOST;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBAR;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBIN;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBARPOST;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBARPRE;
+//import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBARPOST;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBAR;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBIN;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTREST;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTWALL;
@@ -16,7 +15,6 @@ import static org.firstinspires.ftc.teamcode.VariablesLift.kG;
 import static org.firstinspires.ftc.teamcode.VariablesLift.kI;
 import static org.firstinspires.ftc.teamcode.VariablesLift.kP;
 import static org.firstinspires.ftc.teamcode.VariablesLift.summax;
-import static org.firstinspires.ftc.teamcode.VariablesLift.targetpos;
 import static org.firstinspires.ftc.teamcode.VariablesLift.threshold;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -57,18 +55,18 @@ public class Lift {
     public void Llbin(){
         this.setPosition(LIFTLBIN);
     }
-    public void Lhbarpre(){
-        this.setPosition(LIFTHBARPRE);
+    public void Lhbar(){
+        this.setPosition(LIFTHBAR);
     }
-    public void Lhbarpost(){
-        this.setPosition(LIFTHBARPOST);
+//    public void Lhbarpost(){
+//        this.setPosition(LIFTHBARPOST);
+//    }
+    public void Llbar(){
+        this.setPosition(LIFTLBAR);
     }
-    public void Llbarpre(){
-        this.setPosition(LIFTLBARPRE);
-    }
-    public void Llbarpost(){
-        this.setPosition(LIFTLBARPOST);
-    }
+//    public void Llbarpost(){
+//        this.setPosition(LIFTLBARPOST);
+//    }
     public void Lwall(){
         this.setPosition(LIFTWALL);
     }

@@ -5,12 +5,14 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class VariablesIntake {
 
-    public static double CLAW_CLOSED = .28;
+    public static double CLAW_LOOSE = .26;
     public static double CLAW_OPEN = 0.05;
+    public static double CLAW_TIGHT = .28;
 
     public static double IWRIST_MIDDLE = 0.53;
     public static double IWRIST_LEFT = .3;
     public static double IWRIST_RIGHT = .7;
+    public static double IWRIST_TARGET = .53;
 
     public static double FLIP_RAISED = 0.05;
     public static double FLIP_INTAKE = 0;

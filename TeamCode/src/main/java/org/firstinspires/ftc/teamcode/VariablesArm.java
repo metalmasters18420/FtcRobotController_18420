@@ -14,13 +14,14 @@ public class VariablesArm {
 //    public static double ARM_HIGH_POST_POS = .2;
 //    public static double ARM_LOW_BIN_POS = .375;
 
-    public static double ARM_BAR = .3;
+    public static double ARM_BAR = .7;
     public static double ARM_BIN = .6;
     public static double ARM_REST = 0;
-    public static double ARM_WALL = .875;
+    public static double ARM_WALL = .93;
     public static double ARM_RAISED = .1;
+    public static double ARM_BAR2 = 1;
     public static double OWRIST_INTAKE = 0.3;
     public static double OWRIST_BIN = .6;
-    public static double OWRIST_BAR = .5;
-    public static double OWRIST_WALL = .5;
+    public static double OWRIST_BAR = .6;
+    public static double OWRIST_WALL = .4;
 }

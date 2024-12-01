@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
-import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_CLOSED;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_LOOSE;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 
@@ -40,7 +40,7 @@ public class DetectingColorSimple extends OpMode {
 
     hw.iwrist.setPosition(IWRIST_MIDDLE);
     hw.iflip.setPosition(FLIP_RAISED);
-    hw.iclaw.setPosition(CLAW_CLOSED);
+    hw.iclaw.setPosition(CLAW_LOOSE);
   }
 
   @Override
