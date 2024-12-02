@@ -14,7 +14,8 @@ public class VariablesIntake {
     public static double IWRIST_RIGHT = .7;
     public static double IWRIST_TARGET = .53;
 
-    public static double FLIP_RAISED = 0.05;
+    public static double FLIP_RAISED = .1;
+    public static double FLIP_HOVER = .15;
     public static double FLIP_INTAKE = 0;
     public static double FLIP_CLAW = .8;
 

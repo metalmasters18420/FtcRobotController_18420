@@ -10,8 +10,9 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BAR;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BIN;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_WALL;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_CLOSED;
+//import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_TIGHT;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
@@ -20,7 +21,6 @@ import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -51,6 +51,8 @@ public class hwRobot {
 
     public RevColorSensorV3 colorSensor = null;
     float gain = 2;
+    public Servo oLight = null;
+    public Servo iLight = null;
 
     public HorizontalExtention HorExt = null;
     public Lift lift = null;
@@ -76,6 +78,10 @@ public class hwRobot {
         RHoriz = hm.get(Servo.class, "RH"); //EH1
         iflip = hm.get(Servo.class, "IF"); //CH3
         colorSensor = hm.get(RevColorSensorV3.class, "COLOR");
+        oLight = hm.get(Servo.class, "ol");
+        iLight = hm.get(Servo.class, "il");
+
+
 
 
 //        LFDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -240,10 +246,10 @@ public class hwRobot {
     public Action wall(){
         return new InstantAction(()->Wall());
     }
-    public Action clawclose(){return new InstantAction(()-> oclaw.setPosition(CLAW_CLOSED));}
+    public Action clawclose(){return new InstantAction(()-> oclaw.setPosition(CLAW_TIGHT));}
     public Action clawopen(){return new InstantAction(()-> oclaw.setPosition(CLAW_OPEN));}
     public Action iclawopen(){return new InstantAction(()-> iclaw.setPosition(CLAW_OPEN));}
-    public Action iclawclose(){return new InstantAction(()-> iclaw.setPosition(CLAW_CLOSED));}
+    public Action iclawclose(){return new InstantAction(()-> iclaw.setPosition(CLAW_TIGHT));}
     public Action horizextend(){return new InstantAction(()->HorExt.HExtend());}
     public Action horizretract(){return new InstantAction(()->HorExt.HRetract());}
 }
