@@ -64,7 +64,8 @@ public final class MecanumDrive {
 
         // drive model parameters
         public double inPerTick = 0.0019693229412254;
-        public double lateralInPerTick = .004782815941471979; //.006;
+        public double lateralInPerTick = .002952978; //estimate moving teh robot sideways  moved 48, read 32
+        //Moved 180, read 120.71
         public double trackWidthTicks = 5453.737965313754;
 
         // feedforward parameters (in tick units)
