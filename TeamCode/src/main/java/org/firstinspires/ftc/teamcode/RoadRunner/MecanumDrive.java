@@ -66,7 +66,7 @@ public final class MecanumDrive {
         public double inPerTick = 0.0019693229412254;
         public double lateralInPerTick = .002952978; //estimate moving teh robot sideways  moved 48, read 32
         //Moved 180, read 120.71
-        public double trackWidthTicks = 5453.737965313754;
+        public double trackWidthTicks = 5364.750010745253;
 
         // feedforward parameters (in tick units)
         public double kS = .6;//1.7526962035987452;//  .2; //1.7008166311091841;
@@ -84,7 +84,7 @@ public final class MecanumDrive {
 
         // path controller gains
         public double axialGain = 8.0;
-        public double lateralGain = 8.0;
+        public double lateralGain = 10.0;
         public double headingGain = 8.0; // shared with turn
 
         public double axialVelGain = 0.4;
@@ -239,7 +239,7 @@ public final class MecanumDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new ThreeDeadWheelLocalizer(hardwareMap);//,PARAMS.inPerTick);
+        localizer = new ThreeDeadWheelLocalizer(hardwareMap);
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }

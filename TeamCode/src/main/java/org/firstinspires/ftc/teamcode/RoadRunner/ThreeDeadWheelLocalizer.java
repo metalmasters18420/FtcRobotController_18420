@@ -20,9 +20,9 @@ import org.firstinspires.ftc.teamcode.RoadRunner.messages.ThreeDeadWheelInputsMe
 @Config
 public final class ThreeDeadWheelLocalizer implements Localizer {
     public static class Params {
-        public double par0YTicks = -2998.6422102605698; // y position of the first parallel encoder (in tick units)
-        public double par1YTicks = 3011.0632593258283; // y position of the second parallel encoder (in tick units)
-        public double perpXTicks = 411.7759211020046; // x position of the perpendicular encoder (in tick units)
+        public double par0YTicks =  -3090.6153780391046; // y position of the first parallel encoder (in tick units)
+        public double par1YTicks = 2911.3322621067705; // y position of the second parallel encoder (in tick units)
+        public double perpXTicks = 1367.9191411952695; //411.7759211020046; // x position of the perpendicular encoder (in tick units)
 
         // Now each pod can have a different inPerTick
         public double par0InPerTick = 0.001970277;
@@ -51,7 +51,7 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
         // TODO: reverse encoder directions if needed
         par1.setDirection(DcMotorSimple.Direction.FORWARD);
         par0.setDirection(DcMotorSimple.Direction.FORWARD);
-
+        perp.setDirection(DcMotorSimple.Direction.REVERSE);
         FlightRecorder.write("THREE_DEAD_WHEEL_PARAMS", PARAMS);
     }
 
@@ -137,8 +137,8 @@ import org.firstinspires.ftc.teamcode.RoadRunner.messages.ThreeDeadWheelInputsMe
 public final class ThreeDeadWheelLocalizer implements Localizer {
     public static class Params {
         public double par0YTicks =  -3028.1692138450144; // y position of the first parallel encoder (in tick units)
-        public double par1YTicks = 2984.7505815288446; // y position of the second parallel encoder (in tick units)
-        public double perpXTicks = 2836.6971075506394; // x position of the perpendicular encoder (in tick units)
+        public double par1YTicks = 2911.3322621067705; // y position of the second parallel encoder (in tick units)
+        public double perpXTicks = 1367.9191411952695; // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();
