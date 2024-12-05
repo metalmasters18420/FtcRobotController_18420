@@ -13,7 +13,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 // RR-specific imports
 
-//import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 
@@ -33,71 +32,47 @@ public class BlueObserveAuto extends LinearOpMode {
         Vector2d DEEP_END_POINT_BLUE = new Vector2d(-60, 60);
         Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(-48, 50);
 
-        //MecanumDrive drive = new MecanumDrive(hardwareMap, BlueObservePose);
+        MecanumDrive drive = new MecanumDrive(hardwareMap, BlueObservePose);
         //AutoArm arm = new AutoArm(hardwareMap);
-        //AutoArm claw = new AutoArm(hardwareMap);
-        hwRobot robot = new hwRobot();
-        robot.init(hardwareMap);
-
+//        AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
-        waitForStart();
 
-        TrajectoryActionBuilder DriveToSubmersible = robot.drive.actionBuilder(BlueObservePose)//.setTangent(Math.toRadians(180))
+
+        TrajectoryActionBuilder DriveToSubmersible = drive.actionBuilder(BlueObservePose)//.setTangent(Math.toRadians(180))
                 .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                 //.turn(Math.toRadians(180))
-                .lineToY(-32.5)
-        .endTrajectory();
-        TrajectoryActionBuilder Observesample1part1 = DriveToSubmersible.fresh()//.setTangent(Math.toRadians(180))
+                .lineToY(-32.5);
+        TrajectoryActionBuilder Observesample1 = DriveToSubmersible.fresh()//.setTangent(Math.toRadians(180))
                 //.waitSeconds(2)
                 .lineToY(-35)
                 .setTangent(Math.toRadians(0))
                 .strafeToSplineHeading(new Vector2d(28, -40),Math.toRadians(40))
-                .endTrajectory();
-        TrajectoryActionBuilder Observesample1part2 = DriveToSubmersible.fresh()//.setTangent(Math.toRadians(180))
-                .turnTo(Math.toRadians(-40))
-                .endTrajectory();
-        TrajectoryActionBuilder Observesample2part1 = Observesample1part2.fresh()//.setTangent(Math.toRadians(180))
+                .turnTo(Math.toRadians(-40));
+        TrajectoryActionBuilder Observesample2 = Observesample1.fresh()//.setTangent(Math.toRadians(180))
                 .strafeToSplineHeading(new Vector2d(38, -40),Math.toRadians(40))
-                .endTrajectory();
-        TrajectoryActionBuilder Observesample2part2 = Observesample2part1.fresh()//.setTangent(Math.toRadians(180))
-                .turnTo(Math.toRadians(-40))
-                .endTrajectory();
-        TrajectoryActionBuilder Observesample3part1 = Observesample2part2.fresh()//.setTangent(Math.toRadians(180))
+                .turnTo(Math.toRadians(-40));
+        TrajectoryActionBuilder Observesample3 = Observesample2.fresh()//.setTangent(Math.toRadians(180))
                 .strafeToSplineHeading(new Vector2d(48, -40),Math.toRadians(40))
-                .endTrajectory();
-        TrajectoryActionBuilder Observesample3part2 = Observesample3part1.fresh()//.setTangent(Math.toRadians(180))
-                .turnTo(Math.toRadians(-40))
-                .endTrajectory();
-        TrajectoryActionBuilder Drivewall = Observesample3part2.fresh()//.setTangent(Math.toRadians(180))
-                .strafeToSplineHeading(new Vector2d(47, SHALLOW_END_POINT_RED.y),Math.toRadians(90))
+                .turnTo(Math.toRadians(-40));
+        TrajectoryActionBuilder Drivewall = Observesample3.fresh()//.setTangent(Math.toRadians(180))
+                .strafeToSplineHeading(new Vector2d(62, -40),Math.toRadians(90))
                 .setTangent(Math.toRadians(90))
-                .lineToY(SHALLOW_END_POINT_RED.y)
-                .endTrajectory();
+                .lineToY(SHALLOW_END_POINT_RED.y);
         TrajectoryActionBuilder Scorespecimen1 = Drivewall.fresh()//.setTangent(Math.toRadians(180))
                 .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                 .setTangent(Math.toRadians(130))
-                .lineToY(-32.5)
-        .endTrajectory();
-        TrajectoryActionBuilder Scorespecimen2part1 = Scorespecimen1.fresh()//.setTangent(Math.toRadians(180))
-                .strafeToSplineHeading(new Vector2d(47, SHALLOW_END_POINT_RED.y),Math.toRadians(90))
-                .endTrajectory();
-        TrajectoryActionBuilder Scorespecimen2part2 = Scorespecimen2part1.fresh()//.setTangent(Math.toRadians(180))
+                .lineToY(-32.5);
+        TrajectoryActionBuilder Scorespecimen2 = Scorespecimen1.fresh()//.setTangent(Math.toRadians(180))
+                .strafeToSplineHeading(new Vector2d(62, -60),Math.toRadians(90))
                 .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                 .setTangent(Math.toRadians(140))
-                .lineToY(-32.5)
-                .endTrajectory();
-        TrajectoryActionBuilder Scorespecimen3part1 = Scorespecimen2part2.fresh()//.setTangent(Math.toRadians(180))
-                .strafeToSplineHeading(new Vector2d(47, SHALLOW_END_POINT_RED.y),Math.toRadians(90))
-                .endTrajectory();
-        TrajectoryActionBuilder Scorespecimen3part2 = Scorespecimen3part1.fresh()//.setTangent(Math.toRadians(180))
+                .lineToY(-32.5);
+        TrajectoryActionBuilder Scorespecimen3 = Scorespecimen2.fresh()//.setTangent(Math.toRadians(180))
+                .strafeToSplineHeading(new Vector2d(62, -60),Math.toRadians(90))
                 .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                 .setTangent(Math.toRadians(150))
-                .lineToY(-32.5)
-                .endTrajectory();
-        TrajectoryActionBuilder Park = Scorespecimen3part2.fresh()
-        .strafeToSplineHeading(new Vector2d(62, -62),Math.toRadians(270))
-                .endTrajectory();
+                .lineToY(-32.5);
 
 //        TrajectoryActionBuilder DriveToSubmerse = drive.actionBuilder(BlueObservePose)
 //                .setTangent(Math.atan((26-60)/((-11)-(-18))))
@@ -175,75 +150,32 @@ public class BlueObserveAuto extends LinearOpMode {
 
         Action drivetosubmersible = DriveToSubmersible.build();
 
-        Action observesample1part1 = Observesample1part1.build();
+        Action observesample1 = Observesample1.build();
 
-        Action observesample1part2 = Observesample1part2.build();
+        Action observesample2 = Observesample2.build();
 
-        Action observesample2part1 = Observesample2part1.build();
-
-        Action observesample2part2 = Observesample2part2.build();
-
-        Action observesample3part1 = Observesample3part1.build();
-
-        Action observesample3part2 = Observesample3part2.build();
+        Action observesample3 = Observesample3.build();
 
         Action drivewall = Drivewall.build();
 
         Action scorespecimen1 = Scorespecimen1.build();
 
-        Action scorespecimen2part1 = Scorespecimen2part1.build();
+        Action scorespecimen2 = Scorespecimen2.build();
 
-        Action scorespecimen2part2 = Scorespecimen2part2.build();
+        Action scorespecimen3 = Scorespecimen3.build();
 
-        Action scorespecimen3part1 = Scorespecimen3part1.build();
-
-        Action scorespecimen3part2 = Scorespecimen3part2.build();
-
-        Action park = Park.build();
-
+        waitForStart();
 
         Actions.runBlocking(
                 new SequentialAction(
                         drivetosubmersible,
-                        robot.preparetoscore(),
-                        robot.scorespecimen(),
-                        robot.clawopen(),
-                        observesample1part1,
-                        robot.horizextend(),
-                        robot.iclawclose(),
-                        observesample1part2,
-                        robot.iclawopen(),
-                        observesample2part1,
-                        robot.iclawclose(),
-                        observesample2part2,
-                        robot.iclawopen(),
-                        observesample3part1,
-                        robot.iclawclose(),
-                        observesample3part2,
-                        robot.iclawopen(),
-                        robot.horizretract(),
+                        observesample1,
+                        observesample2,
+                        observesample3,
                         drivewall,
-                        robot.wall(),
-                        robot.clawclose(),
                         scorespecimen1,
-                        robot.preparetoscore(),
-                        robot.scorespecimen(),
-                        robot.clawopen(),
-                        scorespecimen2part1,
-                        robot.wall(),
-                        robot.clawclose(),
-                        scorespecimen2part2,
-                        robot.preparetoscore(),
-                        robot.scorespecimen(),
-                        robot.clawopen(),
-                        scorespecimen3part1,
-                        robot.wall(),
-                        robot.clawclose(),
-                        scorespecimen3part2,
-                        robot.preparetoscore(),
-                        robot.scorespecimen(),
-                        robot.clawopen(),
-                        park,
+                        scorespecimen2,
+                        scorespecimen3,
                         //claw.HBPost(),
                         //DriveSpecimen,
                         //claw.Wall(),

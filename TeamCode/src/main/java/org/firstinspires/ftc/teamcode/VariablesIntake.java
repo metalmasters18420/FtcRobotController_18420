@@ -10,8 +10,9 @@ public class VariablesIntake {
     public static double CLAW_TIGHT = .28;
 
     public static double IWRIST_MIDDLE = 0.53;
-    public static double IWRIST_LEFT = .3;
-    public static double IWRIST_RIGHT = .7;
+    public static double IWRIST_LS = .3;
+    public static double IWRIST_RS = .7;
+    public static double IWRIST_MS = .4;
     public static double IWRIST_TARGET = .53;
 
     public static double FLIP_RAISED = .1;

@@ -17,6 +17,7 @@ public class VariablesLift {
     public static int LIFTHANG2 = 0;
     public static int LIFTREST = 0;
     public static int CountsPerin = 10;
+    public static double LIFTSPEED = 1;
 
     public static double kP = 0.015; //.01
     public static double kI = 0.0007; //.01

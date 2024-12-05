@@ -9,6 +9,7 @@ import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBIN;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBAR;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBIN;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTREST;
+import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTSPEED;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTWALL;
 import static org.firstinspires.ftc.teamcode.VariablesLift.kD;
 import static org.firstinspires.ftc.teamcode.VariablesLift.kG;
@@ -34,50 +35,48 @@ public class Lift {
         this.left = ll;
         this.right = rl;
 
-//        right = hardwareMap.get(DcMotor.class, "rl");
-        right.setDirection(DcMotorSimple.Direction.FORWARD);
-        right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        right.setPower(0);
+        right.setTargetPosition(LIFTREST);
+        right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        right.setPower(LIFTSPEED);
 
-//        left = hardwareMap.get(DcMotor.class, "ll");
-        left.setDirection(DcMotorSimple.Direction.REVERSE);
-        left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        left.setPower(0);
+        left.setTargetPosition(LIFTREST);
+        left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        left.setPower(LIFTSPEED);
     }
 
     public void Lhbin(){
-        this.setPosition(LIFTHBIN);
+        left.setTargetPosition(LIFTHBIN);
+        right.setTargetPosition(LIFTHBIN);
     }
     public void Llbin(){
-        this.setPosition(LIFTLBIN);
+        left.setTargetPosition(LIFTLBIN);
+        right.setTargetPosition(LIFTLBIN);
     }
     public void Lhbar(){
-        this.setPosition(LIFTHBAR);
+        left.setTargetPosition(LIFTHBAR);
+        right.setTargetPosition(LIFTHBAR);
     }
-//    public void Lhbarpost(){
-//        this.setPosition(LIFTHBARPOST);
-//    }
     public void Llbar(){
-        this.setPosition(LIFTLBAR);
+        left.setTargetPosition(LIFTLBAR);
+        right.setTargetPosition(LIFTLBAR);
     }
-//    public void Llbarpost(){
-//        this.setPosition(LIFTLBARPOST);
-//    }
     public void Lwall(){
-        this.setPosition(LIFTWALL);
+        left.setTargetPosition(LIFTWALL);
+        right.setTargetPosition(LIFTWALL);
     }
     public void Lhang1(){
-        this.setPosition(LIFTHANG1);
+        left.setTargetPosition(LIFTHANG1);
+        right.setTargetPosition(LIFTHANG1);
     }
     public void Lhang2(){
-        this.setPosition(LIFTHANG2);
+        left.setTargetPosition(LIFTHANG2);
+        right.setTargetPosition(LIFTHANG2);
     }
     public void Lrest(){
-        this.setPosition(LIFTREST);
+        left.setTargetPosition(LIFTREST);
+        right.setTargetPosition(LIFTREST);
     }
 
     private void setPosition(int target){

@@ -10,17 +10,22 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BAR;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_BIN;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_WALL;
-//import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_TIGHT;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_INTAKE;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_LS;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MS;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_RS;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -135,7 +140,6 @@ public class hwRobot {
             RHoriz.setPosition(0);
 
         lift = new Lift(lLift,rLift);
-
     }
 
     public void ArmRest(){
@@ -143,6 +147,12 @@ public class hwRobot {
         oclaw.setPosition(CLAW_OPEN);
         owrist.setPosition(OWRIST_INTAKE);
         arm.setPosition(ARM_REST);
+    }
+    public void ArmRaise(){
+        lift.Lrest();
+        oclaw.setPosition(CLAW_OPEN);
+        owrist.setPosition(OWRIST_INTAKE);
+        arm.setPosition(ARM_RAISED);
     }
     public void InRest(){
         iwrist.setPosition(IWRIST_MIDDLE);
@@ -181,55 +191,27 @@ public class hwRobot {
         owrist.setPosition(OWRIST_WALL);
     }
     public void PreTrans(){
-//        iwrist.setPosition(IWRIST_MIDDLE);
+        iwrist.setPosition(IWRIST_MIDDLE);
         iflip.setPosition(FLIP_CLAW);
         arm.setPosition(ARM_RAISED);
         owrist.setPosition(OWRIST_INTAKE);
         oclaw.setPosition(CLAW_OPEN);
     }
-//    public void PreIntake(){
-//        HorExt.HExtend();
-//        iflip.setPosition(FLIP_RAISED);
-//        iclaw.setPosition(CLAW_OPEN);
-//    }
-//    public void Intaking(){
-//        HorExt.HExtend();
-//        iflip.setPosition(FLIP_RAISED);
-//
-//    }
+    public void Initialize(){
+        arm.setPosition(ARM_REST);
+        owrist.setPosition(OWRIST_INTAKE);
+        oclaw.setPosition(CLAW_OPEN);
+        iflip.setPosition(FLIP_CLAW);
+        LHoriz.setPosition(HORIZ_RETRACT_POS);
+        RHoriz.setPosition(HORIZ_RETRACT_POS);
+        iclaw.setPosition(CLAW_OPEN);
+        iwrist.setPosition(IWRIST_MIDDLE);
+    }
+    public void PreIntake(){
+        iclaw.setPosition(CLAW_OPEN);
+        iflip.setPosition(FLIP_RAISED);
+    }
 
-
-//    public void liftLbin(){
-//        lift.Llowbin();
-//    }
-//
-//    public void liftHbin(){
-//        lift.Lhighbin();
-//    }
-//
-//    public void liftHbar(){
-//        lift.Lhighbar();
-//    }
-//
-//    public void liftLbar(){
-//        lift.Llowbar();
-//    }
-//
-//    public void liftwall(){
-//        lift.Lwall();
-//    }
-//
-//    public void liftrest(){
-//        lift.Lrest();
-//    }
-//
-//    public void liftLhang(){
-//        lift.Lhang1();
-//    }
-//
-//    public void liftHhang(){
-//        lift.Lhang2();
-//    }
     //public Action armRest(){
     //    return new InstantAction(()->ArmRest());
     //}
@@ -246,10 +228,90 @@ public class hwRobot {
     public Action wall(){
         return new InstantAction(()->Wall());
     }
-    public Action clawclose(){return new InstantAction(()-> oclaw.setPosition(CLAW_TIGHT));}
-    public Action clawopen(){return new InstantAction(()-> oclaw.setPosition(CLAW_OPEN));}
+    public Action oclawclose(){return new InstantAction(()-> oclaw.setPosition(CLAW_TIGHT));}
+    public Action oclawopen(){return new InstantAction(()-> oclaw.setPosition(CLAW_OPEN));}
     public Action iclawopen(){return new InstantAction(()-> iclaw.setPosition(CLAW_OPEN));}
     public Action iclawclose(){return new InstantAction(()-> iclaw.setPosition(CLAW_TIGHT));}
     public Action horizextend(){return new InstantAction(()->HorExt.HExtend());}
     public Action horizretract(){return new InstantAction(()->HorExt.HRetract());}
+    public Action RaiseFlip(){
+        return new InstantAction(()->iflip.setPosition(FLIP_RAISED));
+    }
+    public Action WristRS(){
+        return new InstantAction(()->iwrist.setPosition(IWRIST_RS));
+    }
+    public Action WristLS(){return new InstantAction(()->iwrist.setPosition(IWRIST_LS));}
+    public Action WristMS(){return new InstantAction(()->iwrist.setPosition(IWRIST_MS));}
+    public Action IntakeFlip(){
+        return new InstantAction(()->iflip.setPosition(FLIP_INTAKE));
+    }
+    public Action ClawFlip(){return new InstantAction(()->iflip.setPosition(FLIP_CLAW));}
+    public Action WristRest(){return new InstantAction(()->iwrist.setPosition(IWRIST_MIDDLE));}
+    public Action RaiseArm(){return new InstantAction(()->ArmRaise());}
+    public Action RestArm(){return new InstantAction(()->ArmRest());}
+//    public Action Rest(){return new InstantAction(()->);}
+
+    public Action RSpre(){
+        return new SequentialAction(
+                iclawopen(),
+                RaiseFlip(),
+                WristRS(),
+                horizextend());
+    }
+    public Action RSpost(){
+        return new SequentialAction(
+                IntakeFlip(),
+                new SleepAction(.5),
+                iclawclose());
+    }
+    public Action LSpre(){
+        return new SequentialAction(
+                iclawopen(),
+                RaiseFlip(),
+                WristLS(),
+                horizextend());
+    }
+    public Action LSpost(){
+        return new SequentialAction(
+                IntakeFlip(),
+                new SleepAction(.5),
+                iclawclose());
+    }
+    public Action MSpre(){
+        return new SequentialAction(
+                iclawopen(),
+                RaiseFlip(),
+                WristMS(),
+                horizextend());
+    }
+    public Action MSpost(){
+        return new SequentialAction(
+                IntakeFlip(),
+                new SleepAction(.5),
+                iclawclose());
+    }
+    public Action Hretract(){
+        return new SequentialAction(
+                WristRest(),
+                ClawFlip(),
+                horizretract());
+    }
+    public Action Transfer(){
+        return new SequentialAction(
+                WristRest(),
+                ClawFlip(),
+                RaiseArm(),
+        new SleepAction(.5),
+                RestArm(),
+        new SleepAction(.2),
+                iclawopen(),
+                iclawclose());
+    }
+    public Action HBin(){
+        return new SequentialAction(
+                highbin(),
+        new SleepAction(3));
+    }
+
+
 }

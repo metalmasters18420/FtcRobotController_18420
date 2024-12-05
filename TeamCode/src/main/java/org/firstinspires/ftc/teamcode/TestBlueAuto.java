@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -13,7 +12,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 // RR-specific imports
 
-//import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 
@@ -34,7 +32,7 @@ public class TestBlueAuto extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, BlueObservePose);
         //AutoArm arm = new AutoArm(hardwareMap);
-        //AutoArm claw = new AutoArm(hardwareMap);
+//        AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
 
@@ -140,8 +138,8 @@ public class TestBlueAuto extends LinearOpMode {
                 new SequentialAction(
                         //claw.rotateUp(),
                         drivetosubmersible1,
-                        //claw.rotateUp(),
-                        //claw.scoreSpecimen(),
+//                        claw.rotateUp(),
+//                        claw.scoreSpecimen(),
                        // drivetospecimen1
                         observeSampleone1,
                         observeSampletwo2,
@@ -149,10 +147,10 @@ public class TestBlueAuto extends LinearOpMode {
                        // claw.prepareArmForWall(),
                         //wall code here\\
                         scorewallspecimenone1,
-                        //claw.scoreSpecimen(),
+//                        claw.scoreSpecimen(),
                         getspecimentwo1,
                         scorewallspecimentwo1,
-                        //claw.scoreSpecimen(),
+//                        claw.scoreSpecimen(),
                         park1  //help
 
 

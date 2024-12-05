@@ -1,27 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 // RR-specific imports
-import com.acmerobotics.dashboard.config.Config;
 
-//import org.firstinspires.ftc.teamcode.AutoHardware.AutoArm;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 
@@ -44,8 +36,8 @@ public class RedBucketAuto extends LinearOpMode {
         Vector2d SHALLOW_END_POINT_BLUE = new Vector2d(-48, 60);
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, RedBucketPose);
-        //AutoArm arm = new AutoArm(hardwareMap);
-        //AutoArm claw = new AutoArm(hardwareMap);
+//        AutoArm arm = new AutoArm(hardwareMap);
+//        AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
 

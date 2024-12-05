@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 
 
 import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_REST;
-import static org.firstinspires.ftc.teamcode.VariablesArm.OWRIST_INTAKE;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.ArmDelay;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.ButtonDelay;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.ClawDelay;
@@ -18,14 +17,11 @@ import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_HOVER;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_TARGET;
-import static org.firstinspires.ftc.teamcode.VariablesLight.Blue;
 import static org.firstinspires.ftc.teamcode.VariablesLight.Green;
 import static org.firstinspires.ftc.teamcode.VariablesLight.Off;
 import static org.firstinspires.ftc.teamcode.VariablesLight.Red;
-import static org.firstinspires.ftc.teamcode.VariablesLight.Yellow;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -60,15 +56,13 @@ public class DriveControl extends  OpMode {
 
     public enum Pickup {
         REST,
-        IN_PRE,
         RED_WALL,
+        BLUE_WALL,
         IN_POST_BIN,
         WANTS_RED,
         WANTS_BLUE,
         WANTS_YELLOW,
-        ARM_DOWN_WALL,
         ARM_DOWN,
-        WALL_TRANSFER,
         TRANSFER,
         GO_WALL,
         GO_BIN,
@@ -77,7 +71,6 @@ public class DriveControl extends  OpMode {
         TOb,
         REDTRANS,
         BLUETRANS,
-        BLUE_WALL,
         YLWTRANS
     }
 
@@ -110,21 +103,12 @@ public class DriveControl extends  OpMode {
         telemetry.addData("Status", "Initialized");
     }
 
-    //TO DO MONDAY: SWITCH AXON AND MAKE WALL_TRANSFER 100% ACCURATE, CHANGE CLAW DELAY
-
     public void start() {
         clock.reset();
 
         hw.init(hardwareMap);
 
-        hw.arm.setPosition(ARM_REST);
-        hw.owrist.setPosition(OWRIST_INTAKE);
-        hw.oclaw.setPosition(CLAW_OPEN);
-        hw.iflip.setPosition(FLIP_CLAW);
-        hw.LHoriz.setPosition(HORIZ_RETRACT_POS);
-        hw.RHoriz.setPosition(HORIZ_RETRACT_POS);
-        hw.iclaw.setPosition(CLAW_OPEN);
-        hw.iwrist.setPosition(IWRIST_MIDDLE);
+        hw.Initialize();
     }
 
     @Override
@@ -221,19 +205,6 @@ public class DriveControl extends  OpMode {
                     hw.oLight.setPosition(Red);
                 }
 
-//                a2Current = gamepad2.a;
-//
-//                if (a2Current && !a2Last) {
-//                    a2Toggle = !a2Toggle;
-//                }
-//                if (a2Toggle) {
-//                    hw.oclaw.setPosition(CLAW_TIGHT);
-//                }
-//                else{
-//                    hw.oclaw.setPosition(CLAW_OPEN);
-//                }
-//
-//                a2Last = a2Current;
                 if (gamepad2.dpad_up && clock.milliseconds() > ButtonDelay) { //move to wall
                     hw.HBPre();
                     a2Toggle = false;
@@ -631,50 +602,22 @@ public class DriveControl extends  OpMode {
 
                 a1Last = a1Current;
 
-//                if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){ //extends
-//                    hw.HorExt.HExtend();
-//                    buttonDelay.reset();
-//                    InDelay.reset();
-//                    intake = Pickup.IN_PRE;
-//                }
                 if (gamepad1.x && clock.milliseconds() > ButtonDelay) {
                     hw.HorExt.HExtend();
-                    clock.reset();
                     clock.reset();
                     intake = Pickup.TOb;
                 }
                 if (gamepad1.b && clock.milliseconds() > ButtonDelay) {
                     hw.HorExt.HExtend();
                     clock.reset();
-                    clock.reset();
                     intake = Pickup.TOr;
                 }
                 if (gamepad1.y && clock.milliseconds() > ButtonDelay) {
                     hw.HorExt.HExtend();
                     clock.reset();
-                    clock.reset();
                     intake = Pickup.TOy;
                 }
-                if (gamepad1.dpad_down && clock.milliseconds() > ButtonDelay) {
-                    hw.iflip.setPosition(FLIP_HOVER);
-                    clock.reset();
-                    intake = Pickup.IN_PRE;
-                }
                 break;
-//            case EXTEND_NF:
-//                if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){
-//                    hw.FlipIntake();
-//                    buttonDelay.reset();
-//                    intake = Pickup.IN_PRE;
-//                }
-//                break;
-//            case EXTENDED:
-//                if (InDelay.milliseconds() > IntakeDelay){ //flips and turns on intake
-//                    hw.iflip.setPosition(FLIP_INTAKE);
-//                    buttonDelay.reset();
-//                    intake = Pickup.IN_PRE;
-//                }
-//                break;
             case TOy:
                 if (INDelay) {
                     hw.iflip.setPosition(FLIP_HOVER);
@@ -696,81 +639,16 @@ public class DriveControl extends  OpMode {
                     intake = Pickup.WANTS_BLUE;
                 }
                 break;
-//            case IN_PRE:
-//
-//                a1Current = gamepad1.a;
-//
-//                if (a1Current && !a1Last) {
-//                    a1Toggle = !a1Toggle;
-//                }
-//                if (a1Toggle) {
-//                    if(hw.iflip.getPosition() != FLIP_INTAKE){
-//                        hw.iflip.setPosition(FLIP_INTAKE);
-//                        clawDelay.reset();
-//                    }
-//                    if (CDelay) {
-//                        hw.iclaw.setPosition(CLAW_CLOSED);
-//                    }
-//                }
-//                else{
-//                    hw.iclaw.setPosition(CLAW_OPEN);
-//                    hw.iflip.setPosition(FLIP_RAISED);
-//                    clawDelay.reset();
-//                }
-//
-////                a1Last = a1Current;
-////                if(gamepad1.b){
-////                    hw.intake.setPower(1);
-////                }
-////                else {
-////                    hw.intake.setPower(1);
-////                }
-//                if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){ //flips up
-//                    hw.iflip.setPosition(FLIP_CLAW);
-//                    hw.oclaw.setPosition(CLAW_OPEN);
-//                    hw.arm.setPosition(ARM_RAISED);
-//                    buttonDelay.reset();
-//                    InDelay.reset();
-//                    intake = Pickup.IN_POST_WALL;
-//                }
-////                if (gamepad1.a && buttonDelay.milliseconds() > ButtonDelay){ //flips up
-////                    hw.FlipClaw();
-////                    hw.oclaw.setPosition(CLAW_OPEN);
-////                    buttonDelay.reset();
-////                    InDelay.reset();
-////                    intake = Pickup.IN_POST;
-////                }
-//                break;
-            case WANTS_YELLOW:
-//                if (blue > 70 && green < 90 && red < 65){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 70 && green < 90 && blue < 65) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 170 && blue < 80 && red < 175) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
+                case WANTS_YELLOW:
                 if (gamepad1.left_bumper) {
                     hw.iwrist.setPosition(IWRIST_TARGET += .01);
                 } else if (gamepad1.right_bumper) {
                     hw.iwrist.setPosition(IWRIST_TARGET += -.01);
                 }
-
                 if (gamepad1.a && BUTTON_READY) {
                     if (hw.iflip.getPosition() != FLIP_RAISED) {
                         hw.iflip.setPosition(FLIP_RAISED);
                         clock.reset();
-//                        if (blue > 250 && green < 300 && red < 200){
-//                            hw.iLight.setPosition(Blue);
-//                        } else if (red > 250 && green < 300 && blue < 200) {
-//                            hw.iLight.setPosition(Red);
-//                        } else if (green > 300) {
-//                            hw.iLight.setPosition(Yellow);
-//                        } else {
-//                            hw.iLight.setPosition(Off);
-//                        }
                     }
                 }
                 if (gamepad1.a && BUTTON_READY) {
@@ -781,35 +659,21 @@ public class DriveControl extends  OpMode {
                     if (CDelay) {
                         hw.iclaw.setPosition(CLAW_TIGHT);
                         clock.reset();
-//                        if (blue > 250 && green < 300 && red < 200){
-//                            hw.iLight.setPosition(Blue);
-//                        } else if (red > 250 && green < 300 && blue < 200) {
-//                            hw.iLight.setPosition(Red);
-//                        } else if (green > 300) {
-//                            hw.iLight.setPosition(Yellow);
-//                        } else {
-//                            hw.iLight.setPosition(Off);
-//                        }
                     } else {
-                        hw.iclaw.setPosition(CLAW_OPEN);
-                        hw.iflip.setPosition(FLIP_RAISED);
+                        hw.PreIntake();
                         clock.reset();
                     }
                 }
-
                     if (hw.iclaw.getPosition() == CLAW_TIGHT) { //flips up
                         hw.iwrist.setPosition(IWRIST_MIDDLE);
                         clock.reset();
                         intake = Pickup.YLWTRANS;
                     }
-
                     if (gamepad1.x && clock.milliseconds() > ButtonDelay) {
-                        clock.reset();
                         clock.reset();
                         intake = Pickup.WANTS_BLUE;
                     }
                     if (gamepad1.b && clock.milliseconds() > ButtonDelay) {
-                        clock.reset();
                         clock.reset();
                         intake = Pickup.WANTS_RED;
                     }
@@ -821,60 +685,27 @@ public class DriveControl extends  OpMode {
                     }
                     break;
                     case YLWTRANS:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (green < 300) {
                             hw.HorExt.HExtend();
                             clock.reset();
-                            clock.reset();
                             intake = Pickup.TOy;
                         }
-
                         if (green > 300 && FDelay) {
                             hw.PreTrans();
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.IN_POST_BIN;
                         }
                         break;
                     case WANTS_RED:
-//                if (blue > 70 && green < 90 && red < 65){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 70 && green < 90 && blue < 65) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 170 && blue < 80 && red < 175) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (gamepad1.left_bumper) {
                             hw.iwrist.setPosition(IWRIST_TARGET += .01);
                         } else if (gamepad1.right_bumper) {
                             hw.iwrist.setPosition(IWRIST_TARGET += -.01);
                         }
-
                         if (gamepad1.a && BUTTON_READY) {
                             if (hw.iflip.getPosition() != FLIP_RAISED) {
                                 hw.iflip.setPosition(FLIP_RAISED);
                                 clock.reset();
-//                        if (blue > 250 && green < 300 && red < 200){
-//                            hw.iLight.setPosition(Blue);
-//                        } else if (red > 250 && green < 300 && blue < 200) {
-//                            hw.iLight.setPosition(Red);
-//                        } else if (green > 300) {
-//                            hw.iLight.setPosition(Yellow);
-//                        } else {
-//                            hw.iLight.setPosition(Off);
-//                        }
                             }
                         }
                         if (gamepad1.a && BUTTON_READY) {
@@ -885,35 +716,21 @@ public class DriveControl extends  OpMode {
                             if (CDelay) {
                                 hw.iclaw.setPosition(CLAW_TIGHT);
                                 clock.reset();
-//                        if (blue > 250 && green < 300 && red < 200){
-//                            hw.iLight.setPosition(Blue);
-//                        } else if (red > 250 && green < 300 && blue < 200) {
-//                            hw.iLight.setPosition(Red);
-//                        } else if (green > 300) {
-//                            hw.iLight.setPosition(Yellow);
-//                        } else {
-//                            hw.iLight.setPosition(Off);
-//                        }
                             } else {
-                                hw.iclaw.setPosition(CLAW_OPEN);
-                                hw.iflip.setPosition(FLIP_RAISED);
+                                hw.PreIntake();
                                 clock.reset();
                             }
                         }
-
                         if (hw.iclaw.getPosition() == CLAW_TIGHT) { //flips up
                             hw.iwrist.setPosition(IWRIST_MIDDLE);
                             clock.reset();
                             intake = Pickup.REDTRANS;
                         }
-
                         if (gamepad1.x && clock.milliseconds() > ButtonDelay) {
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.WANTS_BLUE;
                         }
                         if (gamepad1.y && clock.milliseconds() > ButtonDelay) {
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.WANTS_YELLOW;
                         }
@@ -925,38 +742,15 @@ public class DriveControl extends  OpMode {
                         }
                         break;
                     case WANTS_BLUE:
-//                if (blue > 70 && green < 90 && red < 65){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 70 && green < 90 && blue < 65) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 170 && blue < 80 && red < 175) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (gamepad1.left_bumper) {
                             hw.iwrist.setPosition(IWRIST_TARGET += .01);
                         } else if (gamepad1.right_bumper) {
                             hw.iwrist.setPosition(IWRIST_TARGET += -.01);
                         }
-//                else {
-//                    hw.iwrist.setPosition(IWRIST_MIDDLE);
-//                }
-
                         if (gamepad1.a && BUTTON_READY) {
                             if (hw.iflip.getPosition() != FLIP_RAISED) {
                                 hw.iflip.setPosition(FLIP_RAISED);
                                 clock.reset();
-//                        if (blue > 250 && green < 300 && red < 200){
-//                            hw.iLight.setPosition(Blue);
-//                        } else if (red > 250 && green < 300 && blue < 200) {
-//                            hw.iLight.setPosition(Red);
-//                        } else if (green > 300) {
-//                            hw.iLight.setPosition(Yellow);
-//                        } else {
-//                            hw.iLight.setPosition(Off);
-//                        }
                             }
                         }
                         if (gamepad1.a && BUTTON_READY) {
@@ -967,35 +761,22 @@ public class DriveControl extends  OpMode {
                             if (CDelay) {
                                 hw.iclaw.setPosition(CLAW_TIGHT);
                                 clock.reset();
-//                        if (blue > 250 && green < 300 && red < 200){
-//                            hw.iLight.setPosition(Blue);
-//                        } else if (red > 250 && green < 300 && blue < 200) {
-//                            hw.iLight.setPosition(Red);
-//                        } else if (green > 300) {
-//                            hw.iLight.setPosition(Yellow);
-//                        } else {
-//                            hw.iLight.setPosition(Off);
-//                        }
                             } else {
-                                hw.iclaw.setPosition(CLAW_OPEN);
-                                hw.iflip.setPosition(FLIP_RAISED);
+                                hw.PreIntake();
                                 clock.reset();
                             }
                         }
-
                         if (hw.iclaw.getPosition() == CLAW_TIGHT) { //flips up
                             hw.iwrist.setPosition(IWRIST_MIDDLE);
                             clock.reset();
                             intake = Pickup.BLUETRANS;
                         }
 
-                        if (gamepad1.b && clock.milliseconds() > ButtonDelay) {
-                            clock.reset();
+                        if (gamepad1.b && BUTTON_READY) {
                             clock.reset();
                             intake = Pickup.WANTS_RED;
                         }
-                        if (gamepad1.y && clock.milliseconds() > ButtonDelay) {
-                            clock.reset();
+                        if (gamepad1.y && BUTTON_READY) {
                             clock.reset();
                             intake = Pickup.WANTS_YELLOW;
                         }
@@ -1007,19 +788,8 @@ public class DriveControl extends  OpMode {
                         }
                         break;
                     case REDTRANS:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (red < 150) {
                             hw.HorExt.HExtend();
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.TOr;
                         }
@@ -1027,24 +797,12 @@ public class DriveControl extends  OpMode {
                         if (red > 150 && FDelay) {
                             hw.PreTrans();
                             clock.reset();
-                            clock.reset();
                             intake = Pickup.RED_WALL;
                         }
                         break;
                     case BLUETRANS:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (blue < 150) {
                             hw.HorExt.HExtend();
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.TOb;
                         }
@@ -1052,101 +810,50 @@ public class DriveControl extends  OpMode {
                         if (blue > 150 && FDelay) {
                             hw.PreTrans();
                             clock.reset();
-                            clock.reset();
                             intake = Pickup.BLUE_WALL;
                         }
                         break;
                     case RED_WALL:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (red < 150) {
                             hw.HorExt.HExtend();
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.TOr;
                         }
 
                         if (clock.milliseconds() > FlipDelay) { //turn off intake and retract
-//                    hw.intake.setPower(0);
                             hw.iflip.setPosition(FLIP_CLAW);
                             hw.HorExt.HRetract();
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.ARM_DOWN;
                         }
                         break;
                     case BLUE_WALL:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (blue < 150) {
                             hw.HorExt.HExtend();
                             clock.reset();
-                            clock.reset();
                             intake = Pickup.TOb;
                         }
-
                         if (clock.milliseconds() > FlipDelay) { //turn off intake and retract
-//                    hw.intake.setPower(0);
                             hw.iflip.setPosition(FLIP_CLAW);
                             hw.HorExt.HRetract();
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.ARM_DOWN;
                         }
                         break;
                     case IN_POST_BIN:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (green < 300) {
                             hw.HorExt.HExtend();
                             clock.reset();
-                            clock.reset();
                             intake = Pickup.TOy;
                         }
-
                         if (clock.milliseconds() > FlipDelay) {
                             hw.iflip.setPosition(FLIP_CLAW);
                             hw.HorExt.HRetract();
-                            clock.reset();
                             clock.reset();
                             intake = Pickup.ARM_DOWN;
                         }
                         break;
                     case ARM_DOWN:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (ADelay) {
                             hw.arm.setPosition(ARM_REST);
                             hw.iclaw.setPosition(CLAW_LOOSE);
@@ -1155,20 +862,9 @@ public class DriveControl extends  OpMode {
                         }
                         break;
                     case TRANSFER:
-//                if (blue > 250 && green < 300 && red < 200){
-//                    hw.iLight.setPosition(Blue);
-//                } else if (red > 250 && green < 300 && blue < 200) {
-//                    hw.iLight.setPosition(Red);
-//                } else if (green > 300) {
-//                    hw.iLight.setPosition(Yellow);
-//                } else {
-//                    hw.iLight.setPosition(Off);
-//                }
-
                         if (TDelay) {
                             hw.oclaw.setPosition(CLAW_TIGHT);
                             hw.iclaw.setPosition(CLAW_OPEN);
-                            clock.reset();
                             clock.reset();
                             a1Toggle = false;
                             armflip = Deposit.REST;
@@ -1190,59 +886,9 @@ public class DriveControl extends  OpMode {
                             intake = Pickup.REST;
                         }
                         break;
-//            case PRE_RETRACTED:
-//                if (ADelay){
-//                    hw.arm.setPosition(ARM_REST);
-//                    buttonDelay.reset();
-//                    armDelay.reset();
-//                    intake = Pickup.RETRACTED;
-//                }
-//                break;
-//            case RETRACTED:
-//
-//                a1Current = gamepad1.a;
-//
-//                if (a1Current && !a1Last) {
-//                    a1Toggle = !a1Toggle;
-//                }
-//                if (a1Toggle) {
-//                    hw.iclaw.setPosition(CLAW_CLOSED);
-//                }
-//                else{
-//                    hw.iclaw.setPosition(CLAW_OPEN);
-//                }
-//
-//                a1Last = a1Current;
-////                if (gamepad2.a && buttonDelay.milliseconds() > ButtonDelay){ //delay before flip
-////                    InDelay.reset();
-////                    buttonDelay.reset();
-////                    intake = Pickup.WALL_TRANSFER;
-////                }
-//                if (gamepad1.y && buttonDelay.milliseconds() > ButtonDelay){
-//                    hw.HorExt.HExtend();
-//                    hw.iflip.setPosition(FLIP_RAISED);
-//                    buttonDelay.reset();
-//                    intake = Pickup.IN_PRE;
-//                }
-//                if (gamepad1.dpad_down && buttonDelay.milliseconds() > ButtonDelay){
-//                    hw.iflip.setPosition(FLIP_RAISED);
-//                    buttonDelay.reset();
-//                    intake = Pickup.IN_PRE;
-//                }
-//                break;
-//            case WALL_TRANSFER:
-//                if (InDelay.milliseconds() > FlipDelay){ //flips for arm
-//                    hw.intake.setPower(0);
-//                    InDelay.reset();
-//                    intake = Pickup.REST;
-//                }
-//                break;
                     default:
                         intake = Pickup.REST;
                 }
-
-                //MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
-
 
                 hw.drive.setDrivePowers(new PoseVelocity2d(
                         new Vector2d(
@@ -1257,7 +903,6 @@ public class DriveControl extends  OpMode {
                 telemetry.addData("x", hw.drive.pose.position.x);
                 telemetry.addData("y", hw.drive.pose.position.y);
                 telemetry.addData("heading (deg)", Math.toDegrees(hw.drive.pose.heading.toDouble()));
-//        telemetry.update();
 
                 hw.lLift.setPower(gamepad2.left_stick_y);
                 hw.rLift.setPower(gamepad2.left_stick_y);
@@ -1292,7 +937,6 @@ public class DriveControl extends  OpMode {
                 //END SAVE SECTION
 
                 telemetry.addData("Current Position", hw.arm.getPosition());
-//        telemetry.addData("Vert Position", hw.VLift.getPosition());
                 telemetry.addData("Arm State", armflip);
                 telemetry.addData("Horiz Position", intake);
                 telemetry.addData("lift position", hw.lLift.getCurrentPosition());
@@ -1303,8 +947,5 @@ public class DriveControl extends  OpMode {
                 telemetry.update();
 
                 hw.lift.update();
-
-
-//        hw.Hang.setPower(gamepad1.right_trigger - gamepad1.left_trigger);
         }
     }
