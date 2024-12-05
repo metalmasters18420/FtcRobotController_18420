@@ -16,10 +16,13 @@ import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_CLAW;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_INTAKE;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.HORIZ_RETRACT_POS;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_LS;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_LSbar;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_LSbin;
 import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MS;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_RS;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MSbar;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MSbin;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_RSbar;
+import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_RSbin;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
@@ -228,6 +231,8 @@ public class hwRobot {
     public Action wall(){
         return new InstantAction(()->Wall());
     }
+    public Action highbarpre(){return new InstantAction(()->HBPre());}
+    public Action highbarpost(){return new InstantAction(()->HBPost());}
     public Action oclawclose(){return new InstantAction(()-> oclaw.setPosition(CLAW_TIGHT));}
     public Action oclawopen(){return new InstantAction(()-> oclaw.setPosition(CLAW_OPEN));}
     public Action iclawopen(){return new InstantAction(()-> iclaw.setPosition(CLAW_OPEN));}
@@ -237,11 +242,16 @@ public class hwRobot {
     public Action RaiseFlip(){
         return new InstantAction(()->iflip.setPosition(FLIP_RAISED));
     }
-    public Action WristRS(){
-        return new InstantAction(()->iwrist.setPosition(IWRIST_RS));
+    public Action binWristRS(){
+        return new InstantAction(()->iwrist.setPosition(IWRIST_RSbin));
     }
-    public Action WristLS(){return new InstantAction(()->iwrist.setPosition(IWRIST_LS));}
-    public Action WristMS(){return new InstantAction(()->iwrist.setPosition(IWRIST_MS));}
+    public Action binWristLS(){return new InstantAction(()->iwrist.setPosition(IWRIST_LSbin));}
+    public Action binWristMS(){return new InstantAction(()->iwrist.setPosition(IWRIST_MSbin));}
+    public Action barWristRS(){
+        return new InstantAction(()->iwrist.setPosition(IWRIST_RSbar));
+    }
+    public Action barWristLS(){return new InstantAction(()->iwrist.setPosition(IWRIST_LSbar));}
+    public Action barWristMS(){return new InstantAction(()->iwrist.setPosition(IWRIST_MSbar));}
     public Action IntakeFlip(){
         return new InstantAction(()->iflip.setPosition(FLIP_INTAKE));
     }
@@ -249,42 +259,41 @@ public class hwRobot {
     public Action WristRest(){return new InstantAction(()->iwrist.setPosition(IWRIST_MIDDLE));}
     public Action RaiseArm(){return new InstantAction(()->ArmRaise());}
     public Action RestArm(){return new InstantAction(()->ArmRest());}
-//    public Action Rest(){return new InstantAction(()->);}
 
-    public Action RSpre(){
+    public Action binRSpre(){
         return new SequentialAction(
                 iclawopen(),
                 RaiseFlip(),
-                WristRS(),
+                binWristRS(),
                 horizextend());
     }
-    public Action RSpost(){
+    public Action binRSpost(){
         return new SequentialAction(
                 IntakeFlip(),
                 new SleepAction(.5),
                 iclawclose());
     }
-    public Action LSpre(){
+    public Action binLSpre(){
         return new SequentialAction(
                 iclawopen(),
                 RaiseFlip(),
-                WristLS(),
+                binWristLS(),
                 horizextend());
     }
-    public Action LSpost(){
+    public Action binLSpost(){
         return new SequentialAction(
                 IntakeFlip(),
                 new SleepAction(.5),
                 iclawclose());
     }
-    public Action MSpre(){
+    public Action binMSpre(){
         return new SequentialAction(
                 iclawopen(),
                 RaiseFlip(),
-                WristMS(),
+                binWristMS(),
                 horizextend());
     }
-    public Action MSpost(){
+    public Action binMSpost(){
         return new SequentialAction(
                 IntakeFlip(),
                 new SleepAction(.5),
@@ -305,13 +314,51 @@ public class hwRobot {
                 RestArm(),
         new SleepAction(.2),
                 iclawopen(),
-                iclawclose());
+                oclawopen());
     }
     public Action HBin(){
         return new SequentialAction(
                 highbin(),
         new SleepAction(3));
     }
-
-
+    public Action barRSpre(){
+        return new SequentialAction(
+                iclawopen(),
+                RaiseFlip(),
+                barWristRS(),
+                horizextend());
+    }
+    public Action barRSpost(){
+        return new SequentialAction(
+                IntakeFlip(),
+                new SleepAction(.5),
+                iclawclose());
+    }
+    public Action barMSpre(){
+        return new SequentialAction(
+                iclawopen(),
+                RaiseFlip(),
+                barWristMS(),
+                horizextend());
+    }
+    public Action barMSpost(){
+        return new SequentialAction(
+                IntakeFlip(),
+                new SleepAction(.5),
+                iclawclose()
+        );
+    }
+    public Action barLSpre(){
+        return new SequentialAction(
+                iclawopen(),
+                RaiseFlip(),
+                barWristLS(),
+                horizextend());
+    }
+    public Action barLSpost(){
+        return new SequentialAction(
+                IntakeFlip(),
+                new SleepAction(.5),
+                iclawclose());
+    }
 }

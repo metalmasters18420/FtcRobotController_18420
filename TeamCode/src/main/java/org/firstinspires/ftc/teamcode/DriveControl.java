@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.RoadRunner.Drawing;
 
 @Config
-@TeleOp(name = "Driver Control 2025", group = "TeleOp")
+@TeleOp(name = "Driver Control 2025", group = "1")
 public class DriveControl extends  OpMode {
 
     public ElapsedTime clock = new ElapsedTime();
