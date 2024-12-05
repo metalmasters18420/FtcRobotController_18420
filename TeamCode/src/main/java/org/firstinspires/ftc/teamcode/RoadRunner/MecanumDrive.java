@@ -51,7 +51,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-//@Config
+@Config
 public final class MecanumDrive {
     public static class Params {
         // IMU orientation
@@ -60,17 +60,18 @@ public final class MecanumDrive {
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+                RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
         // drive model parameters
-        public double inPerTick = (189/356815);
-        public double lateralInPerTick = .000529686251979317; //update?
-        public double trackWidthTicks = 19299.41347528075;
+        public double inPerTick = 0.0019693229412254;
+        public double lateralInPerTick = .002952978; //estimate moving teh robot sideways  moved 48, read 32
+        //Moved 180, read 120.71
+        public double trackWidthTicks = 5453.737965313754;
 
         // feedforward parameters (in tick units)
-        public double kS = 1.7436215123033838;
-        public double kV = 0.00010182280245105304;
-        public double kA = 0.00001;
+        public double kS = .6;//1.7526962035987452;//  .2; //1.7008166311091841;
+        public double kV = 0.0003;//0.00037512703145992614;// .00032; //0.0003708631612211392;
+        public double kA = .00021;//0.000000001;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -238,7 +239,7 @@ public final class MecanumDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new ThreeDeadWheelLocalizer(hardwareMap,PARAMS.inPerTick);
+        localizer = new ThreeDeadWheelLocalizer(hardwareMap);//,PARAMS.inPerTick);
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }
