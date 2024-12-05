@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -15,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Config
 @TeleOp(name = "Lift", group = "BrennanTestCode")
 
-public class Lifty extends  OpMode {
+public class LiftExample extends  OpMode {
 
     private ElapsedTime timer = new ElapsedTime();
     private DcMotor ll;
