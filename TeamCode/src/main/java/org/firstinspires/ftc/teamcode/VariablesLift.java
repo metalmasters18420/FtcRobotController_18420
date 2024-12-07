@@ -6,14 +6,14 @@ import com.acmerobotics.dashboard.config.Config;
 
 public class VariablesLift {
 
-    //max is 2450 ish
+    //max is idek ish
 
     public static int LIFTLBAR = 0;
     public static int LIFTHBAR = 1000;
-    public static int LIFTLBIN = 1000;
-    public static int LIFTHBIN = 2300;
+    public static int LIFTLBIN = 1200;
+    public static int LIFTHBIN = 3200;
     public static int LIFTWALL = 0;
-    public static int LIFTHANG1 = 0;
+    public static int LIFTHANG1 = 2500;
     public static int LIFTHANG2 = 0;
     public static int LIFTREST = 0;
     public static int CountsPerin = 10;

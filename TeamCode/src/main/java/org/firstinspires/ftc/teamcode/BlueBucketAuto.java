@@ -4,11 +4,14 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 // RR-specific imports
 
@@ -35,7 +38,10 @@ public class BlueBucketAuto extends LinearOpMode {
         //AutoArm claw = new AutoArm(hardwareMap);
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
+//        MecanumDrive drive = new MecanumDrive(hardwareMap, BlueObservePose);
         hwRobot robot = new hwRobot();
+        robot.init(hardwareMap);
+
 
 
         TrajectoryActionBuilder drivetobucket = robot.drive.actionBuilder(new Pose2d(-30, -60, Math.toRadians(0)))
@@ -93,34 +99,60 @@ public class BlueBucketAuto extends LinearOpMode {
         Actions.runBlocking(
                new SequentialAction(
                        ToBucket,
-                       robot.HBin(),
-                       robot.oclawopen(),
-                       robot.RestArm(),
+//                       robot.HBin(),
+//                       robot.oclawopen(),
+//                       new SleepAction(.5),
+//                       robot.RestArm(),
+                       new SleepAction(3),
                        ToRS,
-                       robot.binRSpre(),
-                       robot.binRSpost(),
-                       robot.Transfer(),
+                       new SleepAction(3),
+//                       robot.binRSpre(),
+//                       new SleepAction(1),
+//                       robot.binRSpost(),
+//                       new SleepAction(2),
+//                       robot.Hretract(),
+//                       robot.Transfer(),
+//                       new SleepAction(.1),
                        Turn1,
-                       robot.HBin(),
-                       robot.oclawopen(),
-                       robot.RestArm(),
+                       new SleepAction(3),
+//                       robot.HBin(),
+//                       robot.oclawopen(),
+//                       new SleepAction(.5),
+//                       robot.RestArm(),
+//                       new SleepAction(3),
                        ToMS,
-                       robot.binMSpre(),
-                       robot.binMSpost(),
-                       robot.Transfer(),
+                       new SleepAction(3),
+//                       robot.binMSpre(),
+//                       new SleepAction(1),
+//                       robot.binMSpost(),
+//                       new SleepAction(2),
+//                       robot.Hretract(),
+//                       robot.Transfer(),
+//                       new SleepAction(.1),
                        Turn2,
-                       robot.HBin(),
-                       robot.oclawopen(),
-                       robot.RestArm(),
+                       new SleepAction(3),
+//                       robot.HBin(),
+//                       robot.oclawopen(),
+//                       new SleepAction(.5),
+//                       robot.RestArm(),
+//                       new SleepAction(3),
                        ToLS,
-                       robot.binLSpre(),
-                       robot.binLSpost(),
-                       robot.Transfer(),
+                       new SleepAction(3),
+//                       robot.binLSpre(),
+//                       new SleepAction(1),
+//                       robot.binLSpost(),
+//                       new SleepAction(2),
+//                       robot.Transfer(),
+//                       new SleepAction(.1),
                        Turn3,
-                       robot.HBin(),
-                       robot.oclawopen(),
-                       robot.RestArm(),
-                       ToSubmerse
+                       new SleepAction(3),
+//                       robot.HBin(),
+//                       robot.oclawopen(),
+//                       new SleepAction(.5),
+//                       robot.RestArm(),
+//                       new SleepAction(3)
+                       ToSubmerse,
+                       new SleepAction(3)
                 ));
     }
 }

@@ -301,20 +301,19 @@ public class hwRobot {
     }
     public Action Hretract(){
         return new SequentialAction(
+                RaiseArm(),
+                new SleepAction(.2),
                 WristRest(),
                 ClawFlip(),
                 horizretract());
     }
     public Action Transfer(){
         return new SequentialAction(
-                WristRest(),
-                ClawFlip(),
-                RaiseArm(),
-        new SleepAction(.5),
                 RestArm(),
         new SleepAction(.2),
-                iclawopen(),
-                oclawopen());
+                oclawclose(),
+                new SleepAction(.1),
+                iclawopen());
     }
     public Action HBin(){
         return new SequentialAction(

@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-
+//thoughts on a claw: put a thingy in the middle that aligns the sample
 
 import static org.firstinspires.ftc.teamcode.VariablesArm.ARM_REST;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.ArmDelay;
@@ -22,6 +22,8 @@ import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_TARGET;
 import static org.firstinspires.ftc.teamcode.VariablesLight.Green;
 import static org.firstinspires.ftc.teamcode.VariablesLight.Off;
 import static org.firstinspires.ftc.teamcode.VariablesLight.Red;
+
+import android.widget.Button;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -49,7 +51,8 @@ public class DriveControl extends  OpMode {
         LOW_BIN,
         LOW_BAR_PRE,
         LOW_BAR_POST,
-        HIGH_BIN
+        HIGH_BIN,
+        HANG
     }
 
     Deposit armflip = Deposit.REST;
@@ -71,7 +74,10 @@ public class DriveControl extends  OpMode {
         TOb,
         REDTRANS,
         BLUETRANS,
-        YLWTRANS
+        YLWTRANS,
+        WANT_BLUE_LOW,
+        WANT_RED_LOW,
+        WANT_YLW_LOW
     }
 
     Pickup intake = Pickup.REST;
@@ -96,6 +102,8 @@ public class DriveControl extends  OpMode {
     boolean a1Last = false;
     boolean a1Toggle = false;
 
+    boolean justFlippedIntake = true;
+
     @Override
     public void init() {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -104,6 +112,7 @@ public class DriveControl extends  OpMode {
     }
 
     public void start() {
+
         clock.reset();
 
         hw.init(hardwareMap);
@@ -119,7 +128,7 @@ public class DriveControl extends  OpMode {
         boolean INDelay = clock.milliseconds() > IntakeDelay;
         boolean FDelay = clock.milliseconds() > FlipDelay;
         boolean ADelay = clock.milliseconds() > ArmDelay;
-        boolean CDelay = clock.seconds() > ClawDelay;
+        boolean CDelay = clock.milliseconds() > ClawDelay;
         boolean TDelay = clock.milliseconds() > TransDelay;
 
         int red = hw.colorSensor.red();
@@ -205,6 +214,11 @@ public class DriveControl extends  OpMode {
                     hw.oLight.setPosition(Red);
                 }
 
+                if (gamepad2.b && clock.milliseconds() > ButtonDelay){
+                    hw.lift.Lhang1();
+                    clock.reset();
+                    armflip = Deposit.HANG;
+                }
                 if (gamepad2.dpad_up && clock.milliseconds() > ButtonDelay) { //move to wall
                     hw.HBPre();
                     a2Toggle = false;
@@ -226,7 +240,7 @@ public class DriveControl extends  OpMode {
                     hw.oLight.setPosition(Off);
                     armflip = Deposit.LOW_BIN;
                 }
-                if (gamepad2.dpad_left && clock.milliseconds() > ButtonDelay) {
+                if (gamepad2.dpad_left) {
                     hw.Hbin();
                     a2Toggle = false;
                     clock.reset();
@@ -239,6 +253,13 @@ public class DriveControl extends  OpMode {
                     clock.reset();
                     hw.oLight.setPosition(Off);
                     armflip = Deposit.WALL;
+                }
+                break;
+            case HANG:
+                if (gamepad2.b && clock.milliseconds() > ButtonDelay){
+                    hw.lift.Lrest();
+                    clock.reset();
+                    armflip = Deposit.REST;
                 }
                 break;
             case WALL:
@@ -621,6 +642,7 @@ public class DriveControl extends  OpMode {
             case TOy:
                 if (INDelay) {
                     hw.iflip.setPosition(FLIP_HOVER);
+                    hw.iclaw.setPosition(CLAW_OPEN);
                     clock.reset();
                     intake = Pickup.WANTS_YELLOW;
                 }
@@ -628,6 +650,7 @@ public class DriveControl extends  OpMode {
             case TOr:
                 if (INDelay) {
                     hw.iflip.setPosition(FLIP_HOVER);
+                    hw.iclaw.setPosition(CLAW_OPEN);
                     clock.reset();
                     intake = Pickup.WANTS_RED;
                 }
@@ -635,34 +658,57 @@ public class DriveControl extends  OpMode {
             case TOb:
                 if (INDelay) {
                     hw.iflip.setPosition(FLIP_HOVER);
+                    hw.iclaw.setPosition(CLAW_OPEN);
                     clock.reset();
                     intake = Pickup.WANTS_BLUE;
                 }
                 break;
-                case WANTS_YELLOW:
+            case WANTS_YELLOW:
                 if (gamepad1.left_bumper) {
                     hw.iwrist.setPosition(IWRIST_TARGET += .01);
                 } else if (gamepad1.right_bumper) {
                     hw.iwrist.setPosition(IWRIST_TARGET += -.01);
                 }
-                if (gamepad1.a && BUTTON_READY) {
+                if (gamepad1.a && clock.milliseconds() > ButtonDelay) {
                     if (hw.iflip.getPosition() != FLIP_RAISED) {
                         hw.iflip.setPosition(FLIP_RAISED);
                         clock.reset();
                     }
                 }
-                if (gamepad1.a && BUTTON_READY) {
-                    if (hw.iflip.getPosition() == FLIP_RAISED) {
-                        hw.iflip.setPosition(FLIP_INTAKE);
-                        clock.reset();
-                    }
-                    if (CDelay) {
-                        hw.iclaw.setPosition(CLAW_TIGHT);
-                        clock.reset();
-                    } else {
-                        hw.PreIntake();
-                        clock.reset();
-                    }
+                if (gamepad1.dpad_down && clock.milliseconds() > ButtonDelay){
+                    hw.iflip.setPosition(FLIP_RAISED);
+                    clock.reset();
+                    intake = Pickup.WANT_YLW_LOW;
+                }
+                if (gamepad1.x && clock.milliseconds() > ButtonDelay) {
+                      clock.reset();
+                      intake = Pickup.WANTS_BLUE;
+                }
+                if (gamepad1.b && clock.milliseconds() > ButtonDelay) {
+                      clock.reset();
+                      intake = Pickup.WANTS_RED;
+                }
+                if (gamepad1.dpad_up && clock.milliseconds() > ButtonDelay) {
+                    hw.InRest();
+                    hw.iflip.setPosition(FLIP_CLAW);
+                    clock.reset();
+                    intake = Pickup.REST;
+                }
+                break;
+            case WANT_YLW_LOW:
+                if (gamepad1.left_bumper) {
+                    hw.iwrist.setPosition(IWRIST_TARGET += .01);
+                } else if (gamepad1.right_bumper) {
+                    hw.iwrist.setPosition(IWRIST_TARGET += -.01);
+                }
+                if (gamepad1.dpad_down && clock.milliseconds() > ButtonDelay){
+                    hw.iflip.setPosition(FLIP_INTAKE);
+                    clock.reset();
+                }
+
+                if (gamepad1.a) {
+                    hw.iclaw.setPosition(CLAW_TIGHT);
+                    clock.reset();
                 }
                     if (hw.iclaw.getPosition() == CLAW_TIGHT) { //flips up
                         hw.iwrist.setPosition(IWRIST_MIDDLE);
@@ -671,13 +717,13 @@ public class DriveControl extends  OpMode {
                     }
                     if (gamepad1.x && clock.milliseconds() > ButtonDelay) {
                         clock.reset();
-                        intake = Pickup.WANTS_BLUE;
+                        intake = Pickup.WANT_BLUE_LOW;
                     }
                     if (gamepad1.b && clock.milliseconds() > ButtonDelay) {
                         clock.reset();
-                        intake = Pickup.WANTS_RED;
+                        intake = Pickup.WANT_RED_LOW;
                     }
-                    if (gamepad1.dpad_up && BUTTON_READY) {
+                    if (gamepad1.dpad_up && clock.milliseconds() > ButtonDelay) {
                         hw.InRest();
                         hw.iflip.setPosition(FLIP_CLAW);
                         clock.reset();
@@ -685,7 +731,7 @@ public class DriveControl extends  OpMode {
                     }
                     break;
                     case YLWTRANS:
-                        if (green < 300) {
+                        if (green < 300 && FDelay) {
                             hw.HorExt.HExtend();
                             clock.reset();
                             intake = Pickup.TOy;
@@ -702,29 +748,16 @@ public class DriveControl extends  OpMode {
                         } else if (gamepad1.right_bumper) {
                             hw.iwrist.setPosition(IWRIST_TARGET += -.01);
                         }
-                        if (gamepad1.a && BUTTON_READY) {
+                        if (gamepad1.a && clock.milliseconds() > ButtonDelay) {
                             if (hw.iflip.getPosition() != FLIP_RAISED) {
                                 hw.iflip.setPosition(FLIP_RAISED);
                                 clock.reset();
                             }
                         }
-                        if (gamepad1.a && BUTTON_READY) {
-                            if (hw.iflip.getPosition() == FLIP_RAISED) {
-                                hw.iflip.setPosition(FLIP_INTAKE);
-                                clock.reset();
-                            }
-                            if (CDelay) {
-                                hw.iclaw.setPosition(CLAW_TIGHT);
-                                clock.reset();
-                            } else {
-                                hw.PreIntake();
-                                clock.reset();
-                            }
-                        }
-                        if (hw.iclaw.getPosition() == CLAW_TIGHT) { //flips up
-                            hw.iwrist.setPosition(IWRIST_MIDDLE);
+                        if (gamepad1.dpad_down && clock.milliseconds() > ButtonDelay){
+                            hw.iflip.setPosition(FLIP_RAISED);
                             clock.reset();
-                            intake = Pickup.REDTRANS;
+                            intake = Pickup.WANT_RED_LOW;
                         }
                         if (gamepad1.x && clock.milliseconds() > ButtonDelay) {
                             clock.reset();
@@ -734,7 +767,42 @@ public class DriveControl extends  OpMode {
                             clock.reset();
                             intake = Pickup.WANTS_YELLOW;
                         }
-                        if (gamepad1.dpad_up && BUTTON_READY) {
+                        if (gamepad1.dpad_up && clock.milliseconds() > ButtonDelay) {
+                            hw.InRest();
+                            hw.iflip.setPosition(FLIP_CLAW);
+                            clock.reset();
+                            intake = Pickup.REST;
+                        }
+                        break;
+                    case WANT_RED_LOW:
+                        if (gamepad1.left_bumper) {
+                            hw.iwrist.setPosition(IWRIST_TARGET += .01);
+                        } else if (gamepad1.right_bumper) {
+                            hw.iwrist.setPosition(IWRIST_TARGET += -.01);
+                        }
+                        if (gamepad1.dpad_down && clock.milliseconds() > ButtonDelay){
+                            hw.iflip.setPosition(FLIP_INTAKE);
+                            clock.reset();
+                        }
+
+                        if (gamepad1.a) {
+                            hw.iclaw.setPosition(CLAW_TIGHT);
+                            clock.reset();
+                        }
+                        if (hw.iclaw.getPosition() == CLAW_TIGHT) { //flips up
+                            hw.iwrist.setPosition(IWRIST_MIDDLE);
+                            clock.reset();
+                            intake = Pickup.REDTRANS;
+                        }
+                        if (gamepad1.x && clock.milliseconds() > ButtonDelay) {
+                            clock.reset();
+                            intake = Pickup.WANT_BLUE_LOW;
+                        }
+                        if (gamepad1.y && clock.milliseconds() > ButtonDelay) {
+                            clock.reset();
+                            intake = Pickup.WANT_YLW_LOW;
+                        }
+                        if (gamepad1.dpad_up && clock.milliseconds() > ButtonDelay) {
                             hw.InRest();
                             hw.iflip.setPosition(FLIP_CLAW);
                             clock.reset();
@@ -747,40 +815,63 @@ public class DriveControl extends  OpMode {
                         } else if (gamepad1.right_bumper) {
                             hw.iwrist.setPosition(IWRIST_TARGET += -.01);
                         }
-                        if (gamepad1.a && BUTTON_READY) {
+                        if (gamepad1.a && clock.milliseconds() > ButtonDelay) {
                             if (hw.iflip.getPosition() != FLIP_RAISED) {
                                 hw.iflip.setPosition(FLIP_RAISED);
                                 clock.reset();
                             }
                         }
-                        if (gamepad1.a && BUTTON_READY) {
-                            if (hw.iflip.getPosition() == FLIP_RAISED) {
-                                hw.iflip.setPosition(FLIP_INTAKE);
-                                clock.reset();
-                            }
-                            if (CDelay) {
-                                hw.iclaw.setPosition(CLAW_TIGHT);
-                                clock.reset();
-                            } else {
-                                hw.PreIntake();
-                                clock.reset();
-                            }
+                        if (gamepad1.dpad_down && clock.milliseconds() > ButtonDelay){
+                            hw.iflip.setPosition(FLIP_RAISED);
+                            clock.reset();
+                            intake = Pickup.WANT_BLUE_LOW;
                         }
+                        if (gamepad1.b && clock.milliseconds() > ButtonDelay) {
+                            clock.reset();
+                            intake = Pickup.WANTS_RED;
+                        }
+                        if (gamepad1.y && clock.milliseconds() > ButtonDelay) {
+                            clock.reset();
+                            intake = Pickup.WANTS_YELLOW;
+                        }
+                        if (gamepad1.dpad_up && clock.milliseconds() > ButtonDelay){
+                            hw.InRest();
+                            hw.iflip.setPosition(FLIP_CLAW);
+                            clock.reset();
+                            intake = Pickup.REST;
+                        }
+                        break;
+                    case WANT_BLUE_LOW:
+                        if (gamepad1.left_bumper) {
+                            hw.iwrist.setPosition(IWRIST_TARGET += .01);
+                        } else if (gamepad1.right_bumper) {
+                            hw.iwrist.setPosition(IWRIST_TARGET += -.01);
+                        }
+                        if (gamepad1.dpad_down && clock.milliseconds() > ButtonDelay){
+                            hw.iflip.setPosition(FLIP_INTAKE);
+                            clock.reset();
+                        }
+
+                        if (gamepad1.a) {
+                            hw.iclaw.setPosition(CLAW_TIGHT);
+                            clock.reset();
+                        }
+
                         if (hw.iclaw.getPosition() == CLAW_TIGHT) { //flips up
                             hw.iwrist.setPosition(IWRIST_MIDDLE);
                             clock.reset();
                             intake = Pickup.BLUETRANS;
                         }
 
-                        if (gamepad1.b && BUTTON_READY) {
+                        if (gamepad1.b && clock.milliseconds() > ButtonDelay) {
                             clock.reset();
-                            intake = Pickup.WANTS_RED;
+                            intake = Pickup.WANT_RED_LOW;
                         }
-                        if (gamepad1.y && BUTTON_READY) {
+                        if (gamepad1.y && clock.milliseconds() > ButtonDelay) {
                             clock.reset();
-                            intake = Pickup.WANTS_YELLOW;
+                            intake = Pickup.WANT_YLW_LOW;
                         }
-                        if (gamepad1.dpad_up && BUTTON_READY) {
+                        if (gamepad1.dpad_up && clock.milliseconds() > ButtonDelay){
                             hw.InRest();
                             hw.iflip.setPosition(FLIP_CLAW);
                             clock.reset();
@@ -793,8 +884,7 @@ public class DriveControl extends  OpMode {
                             clock.reset();
                             intake = Pickup.TOr;
                         }
-
-                        if (red > 150 && FDelay) {
+                        if (FDelay) {
                             hw.PreTrans();
                             clock.reset();
                             intake = Pickup.RED_WALL;
@@ -806,8 +896,7 @@ public class DriveControl extends  OpMode {
                             clock.reset();
                             intake = Pickup.TOb;
                         }
-
-                        if (blue > 150 && FDelay) {
+                        if (FDelay) {
                             hw.PreTrans();
                             clock.reset();
                             intake = Pickup.BLUE_WALL;
@@ -819,7 +908,6 @@ public class DriveControl extends  OpMode {
                             clock.reset();
                             intake = Pickup.TOr;
                         }
-
                         if (clock.milliseconds() > FlipDelay) { //turn off intake and retract
                             hw.iflip.setPosition(FLIP_CLAW);
                             hw.HorExt.HRetract();
@@ -904,8 +992,15 @@ public class DriveControl extends  OpMode {
                 telemetry.addData("y", hw.drive.pose.position.y);
                 telemetry.addData("heading (deg)", Math.toDegrees(hw.drive.pose.heading.toDouble()));
 
-                hw.lLift.setPower(gamepad2.left_stick_y);
-                hw.rLift.setPower(gamepad2.left_stick_y);
+                //hw.lLift.setPower(gamepad2.left_stick_y);
+                //hw.rLift.setPower(gamepad2.left_stick_y);
+
+                telemetry.addData("leftTarget",hw.lLift.getTargetPosition());
+                telemetry.addData("rightTarget",hw.rLift.getTargetPosition());
+                telemetry.addData("leftTarget",hw.lLift.getCurrentPosition());
+                telemetry.addData("rightTarget",hw.rLift.getCurrentPosition());
+                telemetry.addData("power",hw.lLift.getPower());
+                telemetry.addData("power",hw.rLift.getPower());
 
                 TelemetryPacket packet = new TelemetryPacket();
                 packet.fieldOverlay().setStroke("#3F51B5");
@@ -940,12 +1035,11 @@ public class DriveControl extends  OpMode {
                 telemetry.addData("Arm State", armflip);
                 telemetry.addData("Horiz Position", intake);
                 telemetry.addData("lift position", hw.lLift.getCurrentPosition());
+                telemetry.addData("cdelay", ClawDelay);
 
                 telemetry.addData("Red", red);
                 telemetry.addData("Green", green);
                 telemetry.addData("Blue", blue);
                 telemetry.update();
-
-                hw.lift.update();
         }
     }

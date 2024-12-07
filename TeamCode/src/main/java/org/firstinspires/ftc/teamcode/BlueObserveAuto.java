@@ -39,7 +39,7 @@ public class BlueObserveAuto extends LinearOpMode {
         //Claw claw = new Claw(hardwareMap);
         //Lift lift = new Lift(hardwareMap);
 
-
+        robot.init(hardwareMap);
         TrajectoryActionBuilder DriveToSubmersible = drive.actionBuilder(BlueObservePose)//.setTangent(Math.toRadians(180))
                 .strafeToSplineHeading(new Vector2d(11,-40),Math.toRadians(270))
                 //.turn(Math.toRadians(180))

@@ -10,7 +10,7 @@ public class VariablesDelay {
     public static double IntakeDelay = 500;
     public static double FlipDelay = 500;
     public static double ArmDelay = 700;
-    public static double ClawDelay = .3;
+    public static double ClawDelay = 300;
     public static double TransDelay = 200;
 
 }

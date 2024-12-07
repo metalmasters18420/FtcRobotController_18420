@@ -25,8 +25,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Lift {
 
     private ElapsedTime timer = new ElapsedTime();
-    private DcMotor left;
-    private DcMotor right;
+    public DcMotor left;
+    public DcMotor right;
     int target = 0;
     double lastError = 0;
     double sum = 0;
@@ -44,6 +44,7 @@ public class Lift {
         left.setTargetPosition(LIFTREST);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left.setPower(LIFTSPEED);
+        left.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void Lhbin(){
@@ -79,40 +80,40 @@ public class Lift {
         right.setTargetPosition(LIFTREST);
     }
 
-    private void setPosition(int target){
-        this.target = target;
-        int currentpos = left.getCurrentPosition();
-
-        double output = liftControl(target, currentpos ,threshold) + kG;
-        left.setPower(output);
-        right.setPower(output);
-    }
-
-    private double liftControl(int target, int current, int thresh){
-
-        int error = target - current;
-        double deriv = (error - lastError) / timer.seconds();
-        sum += error;
-
-        if (sum > summax) {
-            sum = summax;
-        }
-        if (sum < summax) {
-            sum = -summax;
-        }
-
-        lastError = error;
-        timer.reset();
-        double output = kP * error + kD * deriv + kI * sum;
-
-        if (Math.abs(error) < thresh) {
-            return 0;
-        } else {
-            return output;
-        }
-    }
-
-    public void update(){
-        setPosition(this.target);
-    }
+//    private void setPosition(int target){
+//        this.target = target;
+//        int currentpos = left.getCurrentPosition();
+//
+//        double output = liftControl(target, currentpos ,threshold) + kG;
+//        left.setPower(output);
+//        right.setPower(output);
+//    }
+//
+//    private double liftControl(int target, int current, int thresh){
+//
+//        int error = target - current;
+//        double deriv = (error - lastError) / timer.seconds();
+//        sum += error;
+//
+//        if (sum > summax) {
+//            sum = summax;
+//        }
+//        if (sum < summax) {
+//            sum = -summax;
+//        }
+//
+//        lastError = error;
+//        timer.reset();
+//        double output = kP * error + kD * deriv + kI * sum;
+//
+//        if (Math.abs(error) < thresh) {
+//            return 0;
+//        } else {
+//            return output;
+//        }
+//    }
+//
+//    public void update(){
+//        setPosition(this.target);
+//    }
 }

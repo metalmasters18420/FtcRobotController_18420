@@ -25,6 +25,6 @@ public class VariablesIntake {
     public static double FLIP_INTAKE = 0;
     public static double FLIP_CLAW = .8;
 
-    public static double HORIZ_EXTEND_POS = 0.4;
-    public static double HORIZ_RETRACT_POS = 0;
+    public static double HORIZ_EXTEND_POS = 0.35;
+    public static double HORIZ_RETRACT_POS = 0.05;
 }
