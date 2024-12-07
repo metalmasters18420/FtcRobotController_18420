@@ -116,7 +116,7 @@ public class hwRobot {
 
         colorSensor.setGain(gain);
 
-        oclaw.setPosition(CLAW_OPEN);
+        oclaw.setPosition(CLAW_TIGHT);
         oclaw.setDirection(Servo.Direction.REVERSE);
 
         owrist.setPosition(OWRIST_INTAKE);
