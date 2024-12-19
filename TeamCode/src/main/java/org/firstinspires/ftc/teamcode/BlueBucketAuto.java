@@ -99,11 +99,11 @@ public class BlueBucketAuto extends LinearOpMode {
         Actions.runBlocking(
                new SequentialAction(
                        ToBucket,
-                       robot.HBin(),
+//                       robot.HBin(),
                        new SleepAction(1.5),
-                       robot.oclawopen(),
+//                       robot.oclawopen(),
                        new SleepAction(.5),
-                       robot.RestArm(),
+//                       robot.RestArm(),
                         new SleepAction(10),
 //                       ToRS,
 //                       new SleepAction(3),

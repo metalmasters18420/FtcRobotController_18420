@@ -5,9 +5,6 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 
 public class VariablesLift {
-
-    //max is idek ish
-
     public static int LIFTLBAR = 0;
     public static int LIFTHBAR = 1000;
     public static int LIFTLBIN = 1200;
@@ -16,18 +13,9 @@ public class VariablesLift {
     public static int LIFTHANG1 = 2500;
     public static int LIFTHANG2 = 0;
     public static int LIFTREST = 0;
-    public static int CountsPerin = 10;
     public static double LIFTSPEED = 1;
 
-    public static double kP = 0.015; //.01
-    public static double kI = 0.0007; //.01
-    public static double kD = 0;
-    public static double kF = 0;
-    public static double kG = 0.13;
-    public static int threshold = 0;
-    public static int summax = 100;
-
-    public static int lowpos = 0;
-    public static int highpos = 3000;
-    public static int targetpos = lowpos;
+    public static double rotaterest = 0;
+    public static double rotateforward = .3;
+    public static double rotateback = .5;
 }

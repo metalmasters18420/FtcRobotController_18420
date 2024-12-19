@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.SimpleExamples;
 
-import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_LOOSE;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
-import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
+//import static org.firstinspires.ftc.teamcode.VariablesIntake.CLAW_LOOSE;
+//import static org.firstinspires.ftc.teamcode.VariablesIntake.FLIP_RAISED;
+//import static org.firstinspires.ftc.teamcode.VariablesIntake.IWRIST_MIDDLE;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -38,9 +38,9 @@ public class DetectingColorSimple extends OpMode {
     hw.init(hardwareMap);
     colorSensor = hardwareMap.get(RevColorSensorV3.class,"COLOR");
 
-    hw.iwrist.setPosition(IWRIST_MIDDLE);
-    hw.iflip.setPosition(FLIP_RAISED);
-    hw.iclaw.setPosition(CLAW_LOOSE);
+//    hw.iwrist.setPosition(IWRIST_MIDDLE);
+//    hw.iflip.setPosition(FLIP_RAISED);
+//    hw.iclaw.setPosition(CLAW_LOOSE);
   }
 
   @Override

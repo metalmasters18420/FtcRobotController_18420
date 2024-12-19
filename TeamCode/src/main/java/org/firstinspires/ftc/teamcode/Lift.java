@@ -2,21 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG1;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG2;
-//import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBARPOST;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBAR;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBIN;
-//import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBARPOST;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBAR;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBIN;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTREST;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTSPEED;
 import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTWALL;
-import static org.firstinspires.ftc.teamcode.VariablesLift.kD;
-import static org.firstinspires.ftc.teamcode.VariablesLift.kG;
-import static org.firstinspires.ftc.teamcode.VariablesLift.kI;
-import static org.firstinspires.ftc.teamcode.VariablesLift.kP;
-import static org.firstinspires.ftc.teamcode.VariablesLift.summax;
-import static org.firstinspires.ftc.teamcode.VariablesLift.threshold;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -79,41 +71,4 @@ public class Lift {
         left.setTargetPosition(LIFTREST);
         right.setTargetPosition(LIFTREST);
     }
-
-//    private void setPosition(int target){
-//        this.target = target;
-//        int currentpos = left.getCurrentPosition();
-//
-//        double output = liftControl(target, currentpos ,threshold) + kG;
-//        left.setPower(output);
-//        right.setPower(output);
-//    }
-//
-//    private double liftControl(int target, int current, int thresh){
-//
-//        int error = target - current;
-//        double deriv = (error - lastError) / timer.seconds();
-//        sum += error;
-//
-//        if (sum > summax) {
-//            sum = summax;
-//        }
-//        if (sum < summax) {
-//            sum = -summax;
-//        }
-//
-//        lastError = error;
-//        timer.reset();
-//        double output = kP * error + kD * deriv + kI * sum;
-//
-//        if (Math.abs(error) < thresh) {
-//            return 0;
-//        } else {
-//            return output;
-//        }
-//    }
-//
-//    public void update(){
-//        setPosition(this.target);
-//    }
 }
