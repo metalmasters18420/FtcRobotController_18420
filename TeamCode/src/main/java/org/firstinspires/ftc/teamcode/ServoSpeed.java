@@ -8,37 +8,45 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ServoSpeed {
     private Servo rservo;
     public Servo lservo;
-    private double position;
+    private double Tpos;
 
-    public static double ks = .2;
+    public static double ksu = .2;
+    public static double ksd = .1;
 
     public ServoSpeed(Servo s, Servo l, double p, double s1){
         rservo = s;
         lservo = l;
-        position = p;
-        ks = s1;
+        Tpos = p;
+        ksu = s1;
 
         rservo.setDirection(Servo.Direction.FORWARD);
         lservo.setDirection(Servo.Direction.REVERSE);
 
-        rservo.setPosition(position);
-        lservo.setPosition(position);
+        rservo.setPosition(Tpos);
+        lservo.setPosition(Tpos);
 
     }
 
-    public void setPosition(double p){
-        position = p;
+    public void setTpos(double p){
+        Tpos = p;
     }
 
     public void update(){
-        double error = position - rservo.getPosition();
+        double error = Tpos - rservo.getPosition();
 
-        rservo.setPosition(rservo.getPosition() + error * ks);
-        lservo.setPosition(lservo.getPosition() + error * ks);
+        if (rservo.getPosition() < Tpos) {
+            rservo.setPosition(rservo.getPosition() + error * ksu);
+            lservo.setPosition(lservo.getPosition() + error * ksu);
+        }
+
+        if (rservo.getPosition() > Tpos) {
+            rservo.setPosition(rservo.getPosition() + error * ksd);
+            lservo.setPosition(lservo.getPosition() + error * ksd);
+        }
 
         if (Math.abs(error) < .005){
-            rservo.setPosition(position);
-            lservo.setPosition(position);
+            rservo.setPosition(Tpos);
+            lservo.setPosition(Tpos);
         }
     }
 }

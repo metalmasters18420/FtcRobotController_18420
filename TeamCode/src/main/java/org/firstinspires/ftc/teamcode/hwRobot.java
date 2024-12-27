@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.ServoSpeed.ks;
-import static org.firstinspires.ftc.teamcode.VariablesLift.rotaterest;
+import static org.firstinspires.ftc.teamcode.ServoSpeed.ksu;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Rrest;
 
 
 import com.acmerobotics.roadrunner.Pose2d;
@@ -49,7 +49,7 @@ public class hwRobot {
 
         drive = new MecanumDrive(hmap,new Pose2d(0,0,0));
 
-        rotation = new ServoSpeed(rrotate, lrotate, rotaterest, ks);
+        rotation = new ServoSpeed(rrotate, lrotate, Rrest, ksu);
 
 //        colorSensor.setGain(gain);
 

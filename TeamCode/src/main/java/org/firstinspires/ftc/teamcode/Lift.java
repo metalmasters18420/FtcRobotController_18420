@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG1;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHANG2;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBAR;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTHBIN;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBAR;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTLBIN;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTREST;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTSPEED;
-import static org.firstinspires.ftc.teamcode.VariablesLift.LIFTWALL;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lbar;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lbin;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lhang1;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lhang2;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lin;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lrest;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lspeed;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lwall;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -28,47 +27,43 @@ public class Lift {
         this.right = rl;
 
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right.setTargetPosition(LIFTREST);
+        right.setTargetPosition(Lspeed);
         right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        right.setPower(LIFTSPEED);
+        right.setPower(Lspeed);
+        right.setDirection(DcMotorSimple.Direction.REVERSE);
 
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        left.setTargetPosition(LIFTREST);
+        left.setTargetPosition(Lrest);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        left.setPower(LIFTSPEED);
-        left.setDirection(DcMotorSimple.Direction.REVERSE);
+        left.setPower(Lspeed);
     }
 
-    public void Lhbin(){
-        left.setTargetPosition(LIFTHBIN);
-        right.setTargetPosition(LIFTHBIN);
+    public void LiftBin(){
+        left.setTargetPosition(Lbin);
+        right.setTargetPosition(Lbin);
     }
-    public void Llbin(){
-        left.setTargetPosition(LIFTLBIN);
-        right.setTargetPosition(LIFTLBIN);
+    public void LiftBar(){
+        left.setTargetPosition(Lbar);
+        right.setTargetPosition(Lbar);
     }
-    public void Lhbar(){
-        left.setTargetPosition(LIFTHBAR);
-        right.setTargetPosition(LIFTHBAR);
+    public void LiftWall(){
+        left.setTargetPosition(Lwall);
+        right.setTargetPosition(Lwall);
     }
-    public void Llbar(){
-        left.setTargetPosition(LIFTLBAR);
-        right.setTargetPosition(LIFTLBAR);
+    public void LiftHang1(){
+        left.setTargetPosition(Lhang1);
+        right.setTargetPosition(Lhang1);
     }
-    public void Lwall(){
-        left.setTargetPosition(LIFTWALL);
-        right.setTargetPosition(LIFTWALL);
+    public void LiftHang2(){
+        left.setTargetPosition(Lhang2);
+        right.setTargetPosition(Lhang2);
     }
-    public void Lhang1(){
-        left.setTargetPosition(LIFTHANG1);
-        right.setTargetPosition(LIFTHANG1);
+    public void LiftRest(){
+        left.setTargetPosition(Lrest);
+        right.setTargetPosition(Lrest);
     }
-    public void Lhang2(){
-        left.setTargetPosition(LIFTHANG2);
-        right.setTargetPosition(LIFTHANG2);
-    }
-    public void Lrest(){
-        left.setTargetPosition(LIFTREST);
-        right.setTargetPosition(LIFTREST);
+    public void LiftIn(){
+        left.setTargetPosition(Lin);
+        right.setTargetPosition(Lin);
     }
 }
