@@ -60,7 +60,7 @@ public class DriveControl extends  OpMode {
         IN
     };
 
-    robot bobot = robot.REST;
+    robot bobot = robot.BIN;
 
 
     @Override
@@ -95,7 +95,43 @@ public class DriveControl extends  OpMode {
 //            hw.claw.setPosition(Copen);
 //        }
 
+
+
+        //ROPER CODE BEGIN
+
+        if (gamepad1.right_trigger>0.05){
+            hw.clawWheel.eatSpecimen();
+        }
+        else if (gamepad1.left_trigger>.05){
+            hw.clawWheel.spitSpecimen();
+        }
+        else {
+            hw.clawWheel.holdSpecimen();
+        }
+
+        if (gamepad1.a){
+            hw.clawWheel.closeClaw();
+        }
+        if (gamepad1.b){
+            hw.clawWheel.openClaw();
+        }
+
+        if (gamepad1.dpad_up){
+            hw.clawWheel.rotateWristToDeposit();
+            hw.clawWheel.rotateArmToDeposit();
+        }
+        if (gamepad1.dpad_down){
+            hw.clawWheel.rotateWristToIntake();
+            hw.clawWheel.rotateArmToIntake();
+        }
+
+
+        //ROPER CODE END
+
+
         a2Last = a2Current;
+
+
 
 
         switch (bobot) {
@@ -222,6 +258,7 @@ public class DriveControl extends  OpMode {
         telemetry.addData("lift position", hw.lLift.getCurrentPosition());
         telemetry.addData("cdelay", ClawDelay);
         telemetry.addData("rotation", hw.rrotate.getPosition());
+        telemetry.addData("bobot", bobot);
 
         hw.rotation.update();
         telemetry.update();
@@ -231,31 +268,31 @@ public class DriveControl extends  OpMode {
 //            hw.arm.setPosition(Arest);
 //            hw.wrist.setPosition(Wrest);
             hw.rotation.setTpos(Rrest);
-            hw.lift.LiftRest();
+            //hw.lift.LiftRest();
         }
         public void Wall(){
 //            hw.arm.setPosition(Awall);
 //            hw.wrist.setPosition(Wwall);
             hw.rotation.setTpos(Rwall);
-            hw.lift.LiftWall();
+            //hw.lift.LiftWall();
         }
         public void Bin(){
 //            hw.arm.setPosition(Abin);
 //            hw.wrist.setPosition(Wbin);
             hw.rotation.setTpos(Rbin);
-            hw.lift.LiftBin();
+            //hw.lift.LiftBin();
         }
         public void Bar(){
 //            hw.arm.setPosition(Abar);
 //            hw.wrist.setPosition(Wbar);
             hw.rotation.setTpos(Rbar);
-            hw.lift.LiftBar();
+            //hw.lift.LiftBar();
         }
         public void Intake(){
 //            hw.arm.setPosition(Ain);
 //            hw.wrist.setPosition(Win);
             hw.rotation.setTpos(Rin);
-            hw.lift.LiftIn();
+            //hw.lift.LiftIn();
         }
 
 

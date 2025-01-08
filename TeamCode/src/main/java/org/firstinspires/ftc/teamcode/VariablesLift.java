@@ -16,6 +16,7 @@ public class VariablesLift {
 
 
     public static double Rrest = 0;
+    public static double Rinit = 0.5;
     public static double Rbin = .2;
     public static double Rbar = .3;
     public static double Rwall = .1;

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
 
-public class ServoSpeed {
+public class ServoNoSpeed {
     private Servo rservo;
     public Servo lservo;
     private double Tpos;
@@ -13,11 +13,11 @@ public class ServoSpeed {
     public static double ksu = .2;
     public static double ksd = .1;
 
-    public ServoSpeed(Servo s, Servo l, double p, double s1){
+    public ServoNoSpeed(Servo s, Servo l, double p){
         rservo = s;
         lservo = l;
         Tpos = p;
-        ksu = s1;
+
 
         rservo.setDirection(Servo.Direction.FORWARD);
         lservo.setDirection(Servo.Direction.REVERSE);
@@ -32,22 +32,8 @@ public class ServoSpeed {
     }
 
     public void update(){
-        double error = Tpos - rservo.getPosition();
-
-        if (rservo.getPosition() < Tpos) {
-            rservo.setPosition(rservo.getPosition() + error * ksu);
-            lservo.setPosition(lservo.getPosition() + error * ksu);
-        }
-
-        if (rservo.getPosition() > Tpos) {
-            rservo.setPosition(rservo.getPosition() - error * ksd);
-            lservo.setPosition(lservo.getPosition() - error * ksd);
-        }
-
-        if (Math.abs(error) < .005){
             rservo.setPosition(Tpos);
             lservo.setPosition(Tpos);
-        }
     }
 }
 

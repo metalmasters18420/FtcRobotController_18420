@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.ServoSpeed.ksu;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Rbin;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Rinit;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rrest;
 
 
@@ -31,8 +33,9 @@ public class hwRobot {
     public Servo iLight = null;
 
     public Lift lift = null;
-    public ServoSpeed rotation = null;
-
+    public ClawWheel clawWheel = null;
+    //public ServoSpeed rotation = null;
+    public ServoNoSpeed rotation = null;
     public hwRobot() {}
 
     public void init(HardwareMap hmap) {
@@ -42,6 +45,7 @@ public class hwRobot {
         rLift = hm.get(DcMotor.class, "RL"); //EH3 motor
         rrotate = hm.get(Servo.class,"RR");
         lrotate = hm.get(Servo.class,"LR");
+        clawWheel = new ClawWheel(hm);
 //                hm.get(Servo.class, "Rotate");
 //        claw = hm.get(Servo.class, "OC"); //CH1
 //        wrist = hm.get(Servo.class, "OW"); //CH0
@@ -49,7 +53,7 @@ public class hwRobot {
 
         drive = new MecanumDrive(hmap,new Pose2d(0,0,0));
 
-        rotation = new ServoSpeed(rrotate, lrotate, Rrest, ksu);
+        rotation = new ServoNoSpeed(rrotate, lrotate, Rinit);//new ServoSpeed(rrotate, lrotate, Rinit, ksu);
 
 //        colorSensor.setGain(gain);
 
