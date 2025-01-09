@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.ServoSpeed.ksu;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rbin;
+import static org.firstinspires.ftc.teamcode.VariablesArm.Arest;
+import static org.firstinspires.ftc.teamcode.VariablesArm.Cclose;
+import static org.firstinspires.ftc.teamcode.VariablesArm.Win;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rinit;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rrest;
 
@@ -29,13 +31,11 @@ public class hwRobot {
 
     public RevColorSensorV3 colorSensor = null;
     float gain = 2;
-    public Servo oLight = null;
-    public Servo iLight = null;
+    public Servo Light = null;
 
     public Lift lift = null;
-    public ClawWheel clawWheel = null;
-    //public ServoSpeed rotation = null;
-    public ServoNoSpeed rotation = null;
+//    public ClawWheel clawWheel = null;
+    public ServoSpeed rotation = null;
     public hwRobot() {}
 
     public void init(HardwareMap hmap) {
@@ -43,31 +43,30 @@ public class hwRobot {
 
         lLift = hm.get(DcMotor.class, "LL"); //EH2 motor
         rLift = hm.get(DcMotor.class, "RL"); //EH3 motor
-        rrotate = hm.get(Servo.class,"RR");
-        lrotate = hm.get(Servo.class,"LR");
-        clawWheel = new ClawWheel(hm);
-//                hm.get(Servo.class, "Rotate");
-//        claw = hm.get(Servo.class, "OC"); //CH1
-//        wrist = hm.get(Servo.class, "OW"); //CH0
-//        arm = hm.get(Servo.class, "arm"); //CH2
+        rrotate = hm.get(Servo.class,"RR"); //CH0
+        lrotate = hm.get(Servo.class,"LR"); //CH1
+        Light = hm.get(Servo.class, "L"); //EH5
+        claw = hm.get(Servo.class, "OC"); //CH3
+        wrist = hm.get(Servo.class, "OW"); //CH2
+        arm = hm.get(Servo.class, "arm"); //CH4
 
         drive = new MecanumDrive(hmap,new Pose2d(0,0,0));
 
-        rotation = new ServoNoSpeed(rrotate, lrotate, Rinit);//new ServoSpeed(rrotate, lrotate, Rinit, ksu);
+        rotation = new ServoSpeed(rrotate, lrotate, Rinit, ksu);
+            lrotate.setPosition(Rrest);
+            rrotate.setPosition(Rrest);
 
-//        colorSensor.setGain(gain);
+        Light.setPosition(.277);
+        arm.setPosition(.5);
 
-//        claw.setPosition(CLAW_TIGHT);
-//        claw.setDirection(Servo.Direction.REVERSE);
-//
-//        wrist.setPosition(WRIST_INTAKE);
-//        wrist.setDirection(Servo.Direction.FORWARD);
-//
-//        rotate.setPosition(rotaterest);
-//        rotate.setDirection(Servo.Direction.FORWARD);
+        claw.setPosition(Cclose);
+        claw.setDirection(Servo.Direction.REVERSE);
 
-//        arm.setPosition(ARM_REST);
-//        arm.setDirection(Servo.Direction.FORWARD);
+        wrist.setPosition(.5);
+        wrist.setDirection(Servo.Direction.FORWARD);
+
+        arm.setPosition(.5);
+        arm.setDirection(Servo.Direction.FORWARD);
 
         lift = new Lift(lLift,rLift);
     }

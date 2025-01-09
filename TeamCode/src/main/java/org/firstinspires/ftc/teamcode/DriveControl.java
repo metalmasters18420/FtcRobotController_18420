@@ -15,7 +15,6 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.Win;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Wrest;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Wwall;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.ButtonDelay;
-import static org.firstinspires.ftc.teamcode.VariablesDelay.ClawDelay;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rbar;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rbin;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rin;
@@ -39,10 +38,9 @@ import org.firstinspires.ftc.teamcode.RoadRunner.Drawing;
 public class DriveControl extends  OpMode {
 
     public ElapsedTime clock = new ElapsedTime();
+    public ElapsedTime light = new ElapsedTime();
 
     hwRobot hw = new hwRobot();
-
-    private final ElapsedTime runtime = new ElapsedTime();
 
     boolean a2Current = false;
     boolean a2Last = false;
@@ -74,65 +72,67 @@ public class DriveControl extends  OpMode {
         clock.reset();
 
         hw.init(hardwareMap);
-
-
     }
 
     @Override
     public void loop() {
 
         boolean Bdelay = clock.milliseconds() > ButtonDelay;
+        boolean RGB = light.milliseconds() > .01;
 
-//        gamepad2.a = a2Current;
+//        //ROPER CODE BEGIN
 //
-//        if (a2Current == !a2Last){
-//            a2Toggle = !a2Toggle;
+//        if (gamepad1.right_trigger>0.05){
+//            hw.clawWheel.eatSpecimen();
 //        }
-//        if (a2Toggle){
-//            hw.claw.setPosition(Cclose);
+//        else if (gamepad1.left_trigger>.05){
+//            hw.clawWheel.spitSpecimen();
 //        }
 //        else {
-//            hw.claw.setPosition(Copen);
+//            hw.clawWheel.holdSpecimen();
 //        }
+//
+//        if (gamepad1.a){
+//            hw.clawWheel.closeClaw();
+//        }
+//        if (gamepad1.b){
+//            hw.clawWheel.openClaw();
+//        }
+//
+//        if (gamepad1.dpad_up){
+//            hw.clawWheel.rotateWristToDeposit();
+//            hw.clawWheel.rotateArmToDeposit();
+//        }
+//        if (gamepad1.dpad_down){
+//            hw.clawWheel.rotateWristToIntake();
+//            hw.clawWheel.rotateArmToIntake();
+//        }
+//
+//
+//        //ROPER CODE END
 
-
-
-        //ROPER CODE BEGIN
-
-        if (gamepad1.right_trigger>0.05){
-            hw.clawWheel.eatSpecimen();
+        if (RGB){
+            hw.Light.setPosition(hw.Light.getPosition() + .01);
+            light.reset();
         }
-        else if (gamepad1.left_trigger>.05){
-            hw.clawWheel.spitSpecimen();
+        if (hw.Light.getPosition() >= .72){
+            hw.Light.setPosition(.277);
+            light.reset();
+        }
+
+        gamepad2.a = a2Current;
+
+        if (a2Current == !a2Last){
+            a2Toggle = !a2Toggle;
+        }
+        if (a2Toggle){
+            hw.claw.setPosition(Cclose);
         }
         else {
-            hw.clawWheel.holdSpecimen();
+            hw.claw.setPosition(Copen);
         }
-
-        if (gamepad1.a){
-            hw.clawWheel.closeClaw();
-        }
-        if (gamepad1.b){
-            hw.clawWheel.openClaw();
-        }
-
-        if (gamepad1.dpad_up){
-            hw.clawWheel.rotateWristToDeposit();
-            hw.clawWheel.rotateArmToDeposit();
-        }
-        if (gamepad1.dpad_down){
-            hw.clawWheel.rotateWristToIntake();
-            hw.clawWheel.rotateArmToIntake();
-        }
-
-
-        //ROPER CODE END
-
 
         a2Last = a2Current;
-
-
-
 
         switch (bobot) {
             case REST:
@@ -256,7 +256,6 @@ public class DriveControl extends  OpMode {
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
 
         telemetry.addData("lift position", hw.lLift.getCurrentPosition());
-        telemetry.addData("cdelay", ClawDelay);
         telemetry.addData("rotation", hw.rrotate.getPosition());
         telemetry.addData("bobot", bobot);
 
@@ -265,38 +264,33 @@ public class DriveControl extends  OpMode {
         }
 
         public void Rest(){
-//            hw.arm.setPosition(Arest);
-//            hw.wrist.setPosition(Wrest);
+            hw.arm.setPosition(Arest);
+            hw.wrist.setPosition(Wrest);
             hw.rotation.setTpos(Rrest);
-            //hw.lift.LiftRest();
+//            hw.lift.LiftRest();
         }
         public void Wall(){
-//            hw.arm.setPosition(Awall);
-//            hw.wrist.setPosition(Wwall);
+            hw.arm.setPosition(Awall);
+            hw.wrist.setPosition(Wwall);
             hw.rotation.setTpos(Rwall);
-            //hw.lift.LiftWall();
+//            hw.lift.LiftWall();
         }
         public void Bin(){
-//            hw.arm.setPosition(Abin);
-//            hw.wrist.setPosition(Wbin);
+            hw.arm.setPosition(Abin);
+            hw.wrist.setPosition(Wbin);
             hw.rotation.setTpos(Rbin);
-            //hw.lift.LiftBin();
+//            hw.lift.LiftBin();
         }
         public void Bar(){
-//            hw.arm.setPosition(Abar);
-//            hw.wrist.setPosition(Wbar);
+            hw.arm.setPosition(Abar);
+            hw.wrist.setPosition(Wbar);
             hw.rotation.setTpos(Rbar);
-            //hw.lift.LiftBar();
+//            hw.lift.LiftBar();
         }
         public void Intake(){
-//            hw.arm.setPosition(Ain);
-//            hw.wrist.setPosition(Win);
+            hw.arm.setPosition(Ain);
+            hw.wrist.setPosition(Win);
             hw.rotation.setTpos(Rin);
-            //hw.lift.LiftIn();
+//            hw.lift.LiftIn();
         }
-
-
-
-
-
-    }
+}
