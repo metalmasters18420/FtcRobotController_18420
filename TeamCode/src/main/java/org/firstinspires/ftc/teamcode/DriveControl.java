@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.teamcode.VariablesArm.Abar;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Abin;
+import static org.firstinspires.ftc.teamcode.VariablesArm.Adown;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Ain;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Arest;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Awall;
@@ -15,11 +16,14 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.Win;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Wrest;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Wwall;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.ButtonDelay;
+import static org.firstinspires.ftc.teamcode.VariablesDelay.RotateDelay;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rbar;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rbin;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rin;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rrest;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rwall;
+
+import android.view.animation.RotateAnimation;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -39,6 +43,7 @@ public class DriveControl extends  OpMode {
 
     public ElapsedTime clock = new ElapsedTime();
     public ElapsedTime light = new ElapsedTime();
+    public ElapsedTime liftClock = new ElapsedTime();
 
     hwRobot hw = new hwRobot();
 
@@ -50,15 +55,17 @@ public class DriveControl extends  OpMode {
     boolean a1Last = false;
     boolean a1Toggle = false;
 
+    boolean justPressed = false;
+
     public enum robot{
         REST,
         WALL,
         BIN,
         BAR,
         IN
-    };
+    }
 
-    robot bobot = robot.BIN;
+    robot bobot = robot.REST;
 
 
     @Override
@@ -70,8 +77,11 @@ public class DriveControl extends  OpMode {
 
     public void start() {
         clock.reset();
+        light.reset();
+        liftClock.reset();
 
         hw.init(hardwareMap);
+
     }
 
     @Override
@@ -79,6 +89,7 @@ public class DriveControl extends  OpMode {
 
         boolean Bdelay = clock.milliseconds() > ButtonDelay;
         boolean RGB = light.milliseconds() > .01;
+        boolean Edelay = clock.milliseconds() > 500;
 
 //        //ROPER CODE BEGIN
 //
@@ -111,6 +122,13 @@ public class DriveControl extends  OpMode {
 //
 //        //ROPER CODE END
 
+
+//        hw.arm.setPosition(Arest);
+//        hw.wrist.setPosition(Wrest);
+//        hw.lrotate.setPosition(Rrest);
+//        hw.rrotate.setPosition(Rrest);
+//        hw.lift.LiftRest();
+
         if (RGB){
             hw.Light.setPosition(hw.Light.getPosition() + .01);
             light.reset();
@@ -122,7 +140,7 @@ public class DriveControl extends  OpMode {
 
         gamepad2.a = a2Current;
 
-        if (a2Current == !a2Last){
+        if (a2Current && !a2Last){
             a2Toggle = !a2Toggle;
         }
         if (a2Toggle){
@@ -136,94 +154,274 @@ public class DriveControl extends  OpMode {
 
         switch (bobot) {
             case REST:
-                if (gamepad2.dpad_up && Bdelay){
+
+                if (liftClock.milliseconds() > RotateDelay && liftClock.milliseconds() < 1000){
+                    Rest();
+                }
+
+                if (gamepad2.dpad_up && Bdelay) {
+
                     Bin();
+                    liftClock.reset();
                     bobot = robot.BIN;
+
                 }
                 if (gamepad2.dpad_right && Bdelay){
+
                     Bar();
+                    liftClock.reset();
                     bobot = robot.BAR;
                 }
                 if (gamepad2.dpad_left && Bdelay){
+
                     Wall();
+                    liftClock.reset();
                     bobot = robot.WALL;
                 }
                 if (gamepad2.y && Bdelay){
+
                     Intake();
+                    liftClock.reset();
                     bobot = robot.IN;
                 }
             break;
             case BIN:
-                if (gamepad2.dpad_down && Bdelay){
-                    Rest();
+
+                if (liftClock.milliseconds() > RotateDelay && liftClock.milliseconds() < 2000){
+                    hw.lift.LiftBin();
+                }
+
+                if (gamepad2.dpad_down && Bdelay) {
+                    hw.lift.LiftRest();
+                    liftClock.reset();
                     bobot = robot.REST;
                 }
-                if (gamepad2.dpad_right && Bdelay){
-                    Bar();
-                    bobot = robot.BAR;
-                }
-                if (gamepad2.dpad_left && Bdelay){
-                    Wall();
-                    bobot = robot.WALL;
-                }
-                if (gamepad2.y && Bdelay) {
+
+                if (gamepad2.y && Bdelay){
+
                     Intake();
+                    liftClock.reset();
                     bobot = robot.IN;
                 }
-            break;
-            case BAR:
-                if (gamepad2.dpad_down && Bdelay){
-                    Rest();
-                    bobot = robot.REST;
-                }
-                if (gamepad2.dpad_up && Bdelay){
-                    Bin();
-                    bobot = robot.BIN;
-                }
-                if (gamepad2.dpad_left && Bdelay){
-                    Wall();
-                    bobot = robot.WALL;
-                }
-                if (gamepad2.y && Bdelay) {
-                    Intake();
-                    bobot = robot.IN;
-                }
-            break;
-            case WALL:
-                if (gamepad2.dpad_down && Bdelay){
-                    Rest();
-                    bobot = robot.REST;
-                }
-                if (gamepad2.dpad_up && Bdelay){
-                    Bin();
-                    bobot = robot.BIN;
-                }
-                if (gamepad2.dpad_right && Bdelay){
-                    Bar();
-                    bobot = robot.BAR;
-                }
-                if (gamepad2.y && Bdelay) {
-                    Intake();
-                    bobot = robot.IN;
-                }
-            break;
+                break;
+//                if (gamepad2.dpad_right && Bdelay){
+//
+//                    justPressed = true;
+//                    Bar();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftBar();
+//                            justPressed = false;
+//                            bobot = robot.BAR;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.dpad_left && Bdelay){
+//
+//                    justPressed = true;
+//                    Wall();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftWall();
+//                            justPressed = false;
+//                            bobot = robot.WALL;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.y && Bdelay){
+//
+//                    justPressed = true;
+//                    Intake();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftIn();
+//                            justPressed = false;
+//                            bobot = robot.IN;
+//                        }
+//                    }
+//                }
+//            break;
+//            case BAR:
+//                localClock = null;
+//                if (gamepad2.dpad_down && Bdelay) {
+//
+//                    justPressed = true;
+//                    hw.lift.LiftRest();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            Rest();
+//                            justPressed = false;
+//                            bobot = robot.REST;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.dpad_up && Bdelay) {
+//
+//                    justPressed = true;
+//                    Bin();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftBin();
+//                            justPressed = false;
+//                            bobot = robot.BIN;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.dpad_left && Bdelay){
+//
+//                    justPressed = true;
+//                    Wall();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftWall();
+//                            justPressed = false;
+//                            bobot = robot.WALL;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.y && Bdelay){
+//
+//                    justPressed = true;
+//                    Intake();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftIn();
+//                            justPressed = false;
+//                            bobot = robot.IN;
+//                        }
+//                    }
+//                }
+//            break;
+//            case WALL:
+//                localClock = null;
+//                if (gamepad2.dpad_down && Bdelay) {
+//
+//                    justPressed = true;
+//                    hw.lift.LiftRest();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            Rest();
+//                            justPressed = false;
+//                            bobot = robot.REST;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.dpad_up && Bdelay) {
+//
+//                    justPressed = true;
+//                    Bin();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftBin();
+//                            justPressed = false;
+//                            bobot = robot.BIN;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.dpad_right && Bdelay){
+//
+//                    justPressed = true;
+//                    Bar();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftBar();
+//                            justPressed = false;
+//                            bobot = robot.BAR;
+//                        }
+//                    }
+//                }
+//                if (gamepad2.y && Bdelay){
+//
+//                    justPressed = true;
+//                    Intake();
+//
+//                    if (justPressed) {
+//                        localClock = new ElapsedTime();
+//                    }
+//
+//                    if (localClock != null) {
+//                        if (localClock.milliseconds() > RotateDelay) {
+//                            hw.lift.LiftIn();
+//                            justPressed = false;
+//                            bobot = robot.IN;
+//                        }
+//                    }
+//                }
+//            break;
             case IN:
+
+                if (liftClock.milliseconds() > RotateDelay && liftClock.milliseconds() < 1000){
+                    hw.lrotate.setPosition(Rin);
+                    hw.rrotate.setPosition(Rin);
+                    hw.lift.LiftIn();
+                }
+
                 if (gamepad2.dpad_down && Bdelay){
-                    Rest();
+
+                    hw.lift.LiftRest();
+                    liftClock.reset();
                     bobot = robot.REST;
                 }
-                if (gamepad2.dpad_up && Bdelay){
-                    Bin();
-                    bobot = robot.BIN;
+
+                if (gamepad2.b && Bdelay){
+                    hw.arm.setPosition(Adown);
                 }
-                if (gamepad2.dpad_right && Bdelay){
-                    Bar();
-                    bobot = robot.BAR;
+                else {
+                    hw.arm.setPosition(Ain);
                 }
-                if (gamepad2.dpad_left && Bdelay){
-                    Wall();
-                    bobot = robot.WALL;
-                }
+
+                hw.lift.Move(gamepad2.left_stick_y);
+
             break;
             default:
                 bobot = robot.REST;
@@ -259,38 +457,43 @@ public class DriveControl extends  OpMode {
         telemetry.addData("rotation", hw.rrotate.getPosition());
         telemetry.addData("bobot", bobot);
 
-        hw.rotation.update();
+//        hw.rotation.update();
         telemetry.update();
         }
 
         public void Rest(){
             hw.arm.setPosition(Arest);
             hw.wrist.setPosition(Wrest);
-            hw.rotation.setTpos(Rrest);
+            hw.lrotate.setPosition(Rrest);
+            hw.rrotate.setPosition(Rrest);
 //            hw.lift.LiftRest();
         }
         public void Wall(){
             hw.arm.setPosition(Awall);
             hw.wrist.setPosition(Wwall);
-            hw.rotation.setTpos(Rwall);
+            hw.lrotate.setPosition(Rwall);
+            hw.rrotate.setPosition(Rwall);
 //            hw.lift.LiftWall();
         }
         public void Bin(){
             hw.arm.setPosition(Abin);
             hw.wrist.setPosition(Wbin);
-            hw.rotation.setTpos(Rbin);
+            hw.lrotate.setPosition(Rbin);
+            hw.rrotate.setPosition(Rbin);
 //            hw.lift.LiftBin();
         }
         public void Bar(){
             hw.arm.setPosition(Abar);
             hw.wrist.setPosition(Wbar);
-            hw.rotation.setTpos(Rbar);
+            hw.lrotate.setPosition(Rbar);
+            hw.rrotate.setPosition(Rbar);
 //            hw.lift.LiftBar();
         }
         public void Intake(){
             hw.arm.setPosition(Ain);
             hw.wrist.setPosition(Win);
-            hw.rotation.setTpos(Rin);
+//            hw.lrotate.setPosition(Rin);
+//            hw.rrotate.setPosition(Rin);
 //            hw.lift.LiftIn();
         }
 }

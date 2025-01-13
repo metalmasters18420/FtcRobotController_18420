@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.ServoSpeed.ksu;
+//import static org.firstinspires.ftc.teamcode.ServoSpeed.ksu;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Arest;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Cclose;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Win;
+import static org.firstinspires.ftc.teamcode.VariablesArm.Wrest;
+import static org.firstinspires.ftc.teamcode.VariablesLift.Lrest;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rinit;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Rrest;
 
@@ -35,7 +37,7 @@ public class hwRobot {
 
     public Lift lift = null;
 //    public ClawWheel clawWheel = null;
-    public ServoSpeed rotation = null;
+//    public ServoSpeed rotation = null;
     public hwRobot() {}
 
     public void init(HardwareMap hmap) {
@@ -52,22 +54,24 @@ public class hwRobot {
 
         drive = new MecanumDrive(hmap,new Pose2d(0,0,0));
 
-        rotation = new ServoSpeed(rrotate, lrotate, Rinit, ksu);
-            lrotate.setPosition(Rrest);
-            rrotate.setPosition(Rrest);
+//        rotation = new ServoSpeed(rrotate, lrotate, Rinit, ksu);
+        lrotate.setPosition(Rrest);
+        rrotate.setPosition(Rrest);
+        lrotate.setDirection(Servo.Direction.REVERSE);
 
         Light.setPosition(.277);
-        arm.setPosition(.5);
 
         claw.setPosition(Cclose);
         claw.setDirection(Servo.Direction.REVERSE);
 
-        wrist.setPosition(.5);
+        wrist.setPosition(Win);
         wrist.setDirection(Servo.Direction.FORWARD);
 
-        arm.setPosition(.5);
+        arm.setPosition(Arest);
         arm.setDirection(Servo.Direction.FORWARD);
 
         lift = new Lift(lLift,rLift);
+            lLift.setTargetPosition(Lrest);
+            rLift.setTargetPosition(Lrest);
     }
 }

@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class VariablesDelay {
     public static double ButtonDelay = 500;
+    public static double RotateDelay = 500;
     public static double wait = 300;
     public static double IntakeDelay = 500;
     public static double FlipDelay = 500;
