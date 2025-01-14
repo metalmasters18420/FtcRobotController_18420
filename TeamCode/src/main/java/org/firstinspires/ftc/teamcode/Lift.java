@@ -9,6 +9,7 @@ import static org.firstinspires.ftc.teamcode.VariablesLift.Lin;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Lrest;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Lspeed;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Lwall;
+import static org.firstinspires.ftc.teamcode.VariablesLift.THING;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -68,7 +69,7 @@ public class Lift {
         right.setTargetPosition(Lin);
     }
     public void Move(double y){
-        left.setTargetPosition((int) (left.getCurrentPosition() + 2 * -y));
-        right.setTargetPosition((int) (right.getCurrentPosition() + 2 * -y));
+        left.setTargetPosition((int) (left.getCurrentPosition() + THING * -y));
+        right.setTargetPosition((int) (right.getCurrentPosition() + THING * -y));
     }
 }
