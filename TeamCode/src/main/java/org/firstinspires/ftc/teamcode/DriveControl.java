@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-//thoughts on a claw: put a thingy in the middle that aligns the sample
-
 import static org.firstinspires.ftc.teamcode.VariablesArm.Abar;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Abar2;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Abin;
@@ -9,22 +7,22 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.Adown;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Ain;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Arest;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Awall;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Cclose;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Copen;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Wbar;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Wbar2;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Wbin;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Win;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Wrest;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Wwall;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Cclose;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Copen;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Wbar;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Wbar2;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Wbin;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Win;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Wrest;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Wwall;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.ButtonDelay;
 import static org.firstinspires.ftc.teamcode.VariablesDelay.RotateDelay;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rbar;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rbar2;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rbin;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rin;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rrest;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rwall;
+import static org.firstinspires.ftc.teamcode.VariablesRotate.Rbar;
+import static org.firstinspires.ftc.teamcode.VariablesRotate.Rbar2;
+import static org.firstinspires.ftc.teamcode.VariablesRotate.Rbin;
+import static org.firstinspires.ftc.teamcode.VariablesRotate.Rin;
+import static org.firstinspires.ftc.teamcode.VariablesRotate.Rrest;
+import static org.firstinspires.ftc.teamcode.VariablesRotate.Rwall;
 
 import android.view.animation.RotateAnimation;
 
@@ -53,12 +51,6 @@ public class DriveControl extends  OpMode {
     boolean a2Current = false;
     boolean a2Last = false;
     boolean a2Toggle = false;
-
-    boolean a1Current = false;
-    boolean a1Last = false;
-    boolean a1Toggle = false;
-
-    boolean justPressed = false;
 
     public enum robot{
         REST,
@@ -93,38 +85,6 @@ public class DriveControl extends  OpMode {
 
         boolean Bdelay = clock.milliseconds() > ButtonDelay;
         boolean RGB = light.milliseconds() > .01;
-        boolean Edelay = clock.milliseconds() > 500;
-
-//        //ROPER CODE BEGIN
-//
-//        if (gamepad1.right_trigger>0.05){
-//            hw.clawWheel.eatSpecimen();
-//        }
-//        else if (gamepad1.left_trigger>.05){
-//            hw.clawWheel.spitSpecimen();
-//        }
-//        else {
-//            hw.clawWheel.holdSpecimen();
-//        }
-//
-//        if (gamepad1.a){
-//            hw.clawWheel.closeClaw();
-//        }
-//        if (gamepad1.b){
-//            hw.clawWheel.openClaw();
-//        }
-//
-//        if (gamepad1.dpad_up){
-//            hw.clawWheel.rotateWristToDeposit();
-//            hw.clawWheel.rotateArmToDeposit();
-//        }
-//        if (gamepad1.dpad_down){
-//            hw.clawWheel.rotateWristToIntake();
-//            hw.clawWheel.rotateArmToIntake();
-//        }
-//
-//
-//        //ROPER CODE END
 
         if (RGB){
             hw.Light.setPosition(hw.Light.getPosition() + .01);
@@ -292,7 +252,6 @@ public class DriveControl extends  OpMode {
         telemetry.addData("rotation", hw.rrotate.getPosition());
         telemetry.addData("bobot", bobot);
 
-//        hw.rotation.update();
         telemetry.update();
         }
 
@@ -301,40 +260,40 @@ public class DriveControl extends  OpMode {
             hw.wrist.setPosition(Wrest);
             hw.lrotate.setPosition(Rrest);
             hw.rrotate.setPosition(Rrest);
-//            hw.lift.LiftRest();
         }
+
         public void Wall(){
             hw.arm.setPosition(Awall);
             hw.wrist.setPosition(Wwall);
             hw.lrotate.setPosition(Rwall);
             hw.rrotate.setPosition(Rwall);
-//            hw.lift.LiftWall();
         }
+
         public void Bin(){
             hw.arm.setPosition(Abin);
             hw.wrist.setPosition(Wbin);
             hw.lrotate.setPosition(Rbin);
             hw.rrotate.setPosition(Rbin);
-//            hw.lift.LiftBin();
         }
+
         public void Bar(){
             hw.arm.setPosition(Abar);
             hw.wrist.setPosition(Wbar);
             hw.lrotate.setPosition(Rbar);
             hw.rrotate.setPosition(Rbar);
-//            hw.lift.LiftBar();
         }
+
         public void Bar2(){
         hw.arm.setPosition(Abar2);
         hw.wrist.setPosition(Wbar2);
         hw.lrotate.setPosition(Rbar2);
         hw.rrotate.setPosition(Rbar2);
         }
+
         public void Intake(){
             hw.arm.setPosition(Ain);
             hw.wrist.setPosition(Win);
             hw.lrotate.setPosition(Rin);
             hw.rrotate.setPosition(Rin);
-//            hw.lift.LiftIn();
         }
 }
