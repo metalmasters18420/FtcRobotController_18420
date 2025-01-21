@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Lbar;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Lbin;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Lhang1;

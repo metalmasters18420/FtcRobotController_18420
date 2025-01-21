@@ -9,6 +9,7 @@ import static org.firstinspires.ftc.teamcode.VariablesArm.Arest;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Awall;
 import static org.firstinspires.ftc.teamcode.VariablesClaw.Cclose;
 import static org.firstinspires.ftc.teamcode.VariablesClaw.Copen;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Srest;
 import static org.firstinspires.ftc.teamcode.VariablesClaw.Wbar;
 import static org.firstinspires.ftc.teamcode.VariablesClaw.Wbar2;
 import static org.firstinspires.ftc.teamcode.VariablesClaw.Wbin;
@@ -51,6 +52,10 @@ public class DriveControl extends  OpMode {
     boolean a2Current = false;
     boolean a2Last = false;
     boolean a2Toggle = false;
+
+    boolean x1Current = false;
+    boolean x1Last = false;
+    boolean x1Toggle = false;
 
     public enum robot{
         REST,
@@ -108,6 +113,25 @@ public class DriveControl extends  OpMode {
         }
 
         a2Last = a2Current;
+
+        x1Current = gamepad1.x;
+
+        if (x1Current && !x1Last){
+            x1Toggle = !x1Toggle;
+        }
+        if (x1Toggle){
+            hw.spin.setPosition(Srest);
+        }
+        else {
+            if (gamepad1.right_bumper){
+                hw.spin.setPosition(hw.spin.getPosition() + .02);
+            }
+            if (gamepad1.left_bumper){
+                hw.spin.setPosition(hw.spin.getPosition() - .02);
+            }
+        }
+
+        x1Last = x1Current;
 
         switch (bobot) {
             case REST:

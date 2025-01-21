@@ -2,12 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 //import static org.firstinspires.ftc.teamcode.ServoSpeed.ksu;
 import static org.firstinspires.ftc.teamcode.VariablesArm.Arest;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Cclose;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Win;
-import static org.firstinspires.ftc.teamcode.VariablesArm.Wrest;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Cclose;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Srest;
+import static org.firstinspires.ftc.teamcode.VariablesClaw.Win;
 import static org.firstinspires.ftc.teamcode.VariablesLift.Lrest;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rinit;
-import static org.firstinspires.ftc.teamcode.VariablesLift.Rrest;
+import static org.firstinspires.ftc.teamcode.VariablesRotate.Rrest;
 
 
 import com.acmerobotics.roadrunner.Pose2d;
@@ -27,8 +26,11 @@ public class hwRobot {
 
     public Servo rrotate = null;
     public Servo lrotate = null;
+
     public Servo claw = null;
     public Servo wrist = null;
+    public Servo spin = null;
+
     public Servo arm = null;
 
     public RevColorSensorV3 colorSensor = null;
@@ -46,15 +48,15 @@ public class hwRobot {
         lLift = hm.get(DcMotor.class, "LL"); //EH2 motor
         rLift = hm.get(DcMotor.class, "RL"); //EH3 motor
         rrotate = hm.get(Servo.class,"RR"); //CH0
-        lrotate = hm.get(Servo.class,"LR"); //CH1
+        lrotate = hm.get(Servo.class,"LR"); //CH5
         Light = hm.get(Servo.class, "L"); //EH5
-        claw = hm.get(Servo.class, "OC"); //CH3
-        wrist = hm.get(Servo.class, "OW"); //CH2
-        arm = hm.get(Servo.class, "arm"); //CH4
+        claw = hm.get(Servo.class, "C"); //CH3
+        wrist = hm.get(Servo.class, "W"); //CH2
+        arm = hm.get(Servo.class, "A"); //CH4
+        spin = hm.get(Servo.class, "S"); //CH1
 
         drive = new MecanumDrive(hmap,new Pose2d(0,0,0));
 
-//        rotation = new ServoSpeed(rrotate, lrotate, Rinit, ksu);
         lrotate.setPosition(Rrest);
         rrotate.setPosition(Rrest);
         lrotate.setDirection(Servo.Direction.REVERSE);
@@ -66,6 +68,9 @@ public class hwRobot {
 
         wrist.setPosition(Win);
         wrist.setDirection(Servo.Direction.FORWARD);
+
+        spin.setPosition(Srest);
+        spin.setDirection(Servo.Direction.FORWARD);
 
         arm.setPosition(Arest);
         arm.setDirection(Servo.Direction.FORWARD);
